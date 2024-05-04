@@ -1,176 +1,3 @@
-// import React, { useState } from 'react'
-
-// const AddProduct = () => {
-//   const [formData, setFormData]=useState({
-//     discount:'',
-//     oldprice: '',
-//     newprice: '',
-//     time: '',
-//   });
-
-//   const inputHandler =(e)=>{
-//     setFormData({
-//       ...formData,
-//       [e.target.name]: e.target.value
-//   });
-//   }
-// console.log(formData)
-// const handleSubmit =async (e) => {
-//   e.preventDefault();
-//   try {
-//    const response = await fetch('http://localhost:5000/api/v1/product/new', {
-//     method:'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(formData)
-// });
-
-//         console.log(response)
-//       alert('product Add successfully successful');
-//   } catch (error) {
-//       console.error('Error signing up:', error);
-//       alert('Signup failed');
-//   }
-// };
-//   return (
-//     <>
-//     <div className="card_section">
-//   <div className="container">
-//     <div className="row">
-//       <h2 className="mt-3 mb-2" style={{ fontWeight: 700, fontSize: 18 }}>
-//         Product card form
-//       </h2>
-//       <form action="" onSubmit={handleSubmit}>
-//       <div className="col-md-6 col-sm-6 col-12 mt-1 mb-1">
-//         <label htmlFor="exampleInputEmail1" className="form-label">
-//           City <span className="text-danger ">*</span>{" "}
-//         </label>
-//         <select className="form-select" aria-label="Default select example">
-//           <option selected="">City </option>
-//           <option value={1}>One</option>
-//           <option value={2}>Two</option>
-//           <option value={3}>Three</option>
-//         </select>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1">
-//         <label
-//           htmlFor="exampleInputEmail1"
-//           style={{ fontWeight: 700, fontSize: 14 }}
-//           className="form-label"
-//         >
-//           Country <span className="text-danger ">*</span>{" "}
-//         </label>
-//         <select className="form-select" aria-label="Default select example">
-//           <option selected="">Country</option>
-//           <option value={1}>One</option>
-//           <option value={2}>Two</option>
-//           <option value={3}>Three</option>
-//         </select>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1">
-//         <form>
-//           <div className="mb-3">
-//             <label
-//               htmlFor="exampleInputEmail1"
-//               style={{ fontWeight: 700, fontSize: 14 }}
-//               className="form-label"
-//             >
-//               Discount <span className="text-danger ">*</span>{" "}
-//             </label>
-//             <input
-//             name='discount'
-//               type="number"
-//               className="form-control"
-//               placeholder="Discount"
-//               id="exampleInputEmail1"
-//               aria-describedby="emailHelp"
-//               onChange={inputHandler}
-//             />
-//           </div>
-//         </form>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1">
-//         <form>
-//           <div className="mb-3">
-//             <label
-//               htmlFor="exampleInputEmail1"
-//               style={{ fontWeight: 700, fontSize: 14 }}
-//               className="form-label"
-//             >
-//               Old price <span className="text-danger ">*</span>
-//             </label>
-//             <input
-//             name='oldprice'
-//               type="number"
-//               className="form-control"
-//               placeholder="Old price "
-//               id="exampleInputEmail1"
-//               aria-describedby="emailHelp"
-//               onChange={inputHandler}
-//             />
-//           </div>
-//         </form>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1">
-//         <form>
-//           <div className="mb-3">
-//             <label
-//               htmlFor="exampleInputEmail1"
-//               style={{ fontWeight: 700, fontSize: 14 }}
-//               className="form-label"
-//             >
-//               New price <span className="text-danger ">*</span>{" "}
-//             </label>
-//             <input
-//             name='newprice'
-//               onChange={inputHandler}
-//               type="number"
-//               className="form-control"
-//               placeholder="New price "
-//               id="exampleInputEmail1"
-//               aria-describedby="emailHelp"
-//             />
-//           </div>
-//         </form>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1">
-//         <form>
-//           <div className="mb-3">
-//             <label
-//               htmlFor="exampleInputEmail1"
-//               style={{ fontWeight: 700, fontSize: 14 }}
-//               className="form-label"
-//             >
-//               Time/hours <span className="text-danger ">*</span>{" "}
-//             </label>
-//             <input
-//               name='time'
-//               onChange={inputHandler}
-//               type="time"
-//               className="form-control"
-//               step={3600000}
-//               placeholder="New price "
-//               id="exampleInputEmail1"
-//               aria-describedby="emailHelp"
-//             />
-//           </div>
-//         </form>
-//       </div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1"></div>
-//       <div className="col-md-6 col-sm-6 col-12  mt-1 mb-1 text-end">
-//         <button type='submit' className="btn btn-success w-25"> Submit</button>
-//       </div>
-//       </form>
-//     </div>
-//   </div>
-// </div>
-//     </>
-//   )
-// }
-
-// export default AddProduct
-
 
 
 
@@ -179,13 +6,14 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useState } from "react";
 
-import Map from "../pages/contact/Map";
+// import Map from "../pages/contact/Map";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [formData, setFormData]=useState({
+    product:"",
     discount:'',
     oldprice: '',
     newprice: '',
@@ -255,7 +83,7 @@ const handleSubmit =async (e) => {
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
               <div className="tabs -underline-2 js-tabs">
-                {/* <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
+             {/* <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (
                     <div
                       onClick={() => setActiveTab(elm)}
@@ -284,10 +112,11 @@ const handleSubmit =async (e) => {
                           activeTab == "Content" ? "is-tab-el-active" : ""
                         }`}
                       >
+                        <form action="" onSubmit={handleSubmit}>
                         <div className="contactForm row y-gap-30">
                         <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                              <input type="text" required />
+                              <input type="text" required name="product" onChange={inputHandler} />
                               <label className="lh-1 text-16 text-light-1">
                               Product Name <span className="text-danger">*</span>
                               </label>
@@ -295,7 +124,7 @@ const handleSubmit =async (e) => {
                           </div> 
                           <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                              <input type="text" required />
+                              <input  required name='discount' type="number" onChange={inputHandler} />
                               <label className="lh-1 text-16 text-light-1">
                               Discount <span className="text-danger">*</span>
                               </label>
@@ -304,7 +133,7 @@ const handleSubmit =async (e) => {
                        
                           <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                              <input type="text" required />
+                              <input type="number" required name='oldprice' onChange={inputHandler}/>
                               <label className="lh-1 text-16 text-light-1">
                               Old Price<span className="text-danger">*</span>
                               </label>
@@ -312,7 +141,7 @@ const handleSubmit =async (e) => {
                           </div>
                           <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                              <input type="text" required />
+                              <input type="number" required  name='newprice' onChange={inputHandler}/>
                               <label className="lh-1 text-16 text-light-1">
                              New Price<span className="text-danger">*</span>
                               </label>
@@ -541,12 +370,13 @@ const handleSubmit =async (e) => {
                           </div>
 
                           <div className="col-12">
-                            <button className="button -md -dark-1 bg-accent-1 text-white">
+                            <button type="submit" className="button -md -dark-1 bg-accent-1 text-white">
                               Save Changes
                               <i className="icon-arrow-top-right text-16 ml-10"></i>
                             </button>
                           </div>
                         </div>
+                        </form>
                       </div>
 
                     

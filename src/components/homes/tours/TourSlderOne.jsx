@@ -8,6 +8,14 @@ import { tourData } from "@/data/tours";
 import { Link } from "react-router-dom";
 
 export default function TourSlderOne() {
+  const [tourData, setTourData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/v1/tours')
+      .then(res => res.json())
+      .then(data => setTourData(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
   return (
     <section className="layout-pt-xl layout-pb-xl relative">
       <div className="sectionBg -w-1530 rounded-12 bg-light-1"></div>
@@ -20,7 +28,7 @@ export default function TourSlderOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Top Trending
+              Top Trending 
             </h2>
           </div>
 

@@ -1,10 +1,18 @@
 import Stars from "@/components/common/Stars";
-import { tourData } from "@/data/tours";
+// import { tourData } from "@/data/tours";
 
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Tour1() {
+  const [tourData, setTourData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/v1/tours')
+      .then(res => res.json())
+      .then(data => setTourData(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
   return (
     <section className="layout-pt-xl layout-pb-xl">
       <div className="container">
@@ -15,7 +23,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Find Popular Tours
+              Find Popular Tours 
             </h2>
           </div>
 

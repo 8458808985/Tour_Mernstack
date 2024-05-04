@@ -6,13 +6,21 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function DestinationsOne() {
+  const [destinations, setDestinations] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/v1/destination')
+      .then(res => res.json())
+      .then(data => setDestinations(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
   return (
     <section className="layout-pt-xl">
       <div className="container">
         <div className="row y-gap-10 justify-between items-end">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 md:text-24">
-              Trending destinations
+              Trending destinations 
             </h2>
           </div>
 

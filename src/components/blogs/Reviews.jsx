@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import Stars from "../common/Stars";
 
 export default function Reviews() {
-  const [review, setReview] = useState([]);
+  // const [review, setReview] = useState([]);
 
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/v1/blog')
-      .then(res => res.json())
-      .then(data => setReview(data))
-      .catch(err => console.error('Error fetching tours:', err));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/api/v1/blog')
+  //     .then(res => res.json())
+  //     .then(data => setReview(data))
+  //     .catch(err => console.error('Error fetching tours:', err));
+  // }, []);
   
   return (
     <>

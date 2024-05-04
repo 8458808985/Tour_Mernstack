@@ -14,7 +14,7 @@ export default function TrendingDestinationsTwo() {
               data-aos-delay=""
               className="text-30 md:text-24 text-white"
             >
-              Trending Destinations
+              Trending Destinations 
             </h2>
           </div>
 

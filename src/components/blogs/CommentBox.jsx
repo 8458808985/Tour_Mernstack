@@ -1,6 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function CommentBox() {
+
+  const [formData, setFormData]=useState({
+    name:"",
+    email:'',
+    title: '',
+    comment: ''
+  });
+
+  const inputHandler =(e)=>{
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+  });
+  }
+console.log(formData)
+const handleSubmit =async (e) => {
+  e.preventDefault();
+  try {
+   const response = await fetch('http://localhost:5000/api/v1/review/new', {
+    method:'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+});
+
+        console.log(response)
+      alert(' Add Review successfully successful');
+  } catch (error) {
+      console.error('Error signing up:', error);
+      alert('Signup failed');
+  }
+};
   return (
     <>
       <h2 className="text-30 pt-60">Leave a Reply</h2>
@@ -99,19 +132,19 @@ export default function CommentBox() {
           </div>
         </div>
       </div>
-
+<form action="" onSubmit={handleSubmit}>
       <div className="contactForm y-gap-30 pt-30">
         <div className="row y-gap-30">
-          <div className="col-md-6">
+          <div className="col-md-6" >
             <div className="form-input ">
-              <input type="text" required />
+              <input type="text" required name="name" onChange={inputHandler}/>
               <label className="lh-1 text-16 text-light-1">Name</label>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className="form-input ">
-              <input type="email" required />
+              <input type="email" required name="email" onChange={inputHandler}/>
               <label className="lh-1 text-16 text-light-1">Email</label>
             </div>
           </div>
@@ -120,7 +153,7 @@ export default function CommentBox() {
         <div className="row">
           <div className="col-12">
             <div className="form-input ">
-              <input type="text" required />
+              <input type="text" required name="title" onChange={inputHandler} />
               <label className="lh-1 text-16 text-light-1">Title</label>
             </div>
           </div>
@@ -129,7 +162,7 @@ export default function CommentBox() {
         <div className="row">
           <div className="col-12">
             <div className="form-input ">
-              <textarea required rows="5"></textarea>
+              <textarea required rows="5" name="comment" onChange={inputHandler}></textarea>
               <label className="lh-1 text-16 text-light-1">Comment</label>
             </div>
           </div>
@@ -137,13 +170,14 @@ export default function CommentBox() {
 
         <div className="row">
           <div className="col-12">
-            <button className="button -md -dark-1 bg-accent-1 text-white">
+            <button type="submit" className="button -md -dark-1 bg-accent-1 text-white">
               Post Comment
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </button>
           </div>
         </div>
       </div>
+      </form>
     </>
   );
 }
