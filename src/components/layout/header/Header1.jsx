@@ -41,7 +41,7 @@ export default function Header1() {
       <header
         className={`header -type-1 js-header ${addClass ? "-is-sticky" : ""}`}
       >
-        <div className="header__container container">
+        <div className="header__container container-fluid">
           <div className="headerMobile__left">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -53,7 +53,7 @@ export default function Header1() {
 
           <div className="header__logo">
             <Link to="/" className="header__logo">
-              <img src="/img/general/logo-1.svg" alt="logo icon" />
+              <img src="/img/Logo/renomadic-color-logo.png" style={{width:"120px"}} alt="logo icon" />
             </Link>
 
             <div className="xl:d-none ml-30">

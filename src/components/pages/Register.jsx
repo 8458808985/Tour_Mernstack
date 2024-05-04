@@ -43,7 +43,7 @@ const handleSubmit =async (e) => {
         <div className="row justify-center">
           <div className="col-xl-6 col-lg-7 col-md-9">
             <div className="text-center mb-60 md:mb-30">
-              <h1 className="text-30">Register</h1>
+              <h1 className="text-30">  <img src="/img/Logo/renomadic-color-logo.png" style={{width:"120px"}} alt="" /> Register</h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
                 Let's create your account!
               </div>
