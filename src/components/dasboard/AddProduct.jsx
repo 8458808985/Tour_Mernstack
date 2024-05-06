@@ -10,6 +10,49 @@ import { useState } from "react";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
+  // const [book , setBook] = useState({
+  //   "book_title":"",
+  //   "book_author":"",
+  //   "book_publish":"",
+  //   "book_price":"",
+  //   "book_category":"",
+  //   "book_image":"",
+  //   "book_document":""
+  //     })
+    
+  //   const inputvalue =(event)=>{
+  //       setBook({...book ,[event.target.name]: event.target.value})
+  //   }
+  //   const FileHandler =(event)=>{
+  //      setBook({...book ,[event.target.name]: event.target.files[0]})
+  //   console.log(event.target.files)
+  //     }
+    
+  //   const Add_book = async(event)=>{
+  //     event.preventDefault();
+  //     try {
+  //       const form_data = new FormData();
+  //       // console.log(form_data)
+  //   form_data.append("book_title", book.book_title);
+  //   form_data.append("book_author", book.book_author);
+  //   form_data.append("book_history", book.book_history);
+  //   form_data.append("book_publish", book.book_publish);
+  //   form_data.append("book_category", book.book_category);
+  //   form_data.append("book_price", book.book_price);
+  //   form_data.append("book_images", book.book_image, book.book_image.name);
+  //   form_data.append("book_document", book.book_document, book.book_document.name);
+  //   //  await axios.post(http://localhost:4000/author, authore)
+  //   let book_result=  await axios.post('http://localhost:4000/add_books', form_data)
+  //   // console.log(book_result)
+  //   //  console.log(data.image.name)
+  //   //  console.log(author_result)
+  //   // if(book_result.data.success){
+  //   // alert(book_result.data.message)
+  //   // }
+  //   } catch (error) {
+        
+  //   }
+  //     }
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [formData, setFormData]=useState({
@@ -29,6 +72,7 @@ export default function AddProduct() {
 console.log(formData)
 const handleSubmit =async (e) => {
   e.preventDefault();
+
   try {
    const response = await fetch('http://localhost:5000/api/v1/product/new', {
     method:'POST',

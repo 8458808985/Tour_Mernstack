@@ -4,9 +4,9 @@ export default function CommentBox() {
 
   const [formData, setFormData]=useState({
     name:"",
-    email:'',
-    title: '',
-    comment: ''
+    email:"",
+    title:"",
+    comment:""
   });
 
   const inputHandler =(e)=>{
@@ -132,7 +132,7 @@ const handleSubmit =async (e) => {
           </div>
         </div>
       </div>
-<form action="" onSubmit={handleSubmit}>
+<form  onSubmit={handleSubmit}>
       <div className="contactForm y-gap-30 pt-30">
         <div className="row y-gap-30">
           <div className="col-md-6" >
