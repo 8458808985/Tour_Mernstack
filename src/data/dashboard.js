@@ -47,6 +47,13 @@ export const sidebarItems = [
     iconClass: "icon-account text-26",
     label: "Add Product",
   },
+  {
+    id: 8,
+    href: "/db-add-banner",
+    iconClass: "icon-account text-26",
+    label: "Add Banner",
+  },
+
 
   { id: 8, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
 ];

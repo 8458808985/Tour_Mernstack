@@ -52,6 +52,7 @@ import InvoicePage from "./pages/pages/invoice";
 import UIElementsPage from "./pages/pages/ui-elements";
 import NotFoundPage from "./pages/pages/404";
 import ContactPage from "./pages/pages/contact";
+import DBAddBannerPage from "./pages/dashboard/db-add-banner";
 function App() {
   useEffect(() => {
     Aos.init({
@@ -100,6 +101,7 @@ function App() {
             <Route path="/db-listing" element={<DBListingPage />} />
             <Route path="/db-add-tour" element={<DBAddTourPage />} />
             <Route path="/db-add-product" element={<DBAddProductPage />} />
+            <Route path="/db-add-banner" element={<DBAddBannerPage />} />
             <Route path="/db-favorites" element={<DBFavoritesPage />} />
             <Route path="/db-messages" element={<DBMessagesPage />} />
             <Route path="/db-profile" element={<DBProfilePage />} />

@@ -248,7 +248,8 @@ const handleSubmit =async (e) => {
                                     </button>
                                   </div>
                                 </div>
-                              ) : (
+                              ) : 
+                              (
                                 <div className="col-auto  ">
                                   <label
                                     htmlFor="imageInp1"
@@ -274,7 +275,7 @@ const handleSubmit =async (e) => {
                                   />
                                 </div>
                               )}
-                              {image2 ? (
+                              {/* {image2 ? (
                                 <div className="col-auto  ">
                                   <div className="relative">
                                     <img
@@ -405,7 +406,7 @@ const handleSubmit =async (e) => {
                                     style={{ display: "none" }}
                                   />
                                 </div>
-                              )}
+                              )} */}
                             </div>
 
                             <div className="text-14 mt-20">

@@ -2,19 +2,20 @@
 import React from "react";
 
 import MetaComponent from "@/components/common/MetaComponent";
-import AddProduct from "@/components/dasboard/AddProduct";
+import AddBanner from "@/components/dasboard/AddBanner";
+
 
 const metadata = {
   title: "Dashboard-add-tour || ViaTour - Travel & Tour Reactjs Template",
   description: "ViaTour - Travel & Tour Reactjs Template",
 };
 
-export default function DBAddProductPage() {
+export default function DBAddBannerPage() {
   return (
     <>
       <MetaComponent meta={metadata} />
       <main>
-        <AddProduct/>
+        <AddBanner/>
       </main>
     </>
   );
