@@ -6,8 +6,6 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import BASE_URL from "@/Urls/baseUrl";
-
 
 // import Map from "../pages/contact/Map";
 
@@ -70,7 +68,7 @@ const handleSubmit = async(event)=>{
      form_data.append("book_category", product.time);
      form_data.append("book_images", product.image, product.image.name);
 
-     const response = await fetch(`${BASE_URL}/product/new`, {
+     const response = await fetch('http://localhost:5000/api/v1/product/new', {
      method:'POST',
      headers: {
         'Content-Type': 'application/json'

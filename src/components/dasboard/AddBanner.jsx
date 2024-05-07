@@ -50,9 +50,11 @@ export default function AddBanner() {
                                         <label htmlFor="formFile" style={{fontWeight:"700"}} className="form-label mx-3">
                                         Select File Here
                                         </label>
-                                        <input className="form-control" type="file" id="formFile" name="banner" onChange={FileHandler}/>
+                                        <input className="form-control" style={{border:"1px solid black"}} type="file" id="formFile"  />
                                     </div>
-
+<div className="btn btn-success text-light w-25 float-end shadow ">
+    <button className="text-light" style={{fontWeight:"700"}}>Submit</button>
+</div>
                                 </div>
                             </div>
                         </div>
