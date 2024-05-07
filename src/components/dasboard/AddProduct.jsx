@@ -14,13 +14,6 @@ import Modal from 'react-bootstrap/Modal';
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
-<<<<<<< HEAD
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-=======
   // const [book , setBook] = useState({
   //   "book_title":"",
   //   "book_author":"",
@@ -64,7 +57,6 @@ export default function AddProduct() {
         
   //   }
   //     }
->>>>>>> b0ec490f8e650f96dd7c4622e2f1409e032b6acb
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [formData, setFormData] = useState({
@@ -81,19 +73,6 @@ export default function AddProduct() {
       [e.target.name]: e.target.value
     });
   }
-<<<<<<< HEAD
-  console.log(formData)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:5000/api/v1/product/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-=======
 console.log(formData)
 const handleSubmit =async (e) => {
   e.preventDefault();
@@ -106,7 +85,6 @@ const handleSubmit =async (e) => {
     },
     body: JSON.stringify(formData)
 });
->>>>>>> b0ec490f8e650f96dd7c4622e2f1409e032b6acb
 
       console.log(response)
       alert('product Add successfully successful');
