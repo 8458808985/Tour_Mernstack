@@ -63,13 +63,13 @@ export default function DestinationsOne() {
                 },
               }}
             >
-              {destinations.map((elm, i) => (
+              {destinations.slice(0, 8).map((elm, i) => (
                 <SwiperSlide key={i}>
                   <a
                     href="#"
-                    className="featureImage -type-1 text-center -hover-image-scale"
+                    className="featureImage -type-1 text-center -hover-image-scale mx-5" 
                   >
-                    <div className="featureImage__image mx-auto rounded-full -hover-image-scale__image">
+                    <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
                       <img
                         src={elm.imageSrc}
                         alt="image"

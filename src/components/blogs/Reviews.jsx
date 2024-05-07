@@ -1,17 +1,17 @@
-import { reviews } from "@/data/tourSingleContent";
+// import { reviews } from "@/data/tourSingleContent";
 import React, { useEffect, useState } from "react";
 import Stars from "../common/Stars";
 
 export default function Reviews() {
-  // const [review, setReview] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
 
-  // useEffect(() => {
-  //   fetch('http://localhost:5000/api/v1/blog')
-  //     .then(res => res.json())
-  //     .then(data => setReview(data))
-  //     .catch(err => console.error('Error fetching tours:', err));
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:5000/api/v1/review')
+      .then(res => res.json())
+      .then(data => setReviews(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
   
   return (
     <>
@@ -20,16 +20,16 @@ export default function Reviews() {
           <div className="row justify-between">
             <div className="col-auto">
               <div className="d-flex items-center">
-                <div className="size-40 rounded-full">
+                {/* <div className="size-40 rounded-full">
                   <img src={elm.avatar} alt="image" className="img-cover" />
-                </div>
+                </div> */}
 
                 <div className="text-16 fw-500 ml-20">{elm.name}</div>
               </div>
             </div>
 
             <div className="col-auto">
-              <div className="text-14 text-light-2">{elm.date}</div>
+              <div className="text-14 text-light-2">{elm.email}</div>
             </div>
           </div>
 
@@ -37,12 +37,12 @@ export default function Reviews() {
             <div className="d-flex x-gap-5">
               <Stars star={elm.stars} />
             </div>
-            <div className="text-16 fw-500 ml-10">{elm.reviewText}</div>
+            <div className="text-16 fw-500 ml-10">{elm.title}</div>
           </div>
 
-          <p className="mt-10">{elm.desc}</p>
+          <p className="mt-10">{elm.comment}</p>
 
-          <div className="row x-gap-20 y-gap-20 pt-20">
+          {/* <div className="row x-gap-20 y-gap-20 pt-20">
             {elm.images.map((elm2, i2) => (
               <div key={i2} className="col-auto">
                 <div className="size-130">
@@ -54,7 +54,7 @@ export default function Reviews() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div className="d-flex x-gap-30 items-center mt-20">
             <div>
