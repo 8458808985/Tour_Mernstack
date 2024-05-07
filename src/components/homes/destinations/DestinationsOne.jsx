@@ -4,12 +4,14 @@ import { Navigation, Pagination } from "swiper/modules";
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
+
 
 export default function DestinationsOne() {
   const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/destination')
+    fetch(`${BASE_URL}/destination`)
       .then(res => res.json())
       .then(data => setDestinations(data))
       .catch(err => console.error('Error fetching tours:', err));

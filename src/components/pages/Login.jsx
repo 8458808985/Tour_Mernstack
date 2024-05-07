@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
 
@@ -12,13 +15,23 @@ export default function Login() {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post('http://localhost:5000/api/v1/login', { email, password });
+    
+    const response = await axios.post(`${BASE_URL}/login`, { email, password });
     // Assuming the API returns a token upon successful login
     const token = response.data.token;
     // Store the token in local storage or session storage
     localStorage.setItem('token', token);
     // Redirect or do something else upon successful login
-    window.location.href = '/dashboard';
+    // window.location.href = '/dashboard';
+    if (userRole === 'admin') {
+      setIsAdmin(true);
+      alert('Admin logged in successfully.');
+     window.location.href = '/db-main';
+
+    } else {
+      
+    
+    }
   } catch (err) {
     setError(err.response.data.message);
   }
@@ -48,7 +61,6 @@ const handleSubmit = async (e) => {
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
               <div className="form-input ">
-                {/* <input type="email" required name="email" onChange={handleChange}/> */}
                 <input type="email" value={email } onChange={(e) => setEmail(e.target.value)} required />
                 <label className="lh-1 text-16 text-light-1">
                   Email Address

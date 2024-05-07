@@ -1,15 +1,17 @@
 import { articles } from "@/data/articles";
-// import { blogs } from "@/data/blogs";
+import { blogs } from "@/data/blogs";
 
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import BASE_URL from "@/Urls/baseUrl";
+
 
 export default function ArticlesThree() {
   const [blog, setBlog] = useState([]);
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/blog')
+    fetch(`${BASE_URL}/blog`)
       .then(res => res.json())
       .then(data => setBlog(data))
       .catch(err => console.error('Error fetching tours:', err));
@@ -46,7 +48,7 @@ export default function ArticlesThree() {
           data-aos-delay=""
           className="row y-gap-30 pt-40 sm:pt-20"
         >
-          {blog.slice(0, 3).map((elm, i) => (
+          {blogs.slice(0, 3).map((elm, i) => (
             <div key={i} className="col-lg-4 col-md-6">
               <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
                 <div className="blogCard__image ratio ratio-41:30">

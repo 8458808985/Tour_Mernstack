@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Pagination from "../common/Pagination";
 import { bookingData } from "@/data/dashboard";
+import BASE_URL from "@/Urls/baseUrl";
+
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 export default function DbBooking() {
+  const [booking , setBooking]=useState([])
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/booking`)
+      .then(res => res.json())
+      .then(data=>setBooking(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+  // console.log(booking)
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [currentTab, setcurrentTab] = useState("Approved");
+  const [currentTab, setcurrentTab] = useState("Pending");
   return (
     <div
       className={`dashboard ${
@@ -61,15 +72,15 @@ export default function DbBooking() {
                       </thead>
 
                       <tbody>
-                        {bookingData
+                        {booking
                           .filter((elm) => elm.status == currentTab)
                           .map((elm, i) => (
                             <tr key={i}>
-                              <td>{elm.orderNumber}</td>
+                              <td>{elm.id}</td>
 
                               <td className="min-w-300">
                                 <div className="d-flex items-center">
-                                  <img src={elm.imageUrl} alt="image" />
+                                  {/* <img src={elm.imageUrl} alt="image" /> */}
                                   <div className="ml-20">{elm.title}</div>
                                 </div>
                               </td>
@@ -78,9 +89,9 @@ export default function DbBooking() {
 
                               <td>{elm.endDate}</td>
 
-                              <td>{elm.numberOfPeople}</td>
+                              <td>{elm.details}</td>
 
-                              <td>{elm.cost}</td>
+                              <td>{500}</td>
 
                               <td>
                                 <div

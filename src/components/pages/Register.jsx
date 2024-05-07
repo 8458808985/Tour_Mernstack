@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function Register() {
 
@@ -22,7 +23,7 @@ console.log(formData)
 const handleSubmit =async (e) => {
   e.preventDefault();
   try {
-   const response = await fetch('http://localhost:5000/api/v1/signup', {
+   const response = await fetch(`${BASE_URL}/signup`, {
     method:'POST',
     headers: {
         'Content-Type': 'application/json'

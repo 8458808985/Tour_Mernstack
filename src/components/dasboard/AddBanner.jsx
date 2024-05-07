@@ -7,26 +7,28 @@ import Map from "../pages/contact/Map";
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddBanner() {
     const [sideBarOpen, setSideBarOpen] = useState(true);
-    const [activeTab, setActiveTab] = useState("Content");
-    const [image1, setImage1] = useState("");
-    const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
-    const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
-    const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
+     const [banner , setBanner] = useState({
+        banner:"",
+       })
+    
+  
+       const FileHandler =(event)=>{
+       setBanner({...book ,[event.target.name]: event.target.files[0]})
+    console.log(event.target.files)
+      }
+    
+    const Add_banner = async(event)=>{
+      event.preventDefault();
+      try {
+        const form_data = new FormData();
+    form_data.append("banner", banner.banner, book.banner.name);
 
-    const handleImageChange = (event, func) => {
-        const file = event.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onloadend = () => {
-                func(reader.result);
-            };
-
-            reader.readAsDataURL(file);
-        }
-    };
-
+    let book_result=  await axios.post('http://localhost:4000/add_books', form_data)
+    
+    } catch (error) {
+        
+    }
+      }
     return (
         <>
             <div
@@ -40,7 +42,7 @@ export default function AddBanner() {
 
                     <div className="dashboard__content_content">
                         <h1 className="text-30 mx-3">Add Banner</h1>
-
+                        <form action="" onSubmit={Add_banner}>
                         <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
                             <div className="row">
                                 <div className="col-md-10 col-sm-10 col-12">
@@ -48,13 +50,13 @@ export default function AddBanner() {
                                         <label htmlFor="formFile" style={{fontWeight:"700"}} className="form-label mx-3">
                                         Select File Here
                                         </label>
-                                        <input className="form-control" type="file" id="formFile" />
+                                        <input className="form-control" type="file" id="formFile" name="banner" onChange={FileHandler}/>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-
+                        </form>
                         <div className="text-center pt-30">
                             © Copyright Viatours {new Date().getFullYear()}
                         </div>

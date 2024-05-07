@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Map from "../pages/contact/Map";
 
-const tabs = ["Content", "Location", "Pricing", "Included"];
+// const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
@@ -13,19 +13,19 @@ export default function AddTour() {
   const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
   const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
 
-  const handleImageChange = (event, func) => {
-    const file = event.target.files[0];
+  // const handleImageChange = (event, func) => {
+  //   const file = event.target.files[0];
 
-    if (file) {
-      const reader = new FileReader();
+  //   if (file) {
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        func(reader.result);
-      };
+  //     reader.onloadend = () => {
+  //       func(reader.result);
+  //     };
 
-      reader.readAsDataURL(file);
-    }
-  };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   return (
     <>
@@ -41,11 +41,11 @@ export default function AddTour() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">Add Tour</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
+            {/* <p className="">Lorem ipsum dolor sit amet, consectetur.</p> */}
 
-            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
+            <div className="rounded-12 bg-white shadow-2 px-40 pt-410 pb-30 mt-10">
               <div className="tabs -underline-2 js-tabs">
-                <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
+                {/* <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (
                     <div
                       onClick={() => setActiveTab(elm)}
@@ -61,7 +61,7 @@ export default function AddTour() {
                       </button>
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <div className="row pt-40">
                   <div className="col-xl-9 col-lg-10">

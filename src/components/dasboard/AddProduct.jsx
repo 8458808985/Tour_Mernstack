@@ -5,109 +5,95 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import BASE_URL from "@/Urls/baseUrl";
+
 
 // import Map from "../pages/contact/Map";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
-  // const [book , setBook] = useState({
-  //   "book_title":"",
-  //   "book_author":"",
-  //   "book_publish":"",
-  //   "book_price":"",
-  //   "book_category":"",
-  //   "book_image":"",
-  //   "book_document":""
-  //     })
-    
-  //   const inputvalue =(event)=>{
-  //       setBook({...book ,[event.target.name]: event.target.value})
-  //   }
-  //   const FileHandler =(event)=>{
-  //      setBook({...book ,[event.target.name]: event.target.files[0]})
-  //   console.log(event.target.files)
-  //     }
-    
-  //   const Add_book = async(event)=>{
-  //     event.preventDefault();
-  //     try {
-  //       const form_data = new FormData();
-  //       // console.log(form_data)
-  //   form_data.append("book_title", book.book_title);
-  //   form_data.append("book_author", book.book_author);
-  //   form_data.append("book_history", book.book_history);
-  //   form_data.append("book_publish", book.book_publish);
-  //   form_data.append("book_category", book.book_category);
-  //   form_data.append("book_price", book.book_price);
-  //   form_data.append("book_images", book.book_image, book.book_image.name);
-  //   form_data.append("book_document", book.book_document, book.book_document.name);
-  //   //  await axios.post(http://localhost:4000/author, authore)
-  //   let book_result=  await axios.post('http://localhost:4000/add_books', form_data)
-  //   // console.log(book_result)
-  //   //  console.log(data.image.name)
-  //   //  console.log(author_result)
-  //   // if(book_result.data.success){
-  //   // alert(book_result.data.message)
-  //   // }
-  //   } catch (error) {
-        
-  //   }
-  //     }
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
-  const [formData, setFormData]=useState({
+
+  const [product, setProduct]=useState({
     product:"",
-    discount:'',
-    oldprice: '',
-    newprice: '',
-    time: '',
+    discount:"",
+    oldprice: "",
+    newprice: "",
+    time: "",
+    image:""
   });
 
   const inputHandler =(e)=>{
-    setFormData({
-      ...formData,
+    setProduct({
+      ...product,
       [e.target.name]: e.target.value
   });
   }
-console.log(formData)
-const handleSubmit =async (e) => {
-  e.preventDefault();
+// console.log(formData)
 
-  try {
-   const response = await fetch('http://localhost:5000/api/v1/product/new', {
-    method:'POST',
-    headers: {
+   const FileHandler =(event)=>{
+       setProduct({...product ,[event.target.name]: event.target.files[0]})
+    console.log(event.target.files)
+      }
+
+// const handleSubmit =async (e) => {
+//   e.preventDefault();
+
+//   try {
+//    const response = await fetch('http://localhost:5000/api/v1/product/new', {
+//     method:'POST',
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(formData)
+// });
+
+//         console.log(response)
+//       alert('product Add successfully successful');
+//   } catch (error) {
+//       console.error('Error signing up:', error);
+//       alert('Signup failed');
+//   }
+// };
+const handleSubmit = async(event)=>{
+       event.preventDefault();
+        try {
+        const form_data = new FormData();
+        // console.log(form_data)
+     form_data.append("product", product.product);
+    form_data.append("discount", product.discount
+    );
+    form_data.append("book_history", product.oldprice);
+    form_data.append("book_publish", product.newprice);
+     form_data.append("book_category", product.time);
+     form_data.append("book_images", product.image, product.image.name);
+
+     const response = await fetch(`${BASE_URL}/product/new`, {
+     method:'POST',
+     headers: {
         'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-});
+     },
+     body: JSON.stringify(product)
+ });
+//  const notify = () => toast.success('Hello, world!');
 
-        console.log(response)
-      alert('product Add successfully successful');
-  } catch (error) {
+         console.log(response)
+       alert('product Add successfully successful');
+     
+  //   let book_result=  await axios.post('http://localhost:5000/api/v1/product/new', form_data)
+  // //     console.log(book_result)
+  // //   console.log(data.image.name)
+  // //  console.log(author_result)
+  // if(book_result.data.success){
+  //  alert(book_result.data.message)
+   }
+    catch (error) {
       console.error('Error signing up:', error);
-      alert('Signup failed');
-  }
-};
-
-  const [image1, setImage1] = useState("");
-  const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
-  const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
-  const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
-
-  const handleImageChange = (event, func) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        func(reader.result);
-      };
-
-      reader.readAsDataURL(file);
+            alert('Signup failed');
     }
-  };
+      }
 
   return (
     <>
@@ -127,25 +113,7 @@ const handleSubmit =async (e) => {
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
               <div className="tabs -underline-2 js-tabs">
-             {/* <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                  {tabs.map((elm, i) => (
-                    <div
-                      onClick={() => setActiveTab(elm)}
-                      key={i}
-                      className="col-auto"
-                    >
-                      <button
-                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
-                          activeTab == elm ? "is-tab-el-active" : ""
-                        }`}
-                      >
-                        {i + 1}. {elm}
-                      </button>
-
-
-                    </div>
-                  ))}
-                </div> */}
+            
               <h2 style={{fontSize:"18px"}}>Content <span className="text-danger">*</span></h2>
 
                 <div className="row pt-40">
@@ -230,26 +198,7 @@ const handleSubmit =async (e) => {
                             <h4 className="text-18 fw-500 mb-20">Gallery</h4>
 
                             <div className="row x-gap-20 y-gap-20">
-                              {image1 ? (
-                                <div className="col-auto  ">
-                                  <div className="relative">
-                                    <img
-                                      src={image1}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage1("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : 
-                              (
+                              
                                 <div className="col-auto  ">
                                   <label
                                     htmlFor="imageInp1"
@@ -265,16 +214,15 @@ const handleSubmit =async (e) => {
                                     </div>
                                   </label>
                                   <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage1)
-                                    }
+                                   onChange={FileHandler}
+                                   name="image"
                                     accept="image/*"
                                     id="imageInp1"
                                     type="file"
                                     style={{ display: "none" }}
                                   />
                                 </div>
-                              )}
+                              
                               {/* {image2 ? (
                                 <div className="col-auto  ">
                                   <div className="relative">
