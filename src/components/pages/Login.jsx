@@ -10,7 +10,7 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  CONS
+
 
 
 // console.log(formData)
