@@ -10,20 +10,24 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  CONS
+
 
 // console.log(formData)
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     
-    const response = await axios.post(`${BASE_URL}/login`, { email, password });
+    const response = await axios.post(`${BASE_URL}/login`, { email, password  });
     // Assuming the API returns a token upon successful login
     const token = response.data.token;
+    const role = response.data.role
+    console.log(role)
     // Store the token in local storage or session storage
     localStorage.setItem('token', token);
     // Redirect or do something else upon successful login
-    // window.location.href = '/dashboard';
-    if (userRole === 'admin') {
+   // window.location.href = '/dashboard';
+    if (role === 'admin') {
       setIsAdmin(true);
       alert('Admin logged in successfully.');
      window.location.href = '/db-main';

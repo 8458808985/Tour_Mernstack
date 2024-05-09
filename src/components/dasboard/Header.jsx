@@ -95,7 +95,9 @@ export default function Header({ setSideBarOpen }) {
         <div>
           <img src="/img/dashboard/header/1.png" alt="image" />
         </div>
+        
       </div>
     </div>
+    
   );
 }

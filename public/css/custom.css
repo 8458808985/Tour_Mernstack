@@ -11,8 +11,36 @@
 .swiperPagination1 .swiper-pagination-bullet-active {
   width: 18px !important;
 
-
 }
+  
+    .custom-dialog-overlay1{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .custom-dialog {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      max-width: 80%;
+      text-align: center;
+    }
+
+    .custom-dialog-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
 .custom-input input{
   width: fit-content !important;
   height: fit-content !important;
@@ -33,8 +61,7 @@
 }
 
 
-.modal{
-  /* The Modal (background) */
+/* .modal{
   box-sizing: border-box;
   position: fixed;
   z-index: 1000;
@@ -49,7 +76,7 @@
   opacity: 0;
   visibility: hidden;
   transition: 0.5s;
-}
+} */
 .activeImageLightBox{
   opacity: 1;
   visibility: visible;
@@ -59,7 +86,7 @@
 
 }
 /* Modal Content */
-.modal .modal-content {
+/* .modal .modal-content {
   position: relative;
   background-color: #fefefe;
   margin: auto;
@@ -68,10 +95,10 @@
   height: 100%;
   max-width: 1200px;
   box-sizing: border-box;
-}
+} */
 
 /* The Close Button */
-.modal .close {
+/* .modal .close {
   color: white;
   position: absolute;
   top: 10px;
@@ -87,7 +114,7 @@
   text-decoration: none;
   cursor: pointer;
 
-}
+} */
 
 
 

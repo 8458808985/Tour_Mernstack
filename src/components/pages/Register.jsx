@@ -6,7 +6,6 @@ import BASE_URL from "@/Urls/baseUrl";
 export default function Register() {
 
   const [formData, setFormData]=useState({
-    username:'',
     firstname: '',
     lastname: '',
     email: '',
@@ -60,10 +59,7 @@ const handleSubmit =async (e) => {
               onSubmit={handleSubmit}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              <div className="form-input ">
-                <input type="text" required name="username" onChange={inputHandler}/>
-                <label className="lh-1 text-16 text-light-1">UserName</label>
-              </div>
+              
 
               <div className="form-input mt-30">
                 <input type="text" required  name="firstname" onChange={inputHandler}/>

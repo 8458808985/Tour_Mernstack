@@ -6,7 +6,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = (token) => {
-    localStorage.setItem('token', token); // Store token in local storage
+    localStorage.setItem('admintoken', token); // Store token in local storage
     setIsLoggedIn(true);
   };
 

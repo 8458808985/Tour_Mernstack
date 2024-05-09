@@ -31,9 +31,9 @@ export const sidebarItems = [
   },
   {
     id: 6,
-    href: "/db-messages",
+    href: "/db-add-article",
     iconClass: "icon-message text-26",
-    label: "Messages",
+    label: "Articles",
   },
   {
     id: 7,
@@ -48,14 +48,19 @@ export const sidebarItems = [
     label: "Product",
   },
   {
-    id: 8,
+    id: 9,
     href: "/db-add-banner",
     iconClass: "icon-account text-26",
     label: "Add Banner",
   },
+  {
+    id: 10,
+    href: "/db-add-destination",
+    iconClass: "icon-account text-26",
+    label: "Destination",
+  },
 
-
-  { id: 8, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
+  { id: 11, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
 ];
 
 export const states = [

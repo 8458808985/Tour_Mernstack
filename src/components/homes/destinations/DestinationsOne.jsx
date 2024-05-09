@@ -82,9 +82,9 @@ export default function DestinationsOne() {
                     <h3 className="featureImage__title text-16 fw-500 mt-20">
                       {elm.name}
                     </h3>
-                    <p className="featureImage__text text-14">
+                    {/* <p className="featureImage__text text-14">
                       {elm.tourCount}+ Tours
-                    </p>
+                    </p> */}
                   </a>
                 </SwiperSlide>
               ))}

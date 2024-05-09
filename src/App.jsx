@@ -35,6 +35,7 @@ import DBBookingPage from "./pages/dashboard/db-booking";
 import DBListingPage from "./pages/dashboard/db-listing";
 import DBAddTourPage from "./pages/dashboard/db-add-tour";
 import DBAddProductPage from "./pages/dashboard/db-add-product";
+// import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
 import DBFavoritesPage from "./pages/dashboard/db-favorites";
 import DBMessagesPage from "./pages/dashboard/db-messages";
 import DBProfilePage from "./pages/dashboard/db-profile";
@@ -53,6 +54,9 @@ import UIElementsPage from "./pages/pages/ui-elements";
 import NotFoundPage from "./pages/pages/404";
 import ContactPage from "./pages/pages/contact";
 import DBAddBannerPage from "./pages/dashboard/db-add-banner";
+import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
+import { Protected } from "./components/protected/protected";
+import DBAddArticlePage from "./pages/dashboard/db-add-article";
 function App() {
   useEffect(() => {
     Aos.init({
@@ -96,12 +100,16 @@ function App() {
 
             <Route path="/booking-pages" element={<BookingPage />} />
 
-            <Route path="/db-main" element={<DBMainPage />} />
+            {/* <Route path="/db-main" element={<DBMainPage />} /> */}
+            {/* <Route path='/db-main' element={<Protected Component={<DBMainPage/>} />}></Route> */}
+            <Route path='/db-main' element={<Protected Component={DBMainPage} />}></Route>
             <Route path="/db-booking" element={<DBBookingPage />} />
             <Route path="/db-listing" element={<DBListingPage />} />
             <Route path="/db-add-tour" element={<DBAddTourPage />} />
             <Route path="/db-add-product" element={<DBAddProductPage />} />
+            <Route path="/db-add-destination" element={<DBAddDestinationPage />} />
             <Route path="/db-add-banner" element={<DBAddBannerPage />} />
+            <Route path="/db-add-article" element={<DBAddArticlePage />} />
             <Route path="/db-favorites" element={<DBFavoritesPage />} />
             <Route path="/db-messages" element={<DBMessagesPage />} />
             <Route path="/db-profile" element={<DBProfilePage />} />

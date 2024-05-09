@@ -1,11 +1,10 @@
-
-
-
-
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
+
 
 // import Map from "../pages/contact/Map";
 
@@ -13,88 +12,77 @@ const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
+  const [product, setProduct] = useState([]);
 
-  const [product, setProduct]=useState({
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProduct(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+  console.log(product)
+
+  const [formData, setFormData] = useState({
     product:"",
     discount:"",
     oldprice: "",
     newprice: "",
     time: "",
-    image:""
+    imageSrc:"",
+    city: "",
+    country: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
-  const inputHandler =(e)=>{
-    setProduct({
-      ...product,
-      [e.target.name]: e.target.value
-  });
-  }
-// console.log(formData)
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-   const FileHandler =(event)=>{
-       setProduct({...product ,[event.target.name]: event.target.files[0]})
-    console.log(event.target.files)
+  const FileHandler = (e) => {
+    setFormData({ ...formData, imageSrc: e.target.files[0] });
+    console.log(formData)
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    console.log(formData)
+    try {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("product", formData.product);
+      formDataToSend.append("discount", formData.discount);
+    formDataToSend.append("oldprice", formData.oldprice);
+    formDataToSend.append("country", formData.country);
+    formDataToSend.append("city", formData.city);
+    formDataToSend.append("newprice", formData.newprice);
+    formDataToSend.append("time", formData.time);
+    formDataToSend.append("imageSrc", formData.imageSrc);
+
+      const response = await fetch("https://test1.buyjugaad.com/api/v1/product/new", {
+        method: 'POST',
+        body: formDataToSend
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
       }
 
-// const handleSubmit =async (e) => {
-//   e.preventDefault();
-
-//   try {
-//    const response = await fetch('http://localhost:5000/api/v1/product/new', {
-//     method:'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(formData)
-// });
-
-//         console.log(response)
-//       alert('product Add successfully successful');
-//   } catch (error) {
-//       console.error('Error signing up:', error);
-//       alert('Signup failed');
-//   }
-// };
-const handleSubmit = async(event)=>{
-       event.preventDefault();
-        try {
-        const form_data = new FormData();
-        // console.log(form_data)
-     form_data.append("product", product.product);
-    form_data.append("discount", product.discount
-    );
-    form_data.append("book_history", product.oldprice);
-    form_data.append("book_publish", product.newprice);
-     form_data.append("book_category", product.time);
-     form_data.append("book_images", product.image, product.image.name);
-
-     const response = await fetch('http://localhost:5000/api/v1/product/new', {
-     method:'POST',
-     headers: {
-        'Content-Type': 'application/json'
-     },
-     body: JSON.stringify(product)
- });
-//  const notify = () => toast.success('Hello, world!');
-
-         console.log(response)
-       alert('product Add successfully successful');
-     
-  //   let book_result=  await axios.post('http://localhost:5000/api/v1/product/new', form_data)
-  // //     console.log(book_result)
-  // //   console.log(data.image.name)
-  // //  console.log(author_result)
-  // if(book_result.data.success){
-  //  alert(book_result.data.message)
-   }
-    catch (error) {
-      console.error('Error signing up:', error);
-            alert('Signup failed');
+      setSubmitted(true);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setSubmitting(false);
     }
-      }
-
+  };
+  
   return (
     <>
+    
       <div
         className={`dashboard ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -106,10 +94,27 @@ const handleSubmit = async(event)=>{
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">Add Product</h1>
-            <p className="">Your products are the goods</p>
 
-            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
+            <div className="d-flex justify-content-between ">
+            <h1 className="text-30">All Product</h1>
+            {/* <p className="">Your products are the goods</p> */}
+            
+            {/* <!-- Button trigger modal --> */}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<i class="fa-solid fa-circle-plus"></i> Add Product
+</button>
+</div>
+
+{/* <!-- Modal --> */}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style={{width:"168%"}}>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="rounded-12 bg-white shadow-2 px-10 pt-10 pb-10 mt-10">
               <div className="tabs -underline-2 js-tabs">
             
               <h2 style={{fontSize:"18px"}}>Content <span className="text-danger">*</span></h2>
@@ -122,7 +127,7 @@ const handleSubmit = async(event)=>{
                           activeTab == "Content" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <form action="" onSubmit={handleSubmit}>
+                        <form  method="post" onSubmit={handleSubmit} encType="multipart/form-data" >
                         <div className="contactForm row y-gap-30">
                         <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
@@ -159,31 +164,46 @@ const handleSubmit = async(event)=>{
                           </div>
                           <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                           
-                            <select class="form-select" aria-label="Default select example">
-                            <option selected>City
+                            <div className="col-6 col-sm-12 col-lg-12">
+                            <div className="form-input ">
+                              <input type="text" required name='city' onChange={inputHandler}/>
+                              <label className="lh-1 text-16 text-light-1">
+                              city<span className="text-danger">*</span>
+                              </label>
+                            </div>
+                          </div>
+                            {/* <select class="form-select" aria-label="Default select example">
+                            <option selected >City
 
                             </option>
-                            <option value="1">Indore</option>
+                            <option value={formData.city} name='city' onChange={inputHandler}>Indore</option>
                            
-                          </select>
+                          </select> */}
                             
                             </div>
                           </div>
                           <div className="col-6 col-sm-6 col-lg-6">
                             <div className="form-input ">
-                           
+{/*                            
                             <select class="form-select" aria-label="Default select example">
-                            <option selected>Country
+                            <option selected >Country
 
                             </option>
-                            <option value="1">India</option>
+                            <option  name='country' onChange={inputHandler} value={formData.country}>India</option>
                            
-                          </select>
+                          </select> */}
+                          <div className="col-6 col-sm-12 col-lg-12">
+                            <div className="form-input ">
+                              <input type="text" required name='country' onChange={inputHandler}/>
+                              <label className="lh-1 text-16 text-light-1">
+                              country<span className="text-danger">*</span>
+                              </label>
+                            </div>
+                          </div>
                             
                             </div>
                           </div>
-                          <div className="col-6 col-sm-6 col-lg-6">
+                          <div className="col-6 col-sm-12 col-lg-12">
                             <div className="form-input ">
                               <input type="Date" required name='time' onChange={inputHandler}/>
                               <label className="lh-1 text-16 text-light-1">
@@ -213,7 +233,7 @@ const handleSubmit = async(event)=>{
                                   </label>
                                   <input
                                    onChange={FileHandler}
-                                   name="image"
+                                   name="imageSrc"
                                     accept="image/*"
                                     id="imageInp1"
                                     type="file"
@@ -221,168 +241,108 @@ const handleSubmit = async(event)=>{
                                   />
                                 </div>
                               
-                              {/* {image2 ? (
-                                <div className="col-auto  ">
-                                  <div className="relative">
-                                    <img
-                                      src={image2}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage2("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto  ">
-                                  <label
-                                    htmlFor="imageInp2"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <img
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
-                                    </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage2)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp2"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                              {image3 ? (
-                                <div className="col-auto ">
-                                  <div className="relative">
-                                    <img
-                                      src={image3}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage3("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto ">
-                                  <label
-                                    htmlFor="imageInp3"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <img
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
-                                    </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage3)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp3"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                              {image4 ? (
-                                <div className="col-auto ">
-                                  <div className="relative">
-                                    <img
-                                      src={image4}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage4("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto ">
-                                  <label
-                                    htmlFor="imageInp4"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <img
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
-                                    </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage4)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp4"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )} */}
+                              
                             </div>
 
                             <div className="text-14 mt-20">
                               PNG or JPG no bigger than 800px wide and tall.
                             </div>
                           </div>
-
-                          <div className="col-12">
-                            <button type="submit" className="button -md -dark-1 bg-accent-1 text-white">
-                              Save Changes
-                              <i className="icon-arrow-top-right text-16 ml-10"></i>
-                            </button>
-                          </div>
                         </div>
+                        <button  class="btn btn-primary" type="submit" >Save changes</button>
                         </form>
                       </div>
-
-                    
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
-            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button  class="btn btn-primary" type="submit" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+          </div>
+          <section className="layout-pt-xl">
+      <div className="container">
+        <div className="row justify-between items-end y-gap-10">
+          <div className="col-auto">
+            <h2
+              data-aos="fade-up"
+              data-aos-delay=""
+              className="text-30 md:text-24 "
+            >
+              
+            </h2>
+          </div>
+
+          <div className="col-auto">
+            <Link
+              to={"/blog-list-1"}
+              data-aos="fade-right"
+              data-aos-delay=""
+              className="buttonArrow d-flex items-center  "
+            >
+              <span>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10"></i>
+            </Link>
           </div>
         </div>
+
+        <div
+          data-aos="fade-up"
+          data-aos-delay=""
+          className="row y-gap-30 pt-5 sm:pt-10"
+        >
+          {product.slice(0, 8).map((elm, i) => (
+            <div key={i} className="col-lg-4 col-md-6">
+              <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
+                <div className="blogCard__image ratio ratio-41:30">
+                  <img
+                    src={elm.imageSrc}
+                    alt="image"
+                    className="img-ratio rounded-12"
+                  />
+
+                  <div className="blogCard__badge">{elm.product}</div>
+                </div>
+
+                <div className="blogCard__content mt-30">
+                  <div className="blogCard__info text-14">
+                    <div className="lh-13">{elm.city}</div>
+                    <div className="blogCard__line"></div>
+                    <div className="lh-13">By {elm.country}</div>
+                  </div>
+
+                  <h3 className="blogCard__title text-18 fw-500 mt-10">
+                    {elm.time}
+                  </h3>
+                  <h3 className="blogCard__title text-18 fw-500 mt-10">
+                    {elm.oldprice}
+                  </h3>
+                  <h3 className="blogCard__title text-18 fw-500 mt-10">
+                    {elm.newprice}
+                  </h3>
+                  <h3 className="blogCard__title text-18 fw-500 mt-10">
+                    {elm.discount}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
+    </section>
+        </div>
+      </div>
+      
     </>
   );
 }

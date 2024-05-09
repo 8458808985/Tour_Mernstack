@@ -1,3 +1,4 @@
+import BASE_URL from "@/Urls/baseUrl";
 import Calender from "@/components/common/dropdownSearch/Calender";
 import Location from "@/components/common/dropdownSearch/Location";
 import TourType from "@/components/common/dropdownSearch/TourType";
@@ -6,6 +7,18 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Hero1() {
+  const [heroBanner, setHeroBanner]=useState([])
+  useEffect(() => {
+    fetch(`${BASE_URL}/banner`)
+      .then(res => res.json())
+      .then((data)=>{
+        setHeroBanner(data);
+        // setTotalPages(Math.ceil(data.length/6))
+      })
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+
+  console.log(heroBanner)
   const navigate = useNavigate();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [location, setLocation] = useState("");
@@ -53,16 +66,20 @@ export default function Hero1() {
               data-bs-ride="carousel"
             >
               <div className="carousel-inner">
+                {heroBanner.map((elm, i) => (
                 <div className="carousel-item active">
-                  <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_90/c_fill,,w_2560,/v1670577664/banner/rtw7fgqatgoc1vpcpamb.webp" className="d-block w-100" style={{ marginTop: "70px" }} alt="..." />
+                
+                  <img src={elm.banner} className="d-block w-100" style={{ marginTop: "70px" }} key={i} alt="..." />
+                            
+</div>
+                            ))}
 
-                </div>
-                <div className="carousel-item">
+                {/* <div className="carousel-item">
                   <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_90/c_fill,,w_2560,/v1670577678/banner/tvhfgpkiapfldzoaj8ll.webp" className="d-block w-100" style={{ marginTop: "70px" }} alt="..." />
                 </div>
                 <div className="carousel-item">
                   <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_90/c_fill,,w_2560,/v1670577664/banner/rtw7fgqatgoc1vpcpamb.webp" className="d-block w-100" style={{ marginTop: "70px" }} alt="..." />
-                </div>
+                </div> */}
                 <div className="position-absolute mb-1 mt-1 top-50 start-50 translate-middle text-wrap w-75 py-4">
                   <h2 className="text-light">Your world of joy</h2>
                   <p className="fadeInUp text-light" style={{ fontSize: "20px" }}>From local escapes to far-flung adventures, find what makes you happy anytime, anywhere</p>

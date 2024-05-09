@@ -19,7 +19,7 @@ export default function ArticlesThree() {
   return (
     <section className="layout-pt-xl">
       <div className="container">
-        <div className="row justify-between items-end y-gap-10">
+        <div className="row justify-between items-end y-gap-10 mt-20">
           <div className="col-auto">
             <h2
               data-aos="fade-up"
@@ -48,7 +48,7 @@ export default function ArticlesThree() {
           data-aos-delay=""
           className="row y-gap-30 pt-40 sm:pt-20"
         >
-          {blogs.slice(0, 3).map((elm, i) => (
+          {blog.slice(0, 3).map((elm, i) => (
             <div key={i} className="col-lg-4 col-md-6">
               <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
                 <div className="blogCard__image ratio ratio-41:30">
