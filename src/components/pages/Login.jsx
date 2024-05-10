@@ -25,9 +25,13 @@ const handleSubmit = async (e) => {
     // setIsUser(response)
     const token = response.data.token;
     const role = response.data.role
+    const _id = response.data.id
+    console.log(_id)
     console.log(role)
     // Store the token in local storage or session storage
     localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
+
     // Redirect or do something else upon successful login
    navigate('/');
    toast.success("Successfully Login ", {
