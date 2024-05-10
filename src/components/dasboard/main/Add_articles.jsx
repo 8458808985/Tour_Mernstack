@@ -17,7 +17,7 @@ export default function AddProduct() {
       .then((data) => setBlog(data))
       .catch((err) => console.error("Error fetching tours:", err));
   }, []);
-//   console.log(product);
+  //   console.log(product);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -80,9 +80,8 @@ export default function AddProduct() {
   return (
     <>
       <div
-        className={`dashboard ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard`}
+        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
+          } js-dashboard`}
       >
         <Sidebar setSideBarOpen={setSideBarOpen} />
 
@@ -97,9 +96,9 @@ export default function AddProduct() {
               {/* <!-- Button trigger modal --> */}
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#exampleModal" style={{backgroundColor:"#78006E",color:"white"}}
               >
                 <i class="fa-solid fa-circle-plus"></i> Add Article
               </button>
@@ -137,11 +136,10 @@ export default function AddProduct() {
                           <div className="col-xl-9 col-lg-10">
                             <div className="tabs__content js-tabs-content">
                               <div
-                                className={`tabs__pane  ${
-                                  activeTab == "Content"
+                                className={`tabs__pane  ${activeTab == "Content"
                                     ? "is-tab-el-active"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 <form
                                   method="post"
@@ -172,7 +170,7 @@ export default function AddProduct() {
                                           onChange={inputHandler}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
-                                        continent{" "}
+                                          continent{" "}
                                           <span className="text-danger">*</span>
                                         </label>
                                       </div>
@@ -187,7 +185,7 @@ export default function AddProduct() {
                                           onChange={inputHandler}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
-                                           Author
+                                          Author
                                           <span className="text-danger">*</span>
                                         </label>
                                       </div>
@@ -217,17 +215,17 @@ export default function AddProduct() {
                                               onChange={inputHandler}
                                             />
                                             <label className="lh-1 text-16 text-light-1">
-                                            Badge
+                                              Badge
                                               <span className="text-danger">
                                                 *
                                               </span>
                                             </label>
                                           </div>
                                         </div>
-                                       
+
                                       </div>
                                     </div>
-                                    
+
                                     <div className="col-6 col-sm-12 col-lg-6">
                                       <div className="form-input ">
                                         <input
@@ -280,7 +278,7 @@ export default function AddProduct() {
                                       </div>
                                     </div>
                                   </div>
-                                  <button class="btn btn-primary mt-30" type="submit">
+                                  <button class="btn  mt-30" style={{backgroundColor:"#78006E",color:"white"}} type="submit">
                                     Save changes
                                   </button>
                                 </form>
@@ -299,26 +297,26 @@ export default function AddProduct() {
                     >
                       Close
                     </button>
-                    
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <section className="layout-pt-xl">
-      <div className="container">
-        <div className="row justify-between items-end y-gap-10 mt-20">
-          <div className="col-auto">
-            {/* <h2
+            <div className="container">
+              <div className="row justify-between items-end y-gap-10 mt-20">
+                <div className="col-auto">
+                  {/* <h2
               data-aos="fade-up"
               data-aos-delay=""
               className="text-30 md:text-24 "
             >
               Travel Articles
             </h2> */}
-          </div>
+                </div>
 
-          {/* <div className="col-auto">
+                {/* <div className="col-auto">
             <Link
               to={"/blog-list-1"}
               data-aos="fade-right"
@@ -329,43 +327,56 @@ export default function AddProduct() {
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div> */}
-        </div>
+              </div>
 
-        <div
-          data-aos="fade-up"
-          data-aos-delay=""
-          className="row y-gap-30 pt-40 sm:pt-20"
-        >
-          {blog.slice(0, 3).map((elm, i) => (
-            <div key={i} className="col-lg-4 col-md-6">
-              <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
-                <div className="blogCard__image ratio ratio-41:30">
-                  <img
-                    src={elm.imageSrc}
-                    alt="image"
-                    className="img-ratio rounded-12"
-                  />
+              <div
+                data-aos="fade-up"
+                data-aos-delay=""
+                className="row y-gap-30 pt-40 sm:pt-20"
+              >
+                {blog.slice(0, 3).map((elm, i) => (
+                  <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
+                    <div className="card shadow mb-1 mb-2 border-0">
+                      <div className="card-body mb-3">
+                        <div className="d-flex justify-content-end mt-1 mb-5">
+                        <i class="fa-light fa-trash mx-1 text-danger mb-3" style={{fontWeight:"700", fontSize:"20px"}}></i>
+                      <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{fontWeight:"700", fontSize:"20px"}}></i>
+                        </div>
+                
+                        <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
+                          <div className="blogCard__image ratio ratio-41:30">
+                            <img
+                              src={elm.imageSrc}
+                              alt="image"
+                              className="img-ratio rounded-12"
+                            />
+                            <div className="blogCard__badge">{elm.badge}</div>
+                          </div>
 
-                  <div className="blogCard__badge">{elm.badge}</div>
-                </div>
+                          <div className="blogCard__content mt-30">
+                            <div className="blogCard__info text-14">
+                              <div className="lh-13">{elm.date}</div>
+                              <div className="blogCard__line"></div>
+                              <div className="lh-13">By {elm.author}</div>
+                            </div>
 
-                <div className="blogCard__content mt-30">
-                  <div className="blogCard__info text-14">
-                    <div className="lh-13">{elm.date}</div>
-                    <div className="blogCard__line"></div>
-                    <div className="lh-13">By {elm.author}</div>
+                            <h3 className="blogCard__title text-18 fw-500 mt-10">
+                              
+                              {elm.title}
+                            </h3>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+
+
+
+
                   </div>
-
-                  <h3 className="blogCard__title text-18 fw-500 mt-10">
-                    {elm.title}
-                  </h3>
-                </div>
-              </Link>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          </section>
         </div>
       </div>
     </>

@@ -34,7 +34,6 @@ export default function Profile() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Profile</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
             <div className="mt-50 rounded-12 bg-white shadow-2 px-40 pt-40 pb-30">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 

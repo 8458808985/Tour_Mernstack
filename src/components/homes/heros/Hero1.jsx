@@ -49,7 +49,7 @@ export default function Hero1() {
   return (
     <section className="hero -type-1 p-0 m-0">
       <div className="hero__bg">
-        <img src="/img/hero/1/1.png" alt="image" />
+        {/* <img src="/img/hero/1/1.png" alt="image" /> */}
         {/* <img
           src="/img/hero/1/shape.svg"
           alt="image"
@@ -81,22 +81,22 @@ export default function Hero1() {
                   <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_90/c_fill,,w_2560,/v1670577664/banner/rtw7fgqatgoc1vpcpamb.webp" className="d-block w-100" style={{ marginTop: "70px" }} alt="..." />
                 </div> */}
                 <div className="position-absolute mb-1 mt-1 top-50 start-50 translate-middle text-wrap w-75 py-4">
-                  <h2 className="text-light">Your world of joy</h2>
-                  <p className="fadeInUp text-light" style={{ fontSize: "20px" }}>From local escapes to far-flung adventures, find what makes you happy anytime, anywhere</p>
-                  <div className="input-group mb-3 mt-3 w-75">
-                    <span className="input-group-text" id="basic-addon1">
+                  <h2 className="heading1  text-light">Your world of joy</h2>
+                  <p className="heading2  fadeInUp  text-light" style={{ fontSize: "20px" }}>From local escapes to far-flung adventures, find what makes you happy anytime, anywhere</p>
+                  <div className="input-group mb-3 mt-3 ">
+                    <span className="input-group-text " id="basic-addon1">
                     <i class="fa-solid fa-magnifying-glass py-2"></i>
                     </span>
                     <input
                       type="text"
-                      className="form-control bg-white py-2"
+                      className="form-control bg-white py-3  "
                       placeholder="search destination activity"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-lg"
                     />
-                     <span class="input-group-text text-light" style={{backgroundColor:"black"}} >Search</span>
+                     <span class="input-group-text text-light  " style={{backgroundColor:"black"}} >Search</span>
                   </div>
-
+                
                 </div>
               </div>
               <button

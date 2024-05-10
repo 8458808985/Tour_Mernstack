@@ -22,7 +22,6 @@ export default function Messages() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">Messages</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
             <div className="row y-gap-30 pt-60">
               <div className="col-lg-4">
                 <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30">

@@ -61,13 +61,18 @@ export default function DBListing() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Listings</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
               <div className="row y-gap-30">
                 {itemsToDisplay && itemsToDisplay.length >0 ? itemsToDisplay.map((elm, i) => (
-                  <div key={i} className="col-lg-6">
-                    <div className="border-1 rounded-12 px-20 py-20">
+                  <div key={i} className="col-lg-4 col-sm-4 col-12">
+                     
+                      <button className="btn d-flex justify-content-between">
+                      <i class="fa-light fa-trash mx-1 text-danger mb-3" style={{fontWeight:"700", fontSize:"20px"}}></i>
+                      <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{fontWeight:"700", fontSize:"20px"}}></i>
+                      </button>
+                   
+                    <div className="border-1 rounded-12 px-20 py-20 shadow">
                       <div className="row x-gap-20 y-gap-20 items-center">
                         <div className="col-xxl-auto">
                           <img

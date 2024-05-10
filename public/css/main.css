@@ -1863,6 +1863,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .lh-13 {
   line-height: 1.3 !important;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .lh-14 {
@@ -11012,7 +11014,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .rounded-full {
-  border-radius: 100%;
+  border-radius: 10%;
 }
 
 @media (max-width: 767px) {
@@ -13884,4 +13886,19 @@ button.gm-ui-hover-effect::after {
 
 .h-500 {
   height: 500px;
+}
+
+@media only screen and (max-width: 768px) {
+  .heading1 {
+      display: none;
+  }
+  .heading2 {
+ font-size: 15px !important;
+ margin-top: 80px !important;
+ line-height: normal;
+}
+.input-group{
+  margin-top: 50px;
+  margin-bottom: 120px;
+}
 }

@@ -92,10 +92,11 @@ export default function Header({ setSideBarOpen }) {
           </button>
         </div>
 
-        <div>
-          <img src="/img/dashboard/header/1.png" alt="image" />
-        </div>
         
+        <div>
+         <button className="btn"  style={{backgroundColor:"#78006E",color:"white"}}>Logout</button>
+        </div>
+      
       </div>
     </div>
     
