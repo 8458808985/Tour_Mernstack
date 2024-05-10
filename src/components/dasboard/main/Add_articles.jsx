@@ -1,9 +1,11 @@
 import Sidebar from "../Sidebar";
 import Header from "../Header";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
@@ -64,10 +66,13 @@ export default function AddProduct() {
           body: formDataToSend,
         }
       );
-
+      toast.success("Successfully Added ", {
+        position: "top-center"
+      })
       if (!response.ok) {
         throw new Error("Failed to submit form");
       }
+      
 
       setSubmitted(true);
     } catch (error) {
@@ -79,6 +84,7 @@ export default function AddProduct() {
 
   return (
     <>
+    <ToastContainer/>
       <div
         className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
           } js-dashboard`}

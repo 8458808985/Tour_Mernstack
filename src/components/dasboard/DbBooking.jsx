@@ -124,7 +124,7 @@ export default function DbBooking() {
                     </table>
                   </div>
 
-                  <Pagination />
+                  {/* <Pagination /> */}
 
                   <div className="text-14 text-center mt-20">
                     Showing results 1-30 of 1,415

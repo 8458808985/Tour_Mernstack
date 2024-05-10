@@ -1,13 +1,14 @@
 // import { reviews } from "@/data/tourSingleContent";
 import React, { useEffect, useState } from "react";
 import Stars from "../common/Stars";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/review')
+    fetch(`${BASE_URL}/review`)
       .then(res => res.json())
       .then(data => setReviews(data))
       .catch(err => console.error('Error fetching tours:', err));

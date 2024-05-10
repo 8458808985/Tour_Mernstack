@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "@/Urls/baseUrl";
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
 
-
+const navigate = useNavigate()
 
 // console.log(formData)
 const handleSubmit = async (e) => {
@@ -20,24 +22,32 @@ const handleSubmit = async (e) => {
     
     const response = await axios.post(`${BASE_URL}/login`, { email, password  });
     // Assuming the API returns a token upon successful login
+    // setIsUser(response)
     const token = response.data.token;
     const role = response.data.role
     console.log(role)
     // Store the token in local storage or session storage
     localStorage.setItem('token', token);
     // Redirect or do something else upon successful login
-   // window.location.href = '/dashboard';
+   navigate('/');
+   toast.success("Successfully Login ", {
+    position: "top-center"
+  })
     if (role === 'admin') {
       setIsAdmin(true);
-      alert('Admin logged in successfully.');
-     window.location.href = '/db-main';
+      // alert('Admin logged in successfully.');
+      toast.success("Successfully Admin Login ", {
+        position: "top-center"
+      })
+      navigate('/db-main')
+    }else if(role === user){
+      setIsUser(true);
 
-    } else {
-      
-    
+      alert('User logged in successfully.');
+
     }
   } catch (err) {
-    setError(err.response.data.message);
+    setError(err);
   }
 };
 
