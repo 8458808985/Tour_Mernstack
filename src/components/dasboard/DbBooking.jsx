@@ -32,7 +32,7 @@ export default function DbBooking() {
 
         <div className="dashboard__content_content">
           <h1 className="text-30">My Booking</h1>
-          <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
+         
 
           <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:mb-20 mt-60">
             <div className="tabs -underline-2 js-tabs">

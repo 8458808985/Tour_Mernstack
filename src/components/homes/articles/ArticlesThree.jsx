@@ -59,6 +59,7 @@ export default function ArticlesThree() {
                   />
 
                   <div className="blogCard__badge">{elm.badge}</div>
+                 
                 </div>
 
                 <div className="blogCard__content mt-30">
@@ -80,3 +81,4 @@ export default function ArticlesThree() {
     </section>
   );
 }
+

@@ -23,7 +23,7 @@ export default function Add_destination() {
       .then(data => setDestinations(data))
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
-  
+
   const [formData, setFormData] = useState({
     name: "",
     imageSrc: ""
@@ -70,9 +70,8 @@ export default function Add_destination() {
   return (
     <>
       <div
-        className={`dashboard ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard`}
+        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
+          } js-dashboard`}
       >
         <Sidebar setSideBarOpen={setSideBarOpen} />
 
@@ -85,7 +84,7 @@ export default function Add_destination() {
 
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn" style={{ backgroundColor: "#78006E", color: "white" }}
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
                 <i class="fa-solid fa-circle-plus"></i> Add destination
@@ -119,11 +118,10 @@ export default function Add_destination() {
                           <div className="col-xl-9 col-lg-10">
                             <div className="tabs__content js-tabs-content">
                               <div
-                                className={`tabs__pane  ${
-                                  activeTab == "Content"
+                                className={`tabs__pane  ${activeTab == "Content"
                                     ? "is-tab-el-active"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 <form action="" method="post" onSubmit={handleSubmit} encType="multipart/form-data">
                                   <div className="contactForm row y-gap-30">
@@ -163,21 +161,21 @@ export default function Add_destination() {
                                           </label>
                                         </div>
                                         <div class="modal-footer">
-                    
+
+                                        </div>
                                       </div>
                                     </div>
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary mt-2 mb-2"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                    <button type="submit" style={{ backgroundColor: "#78006E", fontWeight:"700", color: "white" }} class="btn  mt-3 mb-2">
+                                      Save changes
+                                    </button>
                                   </div>
-                                  <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                      Save changes
-                    </button>
-                  </div>
                                 </form>
                               </div>
                             </div>
@@ -191,85 +189,89 @@ export default function Add_destination() {
             </div>
           </div>
           <section className="layout-pt-xl">
-      <div className="container">
-        <div className="row y-gap-10 justify-between items-end">
-          <div className="col-auto">
-            {/* <h2 data-aos="fade-up" className="text-30 md:text-24">
+            <div className="container">
+              <div className="row y-gap-10 justify-between items-end">
+                <div className="col-auto">
+                  {/* <h2 data-aos="fade-up" className="text-30 md:text-24">
               Trending destinations 
             </h2> */}
-          </div>
+                </div>
 
-          <div data-aos="fade-up" className="col-auto">
-            <Link
-              to={"/tour-list-1"}
-              className="buttonArrow d-flex items-center "
-            >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
-            </Link>
-          </div>
-        </div>
-
-        <div
-          data-aos="fade-up"
-          className="overflow-hidden pt-40 sm:pt-20 js-section-slider"
-        >
-          <div className="swiper-wrapper">
-            <Swiper
-              spaceBetween={30}
-              className="w-100"
-              pagination={{
-                el: ".pbutton1",
-                clickable: true,
-              }}
-              modules={[Navigation, Pagination]}
-              breakpoints={{
-                500: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1024: {
-                  slidesPerView: 6,
-                },
-                1200: {
-                  slidesPerView: 8,
-                },
-              }}
-            >
-              {destinations.slice(0, 8).map((elm, i) => (
-                <SwiperSlide key={i}>
-                  <a
-                    href="#"
-                    className="featureImage -type-1 text-center -hover-image-scale mx-5" 
+                <div data-aos="fade-up" className="col-auto">
+                  <Link
+                    to={"/tour-list-1"}
+                    className="buttonArrow d-flex items-center "
                   >
-                    <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
-                      <img
-                        src={elm.imageSrc}
-                        alt="image"
-                        className="size-130 object-cover rounded-full"
-                      />
-                    </div>
+                    <span>See all</span>
+                    <i className="icon-arrow-top-right text-16 ml-10"></i>
+                  </Link>
+                </div>
+              </div>
 
-                    <h3 className="featureImage__title text-16 fw-500 mt-20">
-                      {elm.name}
-                    </h3>
-                    {/* <p className="featureImage__text text-14">
+              <div
+                data-aos="fade-up"
+                className="overflow-hidden pt-40 sm:pt-20 js-section-slider"
+              >
+                <div className="swiper-wrapper">
+                  <Swiper
+                    spaceBetween={30}
+                    className="w-100"
+                    pagination={{
+                      el: ".pbutton1",
+                      clickable: true,
+                    }}
+                    modules={[Navigation, Pagination]}
+                    breakpoints={{
+                      500: {
+                        slidesPerView: 2,
+                      },
+                      768: {
+                        slidesPerView: 3,
+                      },
+                      1024: {
+                        slidesPerView: 6,
+                      },
+                      1200: {
+                        slidesPerView: 8,
+                      },
+                    }}
+                  >
+                    {destinations.slice(0, 8).map((elm, i) => (
+                      <SwiperSlide key={i}>
+
+                     
+                            <a
+                              href="#"
+                              className="featureImage -type-1 text-center -hover-image-scale"
+                            >
+                              <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
+                                <img
+                                  src={elm.imageSrc}
+                                  alt="image"
+                                  className="size-100 object-cover rounded-full"
+                                />
+                              </div>
+
+                              <h3 className="featureImage__title text-16 fw-500 mt-20" >
+                                {elm.name}
+                              </h3>
+                              {/* <p className="featureImage__text text-14">
                       {elm.tourCount}+ Tours
                     </p> */}
-                  </a>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+                            </a>
 
-          <div className="pagination -type-1 justify-center pt-60 md:pt-40 js-dest-pagination swiperPagination1">
-            <div className="pagination__button pbutton1"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+                          
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+
+                <div className="pagination -type-1 justify-center pt-60 md:pt-40 js-dest-pagination swiperPagination1">
+                  <div className="pagination__button pbutton1"></div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </>
