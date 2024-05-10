@@ -31,7 +31,7 @@ export default function HomePage1() {
       <TourTypeOne />
       <TourSlderOne />
       <TestimonialOne />
-      <BannerOne />
+      {/* <BannerOne /> */}
       <ArticlesThree />
       <FooterOne />
     </main>

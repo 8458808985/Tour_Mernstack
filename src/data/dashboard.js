@@ -35,12 +35,7 @@ export const sidebarItems = [
     iconClass: "icon-message text-26",
     label: "Articles",
   },
-  {
-    id: 7,
-    href: "/db-profile",
-    iconClass: "icon-account text-26",
-    label: "My Profile",
-  },
+  
   {
     id: 8,
     href: "/db-add-product",

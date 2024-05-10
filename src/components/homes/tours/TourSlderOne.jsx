@@ -6,12 +6,13 @@ import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 
 import { Link } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function TourSlderOne() {
   const [tourData, setTourData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/v1/tours')
+    fetch(`${BASE_URL}/tours`)
       .then(res => res.json())
       .then(data => setTourData(data))
       .catch(err => console.error('Error fetching tours:', err));

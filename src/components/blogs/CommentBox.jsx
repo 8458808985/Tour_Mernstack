@@ -1,3 +1,4 @@
+import BASE_URL from "@/Urls/baseUrl";
 import React, { useState } from "react";
 
 export default function CommentBox() {
@@ -19,7 +20,7 @@ console.log(formData)
 const handleSubmit =async (e) => {
   e.preventDefault();
   try {
-   const response = await fetch('http://localhost:5000/api/v1/review/new', {
+   const response = await fetch(`${BASE_URL}/review/new`, {
     method:'POST',
     headers: {
         'Content-Type': 'application/json'

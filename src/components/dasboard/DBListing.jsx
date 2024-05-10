@@ -1,52 +1,33 @@
 import Pagination from "../common/Pagination";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-// import { tourData } from "@/data/tours";
 import Stars from "../common/Stars";
 import { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 
 export default function DBListing() {
-  const [tours, setTours] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages]=useState(0);
   const [sideBarOpen, setSideBarOpen] = useState(true);
- 
+  const [tours, setTours] = useState([]);
+  const [showPerPage, setShowPerPage] = useState(6);
+  const [pagination , setPagination]=useState({
+    start:0,
+    end:showPerPage
+  })
   
+  const onPaginationChange = (start, end)=>{
+    setPagination({start: start, end:end})
+  } 
+ 
 
   useEffect(() => {
     fetch(`${BASE_URL}/tours`)
       .then(res => res.json())
       .then((data)=>{
         setTours(data);
-        setTotalPages(Math.ceil(data.length/6))
+        // setTotalPages(Math.ceil(data.length/6))
       })
       .catch(err => console.error('Error fetching tours:', err));
-  }, []);
-
-  const handlePageChange =(newPage)=>{
-    setCurrentPage(newPage)
-  }
-  
-  const handleNextClick =()=>{
-    if(currentPage < totalPages){
-      setCurrentPage(currentPage + 1)
-    }
-  }
-  
-  const handlePrevClick =()=>{
-    if(currentPage > 1){
-      setCurrentPage(currentPage - 1)
-    }
-  }
-
-  const preDisabled = currentPage ===1;
-  const nextDisabled = currentPage === totalPages
-
-  const itemsPerPage = 6;
-  const startIndex = (currentPage-1)*itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = tours.slice(startIndex , endIndex )
+  }, []);  
   return (
     <>
       <div
@@ -65,7 +46,7 @@ export default function DBListing() {
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
               <div className="row y-gap-30">
-                {itemsToDisplay && itemsToDisplay.length >0 ? itemsToDisplay.map((elm, i) => (
+                {tours.slice(pagination.start, pagination.end).map((elm, i) => (
                   <div key={i} className="col-lg-6">
                     <div className="border-1 rounded-12 px-20 py-20">
                       <div className="row x-gap-20 y-gap-20 items-center">
@@ -118,22 +99,20 @@ export default function DBListing() {
                       </div>
                     </div>
                   </div>
-                )):''}
+                ))}
               </div>
 
 
-              {/* <div className="mt-30">
-                <Pagination />
+              <div className="mt-30">
+                {/* <Pagination range={Math.ceil(tours.length / itemsPerPage)} onPageChange={handlePageChange} /> */}
+                <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={tours.length}/>
 
-                <div className="text-14 text-center mt-20">
+                {/* <div className="text-14 text-center mt-20">
                   Showing results 1-30 of 1,415
-                </div>
-              </div> */}
+                </div> */}
+              </div>
             </div>
 
-            <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
-            </div>
           </div>
         </div>
       </div>
