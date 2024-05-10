@@ -1,7 +1,8 @@
 import { menuData } from "@/data/mobileMenu";
 import { Link, useLocation } from "react-router-dom";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Login from "@/components/pages/Login";
 const socialMediaLinks = [
   { id: 1, class: "icon-facebook", href: "#" },
   { id: 2, class: "icon-twitter", href: "#" },
@@ -9,9 +10,17 @@ const socialMediaLinks = [
   { id: 4, class: "icon-linkedin", href: "#" },
 ];
 export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
+  const [isUser, setIsuser]=useState("")
   const [activeSub, setActiveSub] = useState("");
   const { pathname } = useLocation();
+useEffect(()=>{
+let userrole =  localStorage.getItem('role')
+setIsuser(userrole)
+})
+  
+  
   return (
+    
     <div
       data-aos="fade"
       data-aos-delay=""
