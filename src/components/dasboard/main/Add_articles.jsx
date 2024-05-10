@@ -98,7 +98,7 @@ export default function AddProduct() {
                 type="button"
                 className="btn"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal" style={{backgroundColor:"#78006E",color:"white"}}
+                data-bs-target="#exampleModal" style={{ backgroundColor: "#78006E", color: "white" }}
               >
                 <i class="fa-solid fa-circle-plus"></i> Add Article
               </button>
@@ -137,8 +137,8 @@ export default function AddProduct() {
                             <div className="tabs__content js-tabs-content">
                               <div
                                 className={`tabs__pane  ${activeTab == "Content"
-                                    ? "is-tab-el-active"
-                                    : ""
+                                  ? "is-tab-el-active"
+                                  : ""
                                   }`}
                               >
                                 <form
@@ -278,7 +278,7 @@ export default function AddProduct() {
                                       </div>
                                     </div>
                                   </div>
-                                  <button class="btn  mt-30" style={{backgroundColor:"#78006E",color:"white"}} type="submit">
+                                  <button class="btn  mt-30" style={{ backgroundColor: "#78006E", color: "white" }} type="submit">
                                     Save changes
                                   </button>
                                 </form>
@@ -338,11 +338,11 @@ export default function AddProduct() {
                   <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
                     <div className="card shadow mb-1 mb-2 border-0">
                       <div className="card-body mb-3">
-                        <div className="d-flex justify-content-end mt-1 mb-5">
-                        <i class="fa-light fa-trash mx-1 text-danger mb-3" style={{fontWeight:"700", fontSize:"20px"}}></i>
-                      <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{fontWeight:"700", fontSize:"20px"}}></i>
-                        </div>
-                
+                      <div className="btn d-flex justify-content-end">
+                      <button className="btn btn-warning text-light mx-1">Edit</button>
+                      <button className="btn btn-danger text-light mx-1">Delete</button>
+                    </div>
+
                         <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
                           <div className="blogCard__image ratio ratio-41:30">
                             <img
@@ -350,22 +350,31 @@ export default function AddProduct() {
                               alt="image"
                               className="img-ratio rounded-12"
                             />
-                            <div className="blogCard__badge">{elm.badge}</div>
+
                           </div>
 
                           <div className="blogCard__content mt-30">
-                            <div className="blogCard__info text-14">
-                              <div className="lh-13">{elm.date}</div>
-                              <div className="blogCard__line"></div>
-                              <div className="lh-13">By {elm.author}</div>
+
+                            <div className="blogCard__info text-14 d-flex justify-content-between">
+                              <div className="lh-13" style={{fontSize:"15px", fontWeight:"700"}}>{elm.date}</div>
+                              <div className="blogCard__line" ></div>
+                              <div className="lh-13" style={{fontSize:"15px", fontWeight:"700"}}>By {elm.author}</div>
+
                             </div>
 
-                            <h3 className="blogCard__title text-18 fw-500 mt-10">
-                              
-                              {elm.title}
-                            </h3>
+
                           </div>
+
                         </Link>
+                        <div className="d-flex justify-content-between">
+                          <h3 className="blogCard__title text-18 fw-500 mt-10" >
+                            <span style={{ fontSize: "30px", fontWeight: "700" }}> {elm.title}</span>
+
+                          </h3>
+                          <div className="blogCard__badge" style={{ fontSize: "30px", fontWeight: "700" }}>{elm.badge}</div>
+                        </div>
+
+
                       </div>
                     </div>
 

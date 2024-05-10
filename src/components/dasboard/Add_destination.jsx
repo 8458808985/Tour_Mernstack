@@ -239,6 +239,12 @@ export default function Add_destination() {
                     {destinations.slice(0, 8).map((elm, i) => (
                       <SwiperSlide key={i}>
 
+<div className="card">
+  <div className="card-body">
+  <div className="d-flex justify-content-end mt-2 mb-3">
+                            <i class="fa-light fa-trash mx-1 text-danger" style={{ fontWeight: "700", fontSize: "20px" }}></i>
+                            <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{ fontWeight: "700", fontSize: "20px" }}></i>
+                          </div>
                      
                             <a
                               href="#"
@@ -259,6 +265,10 @@ export default function Add_destination() {
                       {elm.tourCount}+ Tours
                     </p> */}
                             </a>
+  </div>
+</div>
+
+  
 
                           
                       </SwiperSlide>

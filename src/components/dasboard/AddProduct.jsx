@@ -304,10 +304,10 @@ export default function AddProduct() {
                     <div className="card border-0 rounded-3 mb-1 mt-1">
                       <div className="card-body">
                         <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
-                          <div className="d-flex justify-content-end mt-2 mb-3">
-                            <i class="fa-light fa-trash mx-1 text-danger" style={{ fontWeight: "700", fontSize: "20px" }}></i>
-                            <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{ fontWeight: "700", fontSize: "20px" }}></i>
-                          </div>
+                        <div className="btn d-flex justify-content-end">
+                      <button className="btn btn-warning text-light mx-1">Edit</button>
+                      <button className="btn btn-danger text-light mx-1">Delete</button>
+                    </div>
                           <div className="blogCard__image ratio ratio-41:30">
                             <img
                               src={elm.imageSrc}
@@ -315,36 +315,46 @@ export default function AddProduct() {
                               className="img-ratio rounded-12"
                             />
 
-                            <div className="blogCard__badge">{elm.product}</div>
+
                           </div>
 
 
 
                         
                               <div className="blogCard__content mt-30">
-                                <div className="blogCard__info text-14 d-flex justify-content-between">
-                                  <div className="lh-13" style={{fontSize:"13px"}}> <label htmlFor="" className="mb-2" style={{fontSize:"15px"}}>City Name :</label> <br />  {elm.city}</div>
+                                <div className="blogCard__info text-14 d-flex justify-content-center">
+                             
+                                  <div className="lh-13" style={{fontSize:"14px"}}> <label htmlFor="" className="mb-2" style={{fontSize:"15px"}}>City Name :</label>  {elm.city}</div>
                                   <div className="blogCard__line"></div>
-                                  <div className="lh-13" style={{fontSize:"13px"}}> <label htmlFor="" className="mb-2" style={{fontSize:"15px"}}>Cuntary Name :</label> <br />By {elm.country}</div>
+                                  <div className="lh-13" style={{fontSize:"14px"}}> <label htmlFor="" className="mb-2" style={{fontSize:"15px"}}>Cuntary Name :</label> By {elm.country}</div>
                                 </div>
 
 
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                  <p>Time:</p>    {elm.time}
+                        
+                                  <p style={{fontWeight:"700", fontSize:"18px"}}>Time:</p>    {elm.time}
                                 </h3>
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p>Old Price:</p>  {elm.oldprice}
+                                <p style={{fontWeight:"700" ,fontSize:"18px"}}>Old Price:</p>  {elm.oldprice}
                                 </h3>
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p>Discount:</p>      {elm.discount}
+                                <p style={{fontWeight:"700",fontSize:"18px"}}>Discount:</p>      {elm.discount}
                                 </h3>
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p>New Price:</p>     {elm.newprice}
+                                <p style={{fontWeight:"700",fontSize:"18px"}}>New Price:</p>     {elm.newprice}
                                 </h3>
                                
                           </div>
-
+                          
                         </Link>
+                        <div className="d-flex justify-content-between">
+                          <p style={{fontWeight:"700",fontSize:"18px"}}>Product Name</p>
+                        <div className="blogCard__badge d" style={{fontWeight:"700",fontSize:"18px"}}>{elm.product}
+                        
+                        </div>
+                        </div>
+                      
+                       
                       </div>
                     </div>
 
