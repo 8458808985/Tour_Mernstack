@@ -6,12 +6,23 @@ import { Link } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Pagination from "@/components/common/Pagination";
+import axios from "axios";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [blog, setBlog] = useState([]);
+  const [showPerPage, setShowPerPage] = useState(6);
+  const [pagination , setPagination]=useState({
+    start:0,
+    end:showPerPage
+  })
+  const onPaginationChange = (start, end)=>{
+    setPagination({start: start, end:end})
+  } 
+
 
   useEffect(() => {
     fetch(`${BASE_URL}/blog`)
@@ -81,7 +92,14 @@ export default function AddProduct() {
       setSubmitting(false);
     }
   };
-
+  const delete_article =(id)=>{
+    const result = axios.delete(`${BASE_URL}/article/${id}`)
+    if(result){
+      toast.success("Successfully Delete Articles ", {
+        position: "top-center"
+      })
+    }
+      }
   return (
     <>
     <ToastContainer/>
@@ -340,13 +358,11 @@ export default function AddProduct() {
                 data-aos-delay=""
                 className="row y-gap-30 pt-40 sm:pt-20"
               >
-                {blog.slice(0, 3).map((elm, i) => (
+                {blog.slice(pagination.start, pagination.end).map((elm, i) => (
                   <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
                     <div className="card shadow mb-1 mb-2 border-0">
                       <div className="card-body mb-3">
                       <div className="btn d-flex justify-content-end">
-                      <button className="btn btn-warning text-light mx-1">Edit</button>
-                      <button className="btn btn-danger text-light mx-1">Delete</button>
                     </div>
 
                         <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
@@ -381,6 +397,8 @@ export default function AddProduct() {
                         </div>
 
 
+                    <button className="btn btn-danger text-light mx-1 mt-10" onClick={()=>{delete_article(elm._id)}}>Delete</button>
+                    <button className="btn btn-warning text-light mx-1 mt-10">Edit</button>
                       </div>
                     </div>
 
@@ -392,6 +410,10 @@ export default function AddProduct() {
               </div>
             </div>
           </section>
+          <div className="mt-50 mb-50">
+                  {/* <Pagination range={Math.ceil(tours.length / itemsPerPage)} onPageChange={handlePageChange} /> */}
+                  <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={blog.length}/>
+                </div>
         </div>
       </div>
     </>

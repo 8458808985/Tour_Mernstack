@@ -1,10 +1,12 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import BASE_URL from "@/Urls/baseUrl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axios, { Axios } from "axios";
 import { Link } from "react-router-dom";
@@ -61,14 +63,28 @@ export default function Add_destination() {
       }
 
       setSubmitted(true);
+      toast.success("Successfully Add Destination ", {
+        position: "top-center"
+      })
     } catch (error) {
       setError(error.message);
     } finally {
       setSubmitting(false);
     }
   };
+
+  const delete_destination =(id)=>{
+    const result = axios.delete(`${BASE_URL}/destination/${id}`)
+    if(result){
+      toast.success("Successfully Delete destination ", {
+        position: "top-center"
+      })
+    }
+      }
   return (
     <>
+        <ToastContainer />
+
       <div
         className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
           } js-dashboard`}
@@ -236,13 +252,14 @@ export default function Add_destination() {
                       },
                     }}
                   >
-                    {destinations.slice(0, 8).map((elm, i) => (
+                    {destinations.map((elm, i) => (
                       <SwiperSlide key={i}>
 
-<div className="card">
+<div className="card ">
   <div className="card-body">
-  <div className="d-flex justify-content-end mt-2 mb-3">
-                            <i class="fa-light fa-trash mx-1 text-danger" style={{ fontWeight: "700", fontSize: "20px" }}></i>
+    
+                    <div className="d-flex justify-content-end mt-2 mb-3">
+                            <i class="fa-light fa-trash mx-1 text-danger" style={{ fontWeight: "700", fontSize: "20px" }} onClick={()=>{delete_destination(elm._id)}}></i>
                             <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{ fontWeight: "700", fontSize: "20px" }}></i>
                           </div>
                      

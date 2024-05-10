@@ -1,11 +1,16 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import Map from "../pages/contact/Map";
 
 // const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddTour() {
+
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [formData, setFormData] = useState({
@@ -59,6 +64,9 @@ export default function AddTour() {
       }
 
       setSubmitted(true);
+      toast.success("Successfully Add Tour ", {
+        position: "top-center"
+      })
     } catch (error) {
       setError(error.message);
     } finally {
@@ -69,6 +77,7 @@ export default function AddTour() {
   
    return (
     <>
+     <ToastContainer />
       <div
         className={`dashboard ${
           sideBarOpen ? "-is-sidebar-visible" : ""

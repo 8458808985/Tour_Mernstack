@@ -22,7 +22,7 @@ export default function DBListing() {
   useEffect(() => {
     fetch(`${BASE_URL}/tours`)
       .then(res => res.json())
-      .then((data) => {
+      .then((data)=>{
         setTours(data);
         // setTotalPages(Math.ceil(data.length/6))
       })
@@ -31,8 +31,9 @@ export default function DBListing() {
   return (
     <>
       <div
-        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
-          } js-dashboard`}
+        className={`dashboard ${
+          sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard`}
       >
         <Sidebar setSideBarOpen={setSideBarOpen} />
 
@@ -44,16 +45,9 @@ export default function DBListing() {
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
               <div className="row y-gap-30">
-                {itemsToDisplay && itemsToDisplay.length > 0 ? itemsToDisplay.map((elm, i) => (
-                  <div key={i} className="col-lg-4 col-sm-4 col-12">
-
-
-                    <div className="btn d-flex justify-content-end">
-                      <button className="btn btn-warning text-light mx-1">Edit</button>
-                      <button className="btn btn-danger text-light mx-1">Delete</button>
-                    </div>
-                    <div className="border-1 rounded-12 px-20 py-20 shadow">
-
+                {tours.slice(pagination.start, pagination.end).map((elm, i) => (
+                  <div key={i} className="col-lg-6">
+                    <div className="border-1 rounded-12 px-20 py-20">
                       <div className="row x-gap-20 y-gap-20 items-center">
                         <div className="col-xxl-auto">
                           <img
@@ -64,43 +58,37 @@ export default function DBListing() {
                         </div>
 
                         <div className="col">
-                          <div className="d-flex justify-content-between">
-                            <div className="d-flex items-center">
-                              <i className="icon-pin mr-5" style={{ fontWeight: "700", fontSize: "18px" }}></i>
-                              {elm.location}
-                            </div>
-
-                            <div className="text-18 lh-15 fw-500 mt-5" style={{ fontWeight: "700", fontSize: "18px" }}>
-
-                              <span></span>   {elm.title}
-                            </div>
+                          <div className="d-flex items-center">
+                            <i className="icon-pin mr-5"></i>
+                            {elm.location}
                           </div>
 
+                          <div className="text-18 lh-15 fw-500 mt-5">
+                            {elm.title}
+                          </div>
 
-                          <div className="d-flex justify-content-between mt-5">
+                          <div className="d-flex items-center mt-5">
                             <div className="d-flex x-gap-5 text-yellow-2 mr-10">
                               <Stars star={elm.rating} />
                             </div>
-                            <div style={{ fontWeight: "700", fontSize: "18px" }}>
+                            <div>
                               {elm.rating} ({elm.ratingCount})
                             </div>
                           </div>
 
                           <div className="row y-gap-15 justify-between items-end pt-5">
                             <div className="col-auto">
-                              <div className="lh-14" ></div>
-                              <span style={{ fontWeight: "700", fontSize: "18px" }}>  From{" "}</span>
                               <div className="d-flex items-center">
-                                <i className="icon-clock mr-5" style={{ fontWeight: "700" }}></i>
-                                <div className="text-14" style={{ fontWeight: "700", fontSize: "18px" }}>{elm.duration}</div>
+                                <i className="icon-clock mr-5"></i>
+                                <div className="text-14">{elm.duration}</div>
                               </div>
                             </div>
 
                             <div className="col-auto">
-                              <div className="text-right md:text-left" style={{ fontWeight: "700", fontSize: "18px" }}>
-                                <div className="lh-14" style={{ fontWeight: "700", fontSize: "18px" }}>${elm.price}</div>
-                                {" "}
-                                <span className="text-20 fw-500" style={{ fontWeight: "700", fontSize: "18px" }}>
+                              <div className="text-right md:text-left">
+                                <div className="lh-14">${elm.price}</div>
+                                From{" "}
+                                <span className="text-20 fw-500">
                                   ${elm.price + 1000}
                                 </span>
                               </div>
@@ -110,7 +98,7 @@ export default function DBListing() {
                       </div>
                     </div>
                   </div>
-                )) : ''}
+                ))}
               </div>
 
 

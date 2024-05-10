@@ -6,6 +6,8 @@ import Map from "../pages/contact/Map";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddBanner() {
@@ -51,6 +53,9 @@ export default function AddBanner() {
       }
 
       setSubmitted(true);
+      toast.success("Successfully Add Banner ", {
+        position: "top-center"
+      })
     } catch (error) {
       setError(error.message);
     } finally {
@@ -59,14 +64,24 @@ export default function AddBanner() {
   };
  
   
-  const handleDelete =async(did)=>{
+//   const handleDelete =async(did)=>{
   
-// alert(did)
-const response = await axios.delete(`https://test1.buyjugaad.com/api/v1/banner/${did}`)
+// // alert(did)
+// const response = await axios.delete(`https://test1.buyjugaad.com/api/v1/banner/${did}`)
 
+//   }
+const delete_destination =(id)=>{
+  const result = axios.delete(`${BASE_URL}/destination/${id}`)
+  if(result){
+    toast.success("Successfully Delete banner ", {
+      position: "top-center"
+    })
   }
+    }
   return (
     <>
+        <ToastContainer />
+
       <div
         className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
           } js-dashboard`}
@@ -107,7 +122,7 @@ const response = await axios.delete(`https://test1.buyjugaad.com/api/v1/banner/$
                   />
                 </td>
                 <td  className="">
-                  <Button style={{ backgroundColor: "red", marginLeft: "100px", border:"none" }} onClick={() => handleDelete(elm._id)}>
+                  <Button style={{ backgroundColor: "red", marginLeft: "100px", border:"none" }} onClick={()=>{delete_destination(elm._id)}}>
                     <i class="fa-sharp fa-solid fa-trash "></i>
                   </Button>
                 </td>

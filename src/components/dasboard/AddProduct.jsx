@@ -1,10 +1,12 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 // import Map from "../pages/contact/Map";
 
@@ -13,8 +15,15 @@ export default function AddProduct() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [product, setProduct] = useState([]);
-
-
+  const [showPerPage, setShowPerPage] = useState(6);
+  const [pagination , setPagination]=useState({
+    start:0,
+    end:showPerPage
+  })
+  const onPaginationChange = (start, end)=>{
+    setPagination({start: start, end:end})
+  } 
+console.log(product)
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
       .then(res => res.json())
@@ -66,6 +75,7 @@ export default function AddProduct() {
       const response = await fetch("https://test1.buyjugaad.com/api/v1/product/new", {
         method: 'POST',
         body: formDataToSend
+        
       });
 
       if (!response.ok) {
@@ -73,6 +83,9 @@ export default function AddProduct() {
       }
 
       setSubmitted(true);
+      toast.success("Successfully Add Product ", {
+        position: "top-center"
+      })
     } catch (error) {
       setError(error.message);
     } finally {
@@ -80,8 +93,18 @@ export default function AddProduct() {
     }
   };
 
+  const delete_product =async(id)=>{
+const results =await axios.delete(`${BASE_URL}/product/${id}`)
+if(results){
+  toast.success("Successfully Delete Product ", {
+    position: "top-center"
+  })
+}
+  }
+
   return (
     <>
+        <ToastContainer />
 
       <div
         className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
@@ -303,10 +326,10 @@ export default function AddProduct() {
                   <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
                     <div className="card border-0 rounded-3 mb-1 mt-1">
                       <div className="card-body">
+                      <button className="btn btn-danger text-light mx-1" onClick={()=>{delete_product(elm._id)}}>Delete</button>
+                      <button className="btn btn-warning text-light mx-1">Edit</button>
                         <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
                         <div className="btn d-flex justify-content-end">
-                      <button className="btn btn-warning text-light mx-1">Edit</button>
-                      <button className="btn btn-danger text-light mx-1">Delete</button>
                     </div>
                           <div className="blogCard__image ratio ratio-41:30">
                             <img

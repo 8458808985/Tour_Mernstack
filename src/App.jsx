@@ -36,7 +36,7 @@ import DBListingPage from "./pages/dashboard/db-listing";
 import DBAddTourPage from "./pages/dashboard/db-add-tour";
 import DBAddProductPage from "./pages/dashboard/db-add-product";
 // import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
-import DBFavoritesPage from "./pages/dashboard/db-favorites";
+// import DBFavoritesPage from "./pages/dashboard/db-favorites";
 import DBMessagesPage from "./pages/dashboard/db-messages";
 // import DBProfilePage from "./pages/dashboard/db-profile";
 import BlogListPage1 from "./pages/blogs/blog-list-1";
@@ -110,7 +110,7 @@ function App() {
             <Route path="/db-add-destination" element={<DBAddDestinationPage />} />
             <Route path="/db-add-banner" element={<DBAddBannerPage />} />
             <Route path="/db-add-article" element={<DBAddArticlePage />} />
-            <Route path="/db-favorites" element={<DBFavoritesPage />} />
+            {/* <Route path="/db-favorites" element={<DBFavoritesPage />} /> */}
             <Route path="/db-messages" element={<DBMessagesPage />} />
             {/* <Route path="/db-profile" element={<DBProfilePage />} /> */}
 

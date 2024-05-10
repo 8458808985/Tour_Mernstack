@@ -23,12 +23,7 @@ export const sidebarItems = [
     iconClass: "icon-clipboard text-26",
     label: "Add Tour",
   },
-  {
-    id: 5,
-    href: "/db-favorites",
-    iconClass: "icon-heart text-26",
-    label: "My Favorites",
-  },
+  
   {
     id: 6,
     href: "/db-add-article",

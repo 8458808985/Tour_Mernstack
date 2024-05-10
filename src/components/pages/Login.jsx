@@ -2,7 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "@/Urls/baseUrl";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -55,8 +56,8 @@ const handleSubmit = async (e) => {
   }
 };
 
+return (
 
-  return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
       <div className="container">
         <div className="row justify-center">
@@ -74,6 +75,7 @@ const handleSubmit = async (e) => {
               </div>
             </div>
 
+            <ToastContainer/>
             <form
               onSubmit={handleSubmit}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
