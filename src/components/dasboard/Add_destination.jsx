@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios, { Axios } from "axios";
 import { Link } from "react-router-dom";
@@ -21,14 +21,14 @@ export default function Add_destination() {
 
   useEffect(() => {
     fetch(`${BASE_URL}/destination`)
-      .then(res => res.json())
-      .then(data => setDestinations(data))
-      .catch(err => console.error('Error fetching tours:', err));
-  }, []);
+      .then((res) => res.json())
+      .then((data) => setDestinations(data))
+      .catch((err) => console.error("Error fetching tours:", err));
+  }, [destinations]);
 
   const [formData, setFormData] = useState({
     name: "",
-    imageSrc: ""
+    imageSrc: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -41,31 +41,35 @@ export default function Add_destination() {
 
   const FileHandler = (e) => {
     setFormData({ ...formData, imageSrc: e.target.files[0] });
-    console.log(formData)
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    console.log(formData)
+    // console.log(formData);
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('imageSrc', formData.imageSrc);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("imageSrc", formData.imageSrc);
 
-      const response = await fetch('https://test1.buyjugaad.com/api/v1/destination/new', {
-        method: 'POST',
-        body: formDataToSend
-      });
+      const response = await fetch(
+        "https://test1.buyjugaad.com/api/v1/destination/new",
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+      if (response.ok) {
+        formrv.reset();
+        toast.success("Successfully Add Destination ", {
+          position: "top-center",
+          autoClose: 500,
+        });
       }
-
       setSubmitted(true);
-      toast.success("Successfully Add Destination ", {
-        position: "top-center"
-      })
+
     } catch (error) {
       setError(error.message);
     } finally {
@@ -73,21 +77,35 @@ export default function Add_destination() {
     }
   };
 
-  const delete_destination =(id)=>{
-    const result = axios.delete(`${BASE_URL}/destination/${id}`)
-    if(result){
-      toast.success("Successfully Delete destination ", {
-        position: "top-center"
-      })
+  const delete_destination = async(id) => {
+    try {
+      const result =await axios.delete(`${BASE_URL}/destination/${id}`);
+    if (result.status === 200) {
+
+      setDestinations(destinations.filter(destinations => destinations._id !== id));
+      // If the deletion is successful, show a success message
+      toast.success("Successfully deleted the Destination", {
+        position: "top-center",
+        autoClose: 500
+
+      });
+    } else {
+      // Handle other status codes or errors if necessary
+      alert("failed deleted")
     }
-      }
+    } catch (error) {
+      console.log(error)
+    }
+    
+  };
   return (
     <>
-        <ToastContainer />
+      <ToastContainer />
 
       <div
-        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
-          } js-dashboard`}
+        className={`dashboard ${
+          sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard`}
       >
         <Sidebar setSideBarOpen={setSideBarOpen} />
 
@@ -100,9 +118,11 @@ export default function Add_destination() {
 
               <button
                 type="button"
-                class="btn" style={{ backgroundColor: "#78006E", color: "white" }}
+                class="btn"
+                style={{ backgroundColor: "#78006E", color: "white" }}
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
+                data-bs-target="#exampleModal"
+              >
                 <i class="fa-solid fa-circle-plus"></i> Add destination
               </button>
             </div>
@@ -113,7 +133,8 @@ export default function Add_destination() {
               id="exampleModal"
               tabindex="-1"
               aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
+              aria-hidden="true"
+            >
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -134,12 +155,18 @@ export default function Add_destination() {
                           <div className="col-xl-9 col-lg-10">
                             <div className="tabs__content js-tabs-content">
                               <div
-                                className={`tabs__pane  ${activeTab == "Content"
+                                className={`tabs__pane  ${
+                                  activeTab == "Content"
                                     ? "is-tab-el-active"
                                     : ""
-                                  }`}
+                                }`}
                               >
-                                <form action="" method="post" onSubmit={handleSubmit} encType="multipart/form-data">
+                                <form
+                                  name="formrv"
+                                  method="post"
+                                  onSubmit={handleSubmit}
+                                  encType="multipart/form-data"
+                                >
                                   <div className="contactForm row y-gap-30">
                                     <h4 className="text-18 fw-500 mb-2">
                                       Gallery
@@ -167,7 +194,7 @@ export default function Add_destination() {
                                             required
                                             name="name"
                                             onChange={handleChange}
-                                            value={formData.name}
+                                            // value={formData.name}
                                           />
                                           <label className="lh-1 text-16 text-light-1">
                                             Name
@@ -176,9 +203,7 @@ export default function Add_destination() {
                                             </span>
                                           </label>
                                         </div>
-                                        <div class="modal-footer">
-
-                                        </div>
+                                        <div class="modal-footer"></div>
                                       </div>
                                     </div>
                                     <button
@@ -188,7 +213,15 @@ export default function Add_destination() {
                                     >
                                       Close
                                     </button>
-                                    <button type="submit" style={{ backgroundColor: "#78006E", fontWeight:"700", color: "white" }} class="btn  mt-3 mb-2">
+                                    <button
+                                      type="submit"
+                                      style={{
+                                        backgroundColor: "#78006E",
+                                        fontWeight: "700",
+                                        color: "white",
+                                      }}
+                                      class="btn  mt-3 mb-2"
+                                    >
                                       Save changes
                                     </button>
                                   </div>
@@ -253,21 +286,28 @@ export default function Add_destination() {
                     }}
                   >
                     {destinations.map((elm, i) => (
-                      <SwiperSlide key={i}>
+                      <SwiperSlide key={i} >
+                        <div className="card  ">
+                          <div className="card-body">
+                            <div className="d-flex justify-content-end mt-2 mb-3">
+                              <i
+                                class="fa-light fa-trash mx-1 text-danger"
+                                style={{ fontWeight: "700", fontSize: "20px" }}
+                                onClick={() => {
+                                  delete_destination(elm._id);
+                                }}
+                              ></i>
+                              <i
+                                class="fa-light fa-pen-to-square mx-1 text-warning"
+                                style={{ fontWeight: "700", fontSize: "20px" }}
+                              ></i>
+                            </div>
 
-<div className="card ">
-  <div className="card-body">
-    
-                    <div className="d-flex justify-content-end mt-2 mb-3">
-                            <i class="fa-light fa-trash mx-1 text-danger" style={{ fontWeight: "700", fontSize: "20px" }} onClick={()=>{delete_destination(elm._id)}}></i>
-                            <i class="fa-light fa-pen-to-square mx-1 text-warning" style={{ fontWeight: "700", fontSize: "20px" }}></i>
-                          </div>
-                     
                             <a
                               href="#"
                               className="featureImage -type-1 text-center -hover-image-scale"
                             >
-                              <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
+                              <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image">
                                 <img
                                   src={elm.imageSrc}
                                   alt="image"
@@ -275,19 +315,15 @@ export default function Add_destination() {
                                 />
                               </div>
 
-                              <h3 className="featureImage__title text-16 fw-500 mt-20" >
+                              <h3 className="featureImage__title text-16 fw-500 mt-20">
                                 {elm.name}
                               </h3>
                               {/* <p className="featureImage__text text-14">
                       {elm.tourCount}+ Tours
                     </p> */}
                             </a>
-  </div>
-</div>
-
-  
-
-                          
+                          </div>
+                        </div>
                       </SwiperSlide>
                     ))}
                   </Swiper>

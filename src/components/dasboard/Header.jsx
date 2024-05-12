@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Header({ setSideBarOpen }) {
+
+  const navigate = useNavigate();
+  const logoutData = () => {
+    localStorage.removeItem("token");
+    navigate('/login');
+  }
   return (
     <div className="dashboard__content_header">
       <div className="d-flex items-center">
@@ -94,7 +102,7 @@ export default function Header({ setSideBarOpen }) {
 
         
         <div>
-         <button className="btn"  style={{backgroundColor:"#78006E",color:"white"}}>Logout</button>
+         <button className="btn"  style={{backgroundColor:"#78006E",color:"white"}} onClick={logoutData} >Logout</button>
         </div>
       
       </div>

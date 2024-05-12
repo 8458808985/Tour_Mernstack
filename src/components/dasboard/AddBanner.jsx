@@ -19,8 +19,8 @@ export default function AddBanner() {
       .then(res => res.json())
       .then(data => setBanner(data))
       .catch(err => console.error('Error fetching tours:', err));
-  }, []);
-  console.log(banner)
+  }, [banner]);
+  
   const [formData, setFormData] = useState({
     banner: ""
   });
@@ -37,10 +37,9 @@ export default function AddBanner() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    console.log(formData)
     try {
       const formDataToSend = new FormData();
-      //   formDataToSend.append('name', formData.name);
+        // formDataToSend.append('name', formData.name);
       formDataToSend.append('banner', formData.banner);
 
       const response = await fetch('https://test1.buyjugaad.com/api/v1/banner/new', {
@@ -48,14 +47,17 @@ export default function AddBanner() {
         body: formDataToSend
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+      if (response.ok) {
+        // throw new Error('Failed to submit form');
+        frm.reset()
+        toast.success("Successfully Add Banner ", {
+          position: "top-center",
+          autoClose: 300
+        })
       }
 
       setSubmitted(true);
-      toast.success("Successfully Add Banner ", {
-        position: "top-center"
-      })
+      
     } catch (error) {
       setError(error.message);
     } finally {
@@ -63,21 +65,27 @@ export default function AddBanner() {
     }
   };
  
+    const delete_banner = async(id) => {
+      try {
+        const result =await axios.delete(`${BASE_URL}/banner/${id}`);
+      if (result.status === 200) {
   
-//   const handleDelete =async(did)=>{
+        setBanner(banner.filter(banner => banner._id !== id));
+        // If the deletion is successful, show a success message
+        toast.success("Successfully deleted the Banner", {
+          position: "top-center",
+          autoClose: 500
   
-// // alert(did)
-// const response = await axios.delete(`https://test1.buyjugaad.com/api/v1/banner/${did}`)
-
-//   }
-const delete_destination =(id)=>{
-  const result = axios.delete(`${BASE_URL}/destination/${id}`)
-  if(result){
-    toast.success("Successfully Delete banner ", {
-      position: "top-center"
-    })
-  }
-    }
+        });
+      } else {
+        // Handle other status codes or errors if necessary
+        alert("failed deleted")
+      }
+      } catch (error) {
+        console.log(error)
+      }
+      
+    };
   return (
     <>
         <ToastContainer />
@@ -93,7 +101,7 @@ const delete_destination =(id)=>{
 
           <div className="dashboard__content_content">
             <h1 className="text-30 mx-3">Add Banner</h1>
-            <form action="" onSubmit={handleSubmit}>
+            <form name="frm" action="" onSubmit={handleSubmit}>
               <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
                 <div className="row">
                   <div className="col-md-12 col-sm-12 col-12">
@@ -121,16 +129,22 @@ const delete_destination =(id)=>{
                     style={{ width: "200px", height: "100px" }}
                   />
                 </td>
-                <td  className="">
-                  <Button style={{ backgroundColor: "red", marginLeft: "100px", border:"none" }} onClick={()=>{delete_destination(elm._id)}}>
+                <td  className="mt-10">
+                  <Button style={{ backgroundColor: "red", marginLeft: "100px", border:"none" }} onClick={()=>{delete_banner(elm._id)}}>
                     <i class="fa-sharp fa-solid fa-trash "></i>
                   </Button>
+                  <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
+                          data-bs-target="#modelExample" onClick={() => {
+                            edit_article(elm._id);
+                          }}>
+                     <i class="fa-solid fa-pen-to-square fs-6  " ></i>
+                  </Button>
+                  
                 </td>
+                
               </tr>
             ))}
-            <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
-            </div>
+            
           </div>
 
         </div>
