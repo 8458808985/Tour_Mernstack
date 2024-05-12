@@ -28,7 +28,7 @@ export default function DestinationsOne() {
 
           <div data-aos="fade-up" className="col-auto">
             <Link
-              to={"/tour-list-1"}
+              to={"/"}
               className="buttonArrow d-flex items-center "
             >
               <span style={{fontWeight:"700" , fontSize:"20px"}}>See all</span>
@@ -67,10 +67,7 @@ export default function DestinationsOne() {
             >
               {destinations.slice(0, 8).map((elm, i) => (
                 <SwiperSlide key={i}>
-                  <a
-                    href="#"
-                    className="featureImage -type-1 text-center -hover-image-scale mx-5" 
-                  >
+                  <Link to={"/destinations"}>
                     <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
                       <img
                         src={elm.imageSrc}
@@ -85,7 +82,7 @@ export default function DestinationsOne() {
                     {/* <p className="featureImage__text text-14">
                       {elm.tourCount}+ Tours
                     </p> */}
-                  </a>
+                  </Link>
                 </SwiperSlide>
               ))}
             </Swiper>

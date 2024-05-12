@@ -1,36 +1,56 @@
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useEffect, useState } from "react";
-// import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-
-// import Map from "../pages/contact/Map";
+import Pagination from "../common/Pagination";
+import { Button } from "react-bootstrap";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [product, setProduct] = useState([]);
-  const [showPerPage, setShowPerPage] = useState(6);
-  const [pagination , setPagination]=useState({
-    start:0,
-    end:showPerPage
-  })
-  const onPaginationChange = (start, end)=>{
-    setPagination({start: start, end:end})
-  } 
-console.log(product)
+  const [pageData, setPageData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  // console.log(pageCount)
+
+  //handle next
+  const handleNext = () => {
+    if (page === pageCount) return page;
+    setPage(page + 1);
+  };
+  //handle previos
+  const handlePre = () => {
+    if (page === 1) return page;
+    setPage(page - 1);
+  };
+ 
+
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
       .then(res => res.json())
       .then(data => setProduct(data))
       .catch(err => console.error('Error fetching tours:', err));
-  }, []);
-  console.log(product)
+    
+  },[page, product]);
+
+  //pagination useEffect
+  useEffect(() => {
+    const pagedatacount = Math.ceil(product.length / 6);
+    setPageCount(pagedatacount);
+
+    if (page) {
+      const LIMIT = 6;
+      const skip = LIMIT * page;
+      const dataskip = product.slice(page === 1 ? 0 : skip - LIMIT, skip);
+      setPageData(dataskip);
+    }
+  }, [product]);
 
   const [formData, setFormData] = useState({
     product: "",
@@ -69,7 +89,7 @@ console.log(product)
       formDataToSend.append("country", formData.country);
       formDataToSend.append("city", formData.city);
       formDataToSend.append("newprice", formData.newprice);
-      formDataToSend.append("time", formData.time);
+      formDataToSend.append("time", formData.time);   
       formDataToSend.append("imageSrc", formData.imageSrc);
 
       const response = await fetch("https://test1.buyjugaad.com/api/v1/product/new", {
@@ -78,14 +98,19 @@ console.log(product)
         
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+      if (response.ok) {
+        frm.reset();
+        // throw new Error('Failed to submit form');
+        toast.success("Successfully Add Product ", {
+          position: "top-center",
+          autoClose: 500
+
+        })
       }
 
       setSubmitted(true);
-      toast.success("Successfully Add Product ", {
-        position: "top-center"
-      })
+      
+      
     } catch (error) {
       setError(error.message);
     } finally {
@@ -93,13 +118,47 @@ console.log(product)
     }
   };
 
-  const delete_product =async(id)=>{
-const results =await axios.delete(`${BASE_URL}/product/${id}`)
-if(results){
-  toast.success("Successfully Delete Product ", {
-    position: "top-center"
-  })
-}
+//   const delete_product =async(id)=>{
+// const results =await axios.delete(`${BASE_URL}/product/${id}`)
+// if(results){
+//   toast.success("Successfully Delete Product ", {
+//     position: "top-center"
+//   })
+// }
+//   }
+  const delete_product = async(id) => {
+    try {
+      const result =await axios.delete(`${BASE_URL}/product/${id}`);
+    if (result.status === 200) {
+
+      setProduct(product.filter(product => product._id !== id));
+      // If the deletion is successful, show a success message
+      toast.success("Successfully deleted the Product", {
+        position: "top-center",
+        autoClose: 500
+
+      });
+    } else {
+      // Handle other status codes or errors if necessary
+      alert("failed deleted")
+    }
+    } catch (error) {
+      console.log(error)
+    }
+    
+  };
+
+  const edit_product =async(eid)=>{
+    
+      let product =await axios.get(`${BASE_URL}/product/${eid}`)
+      // console.log(book.data.edit_book)
+      console.log(product.data)
+      // localStorage.setItem("product_edit", JSON.stringify(book.data.edit_book));
+      
+      // navigate("/update_book")
+      
+          
+        
   }
 
   return (
@@ -148,7 +207,7 @@ if(results){
                                 className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
                                   }`}
                               >
-                                <form method="post" onSubmit={handleSubmit} encType="multipart/form-data" >
+                                <form method="post" name="frm" onSubmit={handleSubmit} encType="multipart/form-data" >
                                   <div className="contactForm row y-gap-30">
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
@@ -270,7 +329,7 @@ if(results){
                                       </div>
                                     </div>
                                   </div>
-                                  <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button>
+                                  <button class="btn mt-20" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button>
                                 </form>
                               </div>
                             </div>
@@ -283,7 +342,7 @@ if(results){
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button>
+                    {/* <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button> */}
                   </div>
                 </div>
               </div>
@@ -322,12 +381,12 @@ if(results){
                 data-aos-delay=""
                 className="row y-gap-30 pt-5 sm:pt-10"
               >
-                {product.slice(0, 8).map((elm, i) => (
+                {pageData.map((elm, i) => (
                   <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
                     <div className="card border-0 rounded-3 mb-1 mt-1">
                       <div className="card-body">
-                      <button className="btn btn-danger text-light mx-1" onClick={()=>{delete_product(elm._id)}}>Delete</button>
-                      <button className="btn btn-warning text-light mx-1">Edit</button>
+                      {/* <button className="btn btn-danger text-light mx-1" onClick={()=>{delete_product(elm._id)}}>Delete</button> */}
+                      {/* <button className="btn btn-warning text-light mx-1" onClick={()=>{edit_product(elm._id)}}>Edit</button> */}
                         <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
                         <div className="btn d-flex justify-content-end">
                     </div>
@@ -376,16 +435,86 @@ if(results){
                         
                         </div>
                         </div>
-                      
-                       
+                      <hr />
+                        <Button style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }} onClick={()=>{delete_product(elm._id)}}>
+                    <i class="fa-sharp fa-solid fa-trash "></i>
+                  </Button>
+                  <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
+                          data-bs-target="#modelExample" onClick={() => {
+                            edit_article(elm._id);
+                          }}>
+                     <i class="fa-solid fa-pen-to-square fs-6  " ></i>
+                  </Button>
                       </div>
                     </div>
 
                   </div>
+                  
                 ))}
               </div>
             </div>
+
+          
           </section>
+
+          <div style={{display:"flex", justifyContent:"center",}}  >
+          <nav
+          className=" mb-30"
+              aria-label="Page navigation example"
+              style={{ marginTop: "20px",  }}
+            >
+
+              <ul class="pagination">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    href="#"
+                    style={{color:"black", fontSize:"20px"}}
+                    onClick={handlePre}
+                    disabled={page === 1}
+                  >
+                    Previous
+                  </a>
+                </li>
+
+                {Array(pageCount)
+                  .fill(null)
+                  .map((item, index) => {
+                    return (
+                      <>
+                        <li className="page-item ">
+                          <a
+                    style={{color:"black", fontSize:"20px"}}
+                      
+                            class="page-link"
+                            href="#"
+                            onClick={() => setPage(index + 1)}
+                          >
+                            {index + 1}
+                          </a>
+                        </li>
+                      </>
+                    );
+                  })}
+
+                {/* active={page === index + 1 ? true : false} */}
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    style={{color:"black", fontSize:"20px"}}
+
+                    href="#"
+                    onClick={handleNext}
+                    disabled={page === pageCount}
+                  >
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            </div>
+          {/* <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} /> */}
+
         </div>
       </div>
 

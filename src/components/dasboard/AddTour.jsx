@@ -59,14 +59,18 @@ export default function AddTour() {
         body: formDataToSend
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+      if (response.ok) {
+        // throw new Error('Failed to submit form');
+        frm.reset()
+        toast.success("Successfully Add Tour ", {
+          position: "top-center",
+          autoClose: 300
+
+        })
       }
 
       setSubmitted(true);
-      toast.success("Successfully Add Tour ", {
-        position: "top-center"
-      })
+      
     } catch (error) {
       setError(error.message);
     } finally {
@@ -96,7 +100,7 @@ export default function AddTour() {
               <div className="tabs -underline-2 js-tabs">
                 
 
-                <form action="" method="post" onSubmit={handleSubmit} encType="multipart/form-data">
+                <form name="frm" method="post" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="row pt-40">
                   <div className="col-xl-9 col-lg-10">
                     <div className="tabs__content js-tabs-content">

@@ -4,19 +4,27 @@ import Header from "./Header";
 import Stars from "../common/Stars";
 import { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
+import axios from "axios";
+import { Button } from "react-bootstrap";
 
 export default function DBListing() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [tours, setTours] = useState([]);
-  const [showPerPage, setShowPerPage] = useState(6);
-  const [pagination , setPagination]=useState({
-    start:0,
-    end:showPerPage
-  })
-  
-  const onPaginationChange = (start, end)=>{
-    setPagination({start: start, end:end})
-  } 
+  const [pageData, setPageData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+
+  //handle next
+  const handleNext = () => {
+    if (page === pageCount) return page;
+    setPage(page + 1);
+  };
+  //handle previos
+  const handlePre = () => {
+    if (page === 1) return page;
+    setPage(page - 1);
+  };
+
  
 
   useEffect(() => {
@@ -27,7 +35,67 @@ export default function DBListing() {
         // setTotalPages(Math.ceil(data.length/6))
       })
       .catch(err => console.error('Error fetching tours:', err));
-  }, []);  
+  }, [page]); 
+  
+  
+    //pagination useEffect
+    useEffect(() => {
+      const pagedatacount = Math.ceil(tours.length / 6);
+      setPageCount(pagedatacount);
+  
+      if (page) {
+        const LIMIT = 6;
+        const skip = LIMIT * page;
+        const dataskip = tours.slice(page === 1 ? 0 : skip - LIMIT, skip);
+        setPageData(dataskip);
+      }
+    }, [tours]);
+
+  const delete_article = async(id) => {
+    try {
+      const result =await axios.delete(`${BASE_URL}/tours/${id}`);
+    if (result.status === 200) {
+
+      setTours(tours.filter(tours => tours._id !== id));
+      // If the deletion is successful, show a success message
+      toast.success("Successfully deleted the tours", {
+        position: "top-center",
+        autoClose: 500
+
+      });
+    } else {
+      // Handle other status codes or errors if necessary
+      alert("failed deleted")
+    }
+    } catch (error) {
+      console.log(error)
+    }
+    
+  };
+
+  // const delete_Tour = async(id) => {
+  //   try {
+  //     const result = await axios.delete(`${BASE_URL}/tour/${id}`);
+  //   if (result.status === 200) {
+
+  //     setTours(tours.filter(tours => tours._id !== id));
+  //     // If the deletion is successful, show a success message
+  //     toast.success("Successfully deleted the Tours", {
+  //       position: "top-center",
+  //       autoClose: 500
+
+  //     });
+  //   } else {
+  //     // Handle other status codes or errors if necessary
+  //     alert("failed deleted")
+  //   }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+    
+  // };
+
+
   return (
     <>
       <div
@@ -45,7 +113,7 @@ export default function DBListing() {
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
               <div className="row y-gap-30">
-                {tours.slice(pagination.start, pagination.end).map((elm, i) => (
+                {pageData.map((elm, i) => (
                   <div key={i} className="col-lg-6">
                     <div className="border-1 rounded-12 px-20 py-20">
                       <div className="row x-gap-20 y-gap-20 items-center">
@@ -92,8 +160,30 @@ export default function DBListing() {
                                   ${elm.price + 1000}
                                 </span>
                               </div>
+                              
                             </div>
+                           
+                            {/* <div className="d-flex ">
+                           <button onClick={() => {
+                            delete_article(elm._id);
+                          }}>  <i class="fa-sharp fa-solid fa-trash fs-4" style={{color:"#f00000"}} ></i></button>
+      
+                          <button className="ms-3"> <i class="fa-solid fa-pen-to-square fs-4 " style={{color: "#0d46f2"}}></i></button>
+                            </div> */}
+                           
                           </div>
+                          <hr />
+                        <Button style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }} onClick={() => {
+                            delete_article(elm._id);
+                          }}>
+                    <i class="fa-sharp fa-solid fa-trash "></i>
+                  </Button>
+                  <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
+                          data-bs-target="#modelExample" onClick={() => {
+                            edit_article(elm._id);
+                          }}>
+                     <i class="fa-solid fa-pen-to-square fs-6  " ></i>
+                  </Button>
                         </div>
                       </div>
                     </div>
@@ -101,15 +191,62 @@ export default function DBListing() {
                 ))}
               </div>
 
+              <div style={{display:"flex", justifyContent:"center",}}  >
+          <nav
+          className=" mb-30 mt-40"
+              aria-label="Page navigation example"
+              style={{ marginTop: "20px",  }}
+            >
 
-              <div className="mt-30">
-                {/* <Pagination range={Math.ceil(tours.length / itemsPerPage)} onPageChange={handlePageChange} /> */}
-                <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={tours.length}/>
+              <ul class="pagination">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    href="#"
+                    style={{color:"black", fontSize:"20px"}}
+                    onClick={handlePre}
+                    disabled={page === 1}
+                  >
+                    Previous
+                  </a>
+                </li>
 
-                {/* <div className="text-14 text-center mt-20">
-                  Showing results 1-30 of 1,415
-                </div> */}
-              </div>
+                {Array(pageCount)
+                  .fill(null)
+                  .map((item, index) => {
+                    return (
+                      <>
+                        <li className="page-item ">
+                          <a
+                    style={{color:"black", fontSize:"20px"}}
+                      
+                            class="page-link"
+                            href="#"
+                            onClick={() => setPage(index + 1)}
+                          >
+                            {index + 1}
+                          </a>
+                        </li>
+                      </>
+                    );
+                  })}
+
+                {/* active={page === index + 1 ? true : false} */}
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    style={{color:"black", fontSize:"20px"}}
+
+                    href="#"
+                    onClick={handleNext}
+                    disabled={page === pageCount}
+                  >
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            </div>
             </div>
 
           </div>
