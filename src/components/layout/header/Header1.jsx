@@ -43,12 +43,12 @@ export default function Header1() {
       >
         <div className="header__container container-fluid">
           <div className="headerMobile__left">
-            <button
+            {/* <button
               onClick={() => setMobileMenuOpen(true)}
               className="header__menuBtn js-menu-button"
             >
               <i className="icon-main-menu"></i>
-            </button>
+            </button> */}
           </div>
 
           <div className="header__logo">
@@ -92,12 +92,12 @@ export default function Header1() {
               Log in
             </Link>
 
-            <button
+            {/* <button
               onClick={() => setMobileMenuOpen(true)}
               className="header__menuBtn ml-30 js-menu-button"
             >
               <i className="icon-main-menu"></i>
-            </button>
+            </button> */}
           </div>
         </div>
       </header>

@@ -31,7 +31,7 @@ export default function DestinationsOne() {
               to={"/tour-list-1"}
               className="buttonArrow d-flex items-center "
             >
-              <span>See all</span>
+              <span style={{fontWeight:"700" , fontSize:"20px"}}>See all</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>

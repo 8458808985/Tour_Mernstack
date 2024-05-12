@@ -15,7 +15,7 @@ export default function ArticlesOne() {
               data-aos-delay=""
               className="text-30 md:text-24 "
             >
-              Travel Articles
+              Travel Articles 
             </h2>
           </div>
 

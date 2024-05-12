@@ -24,7 +24,7 @@ export default function ArticlesThree() {
             <h2
               data-aos="fade-up"
               data-aos-delay=""
-              className="text-30 md:text-24 "
+              className="text-30 md:text-24 " style={{fontSize:"700"}}
             >
               Travel Articles
             </h2>
@@ -37,8 +37,8 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center  "
             >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
+              <span style={{fontSize:"20px", fontWeight:"700"}}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{fontSize:"20px", fontWeight:"700"}}></i>
             </Link>
           </div>
         </div>
@@ -62,14 +62,14 @@ export default function ArticlesThree() {
                  
                 </div>
 
-                <div className="blogCard__content mt-30">
-                  <div className="blogCard__info text-14">
-                    <div className="lh-13">{elm.date}</div>
-                    <div className="blogCard__line"></div>
-                    <div className="lh-13">By {elm.author}</div>
+                <div className="blogCard__content mt-30" >
+                  <div className="blogCard__info text-14" >
+                    <div className="lh-13" style={{fontSize:"18px",fontWeight:"700"}}>{elm.date}</div>
+                    <div className="blogCard__line" style={{fontSize:"18px"}}></div>
+                    <div className="lh-13" style={{fontSize:"18px"}}>By {elm.author}</div>
                   </div>
 
-                  <h3 className="blogCard__title text-18 fw-500 mt-10">
+                  <h3 className="blogCard__title text-18 fw-500 mt-10" style={{fontSize:"20px",fontWeight:"700"}}>
                     {elm.title}
                   </h3>
                 </div>

@@ -9627,6 +9627,8 @@ h1, h2, h3, h4, h5, h6 {
 .x-gap-5 > * {
   padding-left: 2.5px;
   padding-right: 2.5px;
+
+ 
 }
 
 .y-gap-5 {
@@ -13900,5 +13902,8 @@ button.gm-ui-hover-effect::after {
 .input-group{
   margin-top: 50px;
   margin-bottom: 120px;
+}
+.carousel-inner{
+  height: auto;
 }
 }

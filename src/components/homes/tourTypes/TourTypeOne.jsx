@@ -12,9 +12,9 @@ export default function TourTypeOne() {
             <h2
               data-aos="fade-up"
               data-aos-delay=""
-              className="text-30 md:text-24"
+              className="text-30 md:text-24" style={{fontSize:"20px", fontWeight:"700"}}
             >
-              Popular things to do
+              Popular things to do 
             </h2>
           </div>
 
@@ -25,8 +25,8 @@ export default function TourTypeOne() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
+              <span style={{fontSize:"18px",fontWeight:"700"}}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{fontSize:"18px",fontWeight:"700"}}></i>
             </Link>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function TourTypeOne() {
         >
           {destinationsSix.map((elm, i) => (
             <Link
-              to={"/tour-list-1"}
+              to={"/tour-list-4"}
               key={i}
               className="featureCard -type-1 -hover-1 overflow-hidden rounded-12 px-30 py-30"
             >

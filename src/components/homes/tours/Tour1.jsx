@@ -35,8 +35,9 @@ export default function Tour1() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
+              <span style={{fontWeight:"700", fontSize:"20px"}}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{color:"#78006E", fontSize:"20px", fontWeight:"700"}}></i>
+
             </Link>
           </div>
         </div>
@@ -50,7 +51,7 @@ export default function Tour1() {
             <div key={i} className="col-lg-3 col-md-6">
               <Link
                 to={`/tour-single-1/${elm.id}`}
-                className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
+                className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
               >
                 <div className="tourCard__header">
                   <div className="tourCard__image ratio ratio-28:20">
@@ -62,38 +63,38 @@ export default function Tour1() {
                   </div>
 
                   <button className="tourCard__favorite">
-                    <i className="icon-heart"></i>
+                    <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
                   </button>
                 </div>
 
                 <div className="tourCard__content px-10 pt-10">
                   <div className="tourCard__location d-flex items-center text-13 text-light-2">
                     <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                    {elm.location}
+               <span style={{fontSize:"20px",fontWeight:"700"}}>  {elm.location}</span>   
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">
-                    <span>{elm.title}</span>
+                    <span style={{fontSize:"18px",fontWeight:"700"}}>{elm.title}</span>
                   </h3>
 
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    <div className="d-flex x-gap-5">
-                      <Stars star={elm.rating} />
+                    <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
+                      <Stars star={elm.rating}  />
                     </div>
 
-                    <span className="text-dark-1 ml-10">
+                    <span className="text-dark-1 ml-10" style={{fontSize:"17px",fontWeight:"700"}}>
                       {elm.rating} ({elm.ratingCount})
                     </span>
                   </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                    <div className="d-flex items-center">
-                      <i className="icon-clock text-16 mr-5"></i>
+                    <div className="d-flex items-center" style={{fontSize:"17px",fontWeight:"700"}}>
+                      <i className="icon-clock text-16 mr-5" style={{fontSize:"17px",fontWeight:"700"}}></i>
                       {elm.duration}
                     </div>
 
                     <div>
-                      From <span className="text-16 fw-500">${elm.price}</span>
+                     <span className="text-16 fw-500" style={{fontSize:"17px",fontWeight:"700"}}>${elm.price}</span>
                     </div>
                   </div>
                 </div>

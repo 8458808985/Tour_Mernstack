@@ -43,12 +43,12 @@ export default function Header5() {
       >
         <div className="header__container container">
           <div className="headerMobile__left">
-            <button
+            {/* <button
               onClick={() => setMobileMenuOpen(true)}
               className="header__menuBtn js-menu-button"
             >
               <i className="icon-main-menu"></i>
-            </button>
+            </button> */}
           </div>
 
           <div className="header__logo">

@@ -15,7 +15,7 @@ export default function PopulerTours() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Find Popular Tours
+              Find Popular Tou
             </h2>
           </div>
         </div>
@@ -29,13 +29,15 @@ export default function PopulerTours() {
             <div key={i} className="col-lg-3 col-md-6">
               <Link
                 to={`/tour-single-1/${elm.id}`}
-                className="tourCard -type-1 -rounded bg-white hover-shadow-1 overflow-hidden rounded-20 shadow-1 -hover-shadow"
+                className="tourCard -type-1 -rounded bg-white hover-shadow overflow-hidden rounded-20 shadow-1 -hover-shadow "
               >
-                <div className="tourCard__header">
+                <div className="tourCard__header border-0">
+                  
                   <div className="tourCard__image ratio ratio-28:20">
                     <img src={elm.imageSrc} alt="image" className="img-ratio" />
-
-                    <div className="tourCard__shape"></div>
+                    <div className="tourCard__shape">
+                    
+                    </div>
                   </div>
 
                   <button className="tourCard__favorite">

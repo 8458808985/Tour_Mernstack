@@ -208,9 +208,9 @@ export default function Add_destination() {
             <div className="container">
               <div className="row y-gap-10 justify-between items-end">
                 <div className="col-auto">
-                  {/* <h2 data-aos="fade-up" className="text-30 md:text-24">
+                  <h2 data-aos="fade-up" className="text-30 md:text-24">
               Trending destinations 
-            </h2> */}
+            </h2>
                 </div>
 
                 <div data-aos="fade-up" className="col-auto">

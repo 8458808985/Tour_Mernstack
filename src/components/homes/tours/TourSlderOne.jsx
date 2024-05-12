@@ -18,8 +18,8 @@ export default function TourSlderOne() {
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
   return (
-    <section className="layout-pt-xl layout-pb-xl relative">
-      <div className="sectionBg -w-1530 rounded-12 bg-light-1"></div>
+    <section className="layout-pt-xl layout-pb-xl relative" >
+      <div className="sectionBg -w-1530 rounded-12 bg-light-1 shadow"></div>
 
       <div className="container">
         <div className="row justify-between items-end y-gap-10">
@@ -27,9 +27,9 @@ export default function TourSlderOne() {
             <h2
               data-aos="fade-up"
               data-aos-delay=""
-              className="text-30 md:text-24"
+              className="text-30 md:text-24 mt-4"
             >
-              Top Trending 
+              Top Trending
             </h2>
           </div>
 
@@ -38,16 +38,16 @@ export default function TourSlderOne() {
               to={"/tour-list-1"}
               data-aos="fade-right"
               data-aos-delay=""
-              className="buttonArrow d-flex items-center "
+              className="buttonArrow d-flex items-center  "
             >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
+              <span  style={{fontSize:"20px" , fontWeight:"700"}}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{fontSize:"20px" , fontWeight:"700"}}></i>
             </Link>
           </div>
         </div>
 
         <div className="relative pt-40 sm:pt-20">
-          <div className="overflow-hidden pb-30 js-section-slider">
+          <div className="overflow-hidden pb-30 js-section-slider border-0">
             <div
               data-aos="fade-up"
               data-aos-delay=""
@@ -84,9 +84,9 @@ export default function TourSlderOne() {
                   <SwiperSlide key={i}>
                     <Link
                       to={`/tour-single-1/${elm.id}`}
-                      className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
+                      className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow border-0 shadow"
                     >
-                      <div className="tourCard__header">
+                      <div className="tourCard__header border-0">
                         <div className="tourCard__image ratio ratio-28:20">
                           <img
                             src={elm.imageSrc}
@@ -96,39 +96,39 @@ export default function TourSlderOne() {
                         </div>
 
                         <button className="tourCard__favorite">
-                          <i className="icon-heart"></i>
+                          <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
                         </button>
                       </div>
 
                       <div className="tourCard__content px-10 pt-10">
                         <div className="tourCard__location d-flex items-center text-13 text-light-2">
-                          <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                          {elm.location}
+                          <i className="icon-pin d-flex text-16 text-light-2 mr-5" ></i>
+                    <span style={{fontSize:"20px",fontWeight:"700"}}> {elm.location}</span>
                         </div>
 
                         <h3 className="tourCard__title text-16 fw-500 mt-5">
-                          <span>{elm.title}</span>
+                          <span style={{fontSize:"20px",fontWeight:"700"}}>{elm.title}</span>
                         </h3>
 
                         <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                          <div className="d-flex x-gap-5">
+                          <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
                             <Stars star={elm.rating} />
                           </div>
 
-                          <span className="text-dark-1 ml-10">
+                          <span className="text-dark-1 ml-10" style={{fontSize:"18px",fontWeight:"900"}}>
                             {elm.rating} ({elm.ratingCount})
                           </span>
                         </div>
 
                         <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                           <div className="d-flex items-center">
-                            <i className="icon-clock text-16 mr-5"></i>
-                            {elm.duration}
+                            <i className="icon-clock text-16 mr-5" style={{fontSize:"17px",fontWeight:"700"}}></i>
+                       <span style={{fontSize:"17px",fontWeight:"700"}}> {elm.duration}</span>    
                           </div>
 
                           <div>
-                            From{" "}
-                            <span className="text-16 fw-500">${elm.price}</span>
+                           {" "}
+                            <span className="text-16 fw-500"style={{fontSize:"18px",fontWeight:"700"}}>${elm.price}</span>
                           </div>
                         </div>
                       </div>
