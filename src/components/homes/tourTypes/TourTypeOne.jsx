@@ -43,7 +43,7 @@ export default function TourTypeOne() {
               className="featureCard -type-1 -hover-1 overflow-hidden rounded-12 px-30 py-30"
             >
               <div className="featureCard__image">
-                <img src={elm.imgSrc} alt="image" />
+                <img src={elm.imgSrc} alt="image"/>
               </div>
 
               <div className="featureCard__content">
