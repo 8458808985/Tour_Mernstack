@@ -5,7 +5,7 @@ import Stars from "../common/Stars";
 import { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function DBListing() {
@@ -14,6 +14,8 @@ export default function DBListing() {
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const navigate =useNavigate()
   //handle next
@@ -53,28 +55,37 @@ export default function DBListing() {
       }
     }, [tours]);
 
-  const delete_article = async(id) => {
-    try {
-      const result =await axios.delete(`${BASE_URL}/tours/${id}`);
-    if (result.status === 200) {
-
-      setTours(tours.filter(tours => tours._id !== id));
-      // If the deletion is successful, show a success message
-      toast.success("Successfully deleted the tours", {
-        position: "top-center",
-        autoClose: 500
-
-      });
-    } else {
-      // Handle other status codes or errors if necessary
-      alert("failed deleted")
-    }
-    } catch (error) {
-      console.log(error)
-    }
-    
-  };
-
+    const deleteTour = async (id) => {
+      try {
+        const response = await axios.delete(`${BASE_URL}/tours/${id}`);
+        if (response.status === 200) {
+          setTours(tours.filter(tour => tour._id !== id));
+          hideDeleteModal();
+          // If the deletion is successful, show a success message
+          toast.success("Successfully deleted the tour", {
+            position: "top-center",
+            autoClose: 2000
+          });
+        } else {
+          // Handle other status codes or errors if necessary
+          toast.error("Failed to delete the tour");
+        }
+      } catch (error) {
+        console.error("Error deleting tour:", error);
+      }
+    };
+  
+    // Function to show the delete confirmation modal
+    const showDeleteModal = (id) => {
+      setTourToDelete(id);
+      setShowModal(true);
+    };
+  
+    // Function to close the delete confirmation modal
+    const hideDeleteModal = () => {
+      setTourToDelete(null);
+      setShowModal(false);
+    };
   const edit_tour =async(eid)=>{
     try {
       let tour =await axios.get(`${BASE_URL}/tours/${eid}`)
@@ -92,29 +103,7 @@ export default function DBListing() {
       
 }
 
-  // const delete_Tour = async(id) => {
-  //   try {
-  //     const result = await axios.delete(`${BASE_URL}/tour/${id}`);
-  //   if (result.status === 200) {
-
-  //     setTours(tours.filter(tours => tours._id !== id));
-  //     // If the deletion is successful, show a success message
-  //     toast.success("Successfully deleted the Tours", {
-  //       position: "top-center",
-  //       autoClose: 500
-
-  //     });
-  //   } else {
-  //     // Handle other status codes or errors if necessary
-  //     alert("failed deleted")
-  //   }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-    
-  // };
-
-
+ 
   return (
     <>
       <div
@@ -192,11 +181,30 @@ export default function DBListing() {
                            
                           </div>
                           <hr />
-                        <Button style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }} onClick={() => {
-                            delete_article(elm._id);
-                          }}>
+                          <Button 
+              style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }}
+              onClick={() => showDeleteModal(elm._id)}
+            >
                     <i class="fa-sharp fa-solid fa-trash "></i>
-                  </Button>
+              
+            </Button>
+                             {/* Delete confirmation modal */}
+       {/* Delete confirmation modal */}
+       <Modal show={showModal} onHide={hideDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this tour?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => deleteTour(tourToDelete)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+                    
                   <Button style={{marginLeft:"7px"}} onClick={() => {
                             edit_tour(elm._id);
                           }}>

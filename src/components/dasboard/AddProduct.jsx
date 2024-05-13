@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import Pagination from "../common/Pagination";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddProduct() {
@@ -17,6 +17,9 @@ export default function AddProduct() {
   const [pageData, setPageData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   // console.log(pageCount)
 
   //handle next
@@ -126,28 +129,59 @@ export default function AddProduct() {
 //   })
 // }
 //   }
-  const delete_product = async(id) => {
-    try {
-      const result =await axios.delete(`${BASE_URL}/product/${id}`);
-    if (result.status === 200) {
+  // const delete_product = async(id) => {
+  //   try {
+  //     const result =await axios.delete(`${BASE_URL}/product/${id}`);
+  //   if (result.status === 200) {
 
-      setProduct(product.filter(product => product._id !== id));
-      // If the deletion is successful, show a success message
-      toast.success("Successfully deleted the Product", {
-        position: "top-center",
-        autoClose: 500
+  //     setProduct(product.filter(product => product._id !== id));
+  //     // If the deletion is successful, show a success message
+  //     toast.success("Successfully deleted the Product", {
+  //       position: "top-center",
+  //       autoClose: 500
 
-      });
-    } else {
-      // Handle other status codes or errors if necessary
-      alert("failed deleted")
-    }
-    } catch (error) {
-      console.log(error)
-    }
+  //     });
+  //   } else {
+  //     // Handle other status codes or errors if necessary
+  //     alert("failed deleted")
+  //   }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
     
+  // };
+
+  const deleteTour = async (id) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/product/${id}`);
+      if (response.status === 200) {
+        setProduct(product.filter(product => product._id !== id));
+        hideDeleteModal();
+        // If the deletion is successful, show a success message
+        toast.success("Successfully deleted the tour", {
+          position: "top-center",
+          autoClose: 2000
+        });
+      } else {
+        // Handle other status codes or errors if necessary
+        toast.error("Failed to delete the tour");
+      }
+    } catch (error) {
+      console.error("Error deleting tour:", error);
+    }
   };
 
+  // Function to show the delete confirmation modal
+  const showDeleteModal = (id) => {
+    setTourToDelete(id);
+    setShowModal(true);
+  };
+
+  // Function to close the delete confirmation modal
+  const hideDeleteModal = () => {
+    setTourToDelete(null);
+    setShowModal(false);
+  };
   const edit_product =async(eid)=>{
     
       let product =await axios.get(`${BASE_URL}/product/${eid}`)
@@ -592,9 +626,29 @@ export default function AddProduct() {
                         </div>
                         </div>
                       <hr />
-                        <Button style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }} onClick={()=>{delete_product(elm._id)}}>
+                      <Button 
+              style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }}
+              onClick={() => showDeleteModal(elm._id)}
+            >
                     <i class="fa-sharp fa-solid fa-trash "></i>
-                  </Button>
+              
+            </Button>
+                             {/* Delete confirmation modal */}
+       {/* Delete confirmation modal */}
+       <Modal show={showModal} onHide={hideDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this Product?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => deleteTour(tourToDelete)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
                   <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
                           data-bs-target="#editModal" onClick={() => {
                             edit_article(elm._id);

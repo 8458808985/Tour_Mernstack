@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import axios, { Axios } from "axios";
 import { Link } from "react-router-dom";
+import { Button, Modal } from "react-bootstrap";
 
 // import Map from "../pages/contact/Map";
 
@@ -18,6 +19,8 @@ export default function Add_destination() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
   const [destinations, setDestinations] = useState([]);
+  const [bannerToDelete, setBannerToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE_URL}/destination`)
@@ -76,28 +79,59 @@ export default function Add_destination() {
       setSubmitting(false);
     }
   };
-
-  const delete_destination = async(id) => {
+  const deleteBanner = async (id) => {
     try {
-      const result =await axios.delete(`${BASE_URL}/destination/${id}`);
-    if (result.status === 200) {
-
-      setDestinations(destinations.filter(destinations => destinations._id !== id));
-      // If the deletion is successful, show a success message
-      toast.success("Successfully deleted the Destination", {
-        position: "top-center",
-        autoClose: 500
-
-      });
-    } else {
-      // Handle other status codes or errors if necessary
-      alert("failed deleted")
-    }
+      const response = await axios.delete(`${BASE_URL}/destination/${id}`);
+      if (response.status === 200) {
+        setDestinations(destinations.filter(destinations => destinations._id !== id));
+        hideDeleteModal();
+        // If the deletion is successful, show a success message
+        toast.success("Successfully deleted the banner", {
+          position: "top-center",
+          autoClose: 2000
+        });
+      } else {
+        // Handle other status codes or errors if necessary
+        toast.error("Failed to delete the banner");
+      }
     } catch (error) {
-      console.log(error)
+      console.error("Error deleting banner:", error);
     }
-    
   };
+
+  // Function to show the delete confirmation modal
+  const showDeleteModal = (id) => {
+    setBannerToDelete(id);
+    setShowModal(true);
+  };
+
+  // Function to close the delete confirmation modal
+  const hideDeleteModal = () => {
+    setShowModal(false);
+    setBannerToDelete(null);
+  };
+
+  // const delete_destination = async(id) => {
+  //   try {
+  //     const result =await axios.delete(`${BASE_URL}/destination/${id}`);
+  //   if (result.status === 200) {
+
+  //     setDestinations(destinations.filter(destinations => destinations._id !== id));
+  //     // If the deletion is successful, show a success message
+  //     toast.success("Successfully deleted the Destination", {
+  //       position: "top-center",
+  //       autoClose: 500
+
+  //     });
+  //   } else {
+  //     // Handle other status codes or errors if necessary
+  //     alert("failed deleted")
+  //   }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+    
+  // };
   return (
     <>
       <ToastContainer />
@@ -401,7 +435,7 @@ export default function Add_destination() {
                       <SwiperSlide key={i} >
                         <div className="card  ">
                           <div className="card-body">
-                            <div className="d-flex justify-content-end mt-2 mb-3">
+                            {/* <div className="d-flex justify-content-end mt-2 mb-3">
                               <i
                                 class="fa-light fa-trash mx-1 text-danger"
                                 style={{ fontWeight: "700", fontSize: "20px" }}
@@ -413,7 +447,7 @@ export default function Add_destination() {
                                 class="fa-light fa-pen-to-square mx-1 text-warning" data-bs-toggle="modal" data-bs-target="#ediModal" onClick={() => {edit_article(elm._id);}}
                                 style={{ fontWeight: "700", fontSize: "20px" }}
                               ></i>
-                            </div>
+                            </div> */}
 
                             <a
                               href="#"
@@ -434,6 +468,38 @@ export default function Add_destination() {
                       {elm.tourCount}+ Tours
                     </p> */}
                             </a>
+                            <hr />
+<div className="d-flex justify-content-between">
+
+                            <Button className="btn btn-sm fs-6"
+              style={{ backgroundColor: "red", marginLeft: "0px", border:"none"  }}
+              onClick={() => showDeleteModal(elm._id)}
+            >
+              <i className="fa-sharp fa-solid fa-trash "></i>
+            </Button>
+                             {/* Delete confirmation modal */}
+       {/* Delete confirmation modal */}
+       <Modal show={showModal} onHide={hideDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this Destinaion?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => deleteBanner(bannerToDelete)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Button className="btn btn-sm fs-6" style={{marginLeft:"1px"}}  data-bs-toggle="modal"
+                          data-bs-target="#ediModal" onClick={() => {
+                            edit_article(elm._id);
+                          }}>
+                     <i class="fa-solid fa-pen-to-square fs-6  " ></i>
+                  </Button>
+                          </div>
                           </div>
                         </div>
                       </SwiperSlide>
