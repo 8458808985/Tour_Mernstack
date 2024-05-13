@@ -57,6 +57,8 @@ import DBAddBannerPage from "./pages/dashboard/db-add-banner";
 import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
 import { Protected } from "./components/protected/protected";
 import DBAddArticlePage from "./pages/dashboard/db-add-article";
+import UpdateTour from "./components/dasboard/main/UpdateTour";
+
 function App() {
   useEffect(() => {
     Aos.init({
@@ -128,6 +130,8 @@ function App() {
             <Route path="/invoice" element={<InvoicePage />} />
             <Route path="/ui-elements" element={<UIElementsPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/UpdateTour" element={<DBAddTourPage />} />
+
 
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="/*" element={<NotFoundPage />} />

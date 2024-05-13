@@ -236,6 +236,118 @@ export default function Add_destination() {
                 </div>
               </div>
             </div>
+
+            {/* ///// edit Modal  */}
+
+            <div
+              class="modal fade"
+              id="ediModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Edit Destination
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div className="rounded-12 bg-white shadow-2 px-10 pt-10 pb-10 mt-10">
+                      <div className="tabs -underline-2 js-tabs">
+                        <div className="row pt-10">
+                          <div className="col-xl-9 col-lg-10">
+                            <div className="tabs__content js-tabs-content">
+                              <div
+                                className={`tabs__pane  ${
+                                  activeTab == "Content"
+                                    ? "is-tab-el-active"
+                                    : ""
+                                }`}
+                              >
+                                <form
+                                  name="formrv"
+                                  method="post"
+                                  onSubmit={handleSubmit}
+                                  encType="multipart/form-data"
+                                >
+                                  <div className="contactForm row y-gap-30">
+                                    <h4 className="text-18 fw-500 mb-2">
+                                      Gallery
+                                    </h4>
+                                    <div class="input-group mb-3">
+                                      <div class="input-group mb-3">
+                                        <input
+                                          type="file"
+                                          onChange={FileHandler}
+                                          name="imageSrc"
+                                          class="form-control"
+                                          id="inputGroupFile02"
+                                        />
+                                        <label
+                                          class="input-group-text"
+                                          for="inputGroupFile02"
+                                        >
+                                          Upload
+                                        </label>
+                                      </div>
+                                      <div className="col-6 col-sm-12 col-lg-12 mt-5">
+                                        <div className="form-input ">
+                                          <input
+                                            type="text"
+                                            required
+                                            name="name"
+                                            onChange={handleChange}
+                                            // value={formData.name}
+                                          />
+                                          <label className="lh-1 text-16 text-light-1">
+                                            Name
+                                            <span className="text-danger">
+                                              *
+                                            </span>
+                                          </label>
+                                        </div>
+                                        <div class="modal-footer"></div>
+                                      </div>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary mt-2 mb-2"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                    <button
+                                      type="submit"
+                                      style={{
+                                        backgroundColor: "#78006E",
+                                        fontWeight: "700",
+                                        color: "white",
+                                      }}
+                                      class="btn  mt-3 mb-2"
+                                    >
+                                      Update
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* -------------------- */}
           </div>
           <section className="layout-pt-xl">
             <div className="container">
@@ -298,7 +410,7 @@ export default function Add_destination() {
                                 }}
                               ></i>
                               <i
-                                class="fa-light fa-pen-to-square mx-1 text-warning"
+                                class="fa-light fa-pen-to-square mx-1 text-warning" data-bs-toggle="modal" data-bs-target="#ediModal" onClick={() => {edit_article(elm._id);}}
                                 style={{ fontWeight: "700", fontSize: "20px" }}
                               ></i>
                             </div>

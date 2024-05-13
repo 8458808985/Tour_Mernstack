@@ -348,6 +348,162 @@ export default function AddProduct() {
               </div>
             </div>
 
+            {/* // edit Model  */}
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content" style={{ width: "168%" }}>
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div className="rounded-12 bg-white shadow-2 px-10 pt-10 pb-10 mt-10">
+                      <div className="tabs -underline-2 js-tabs">
+
+                        <h2 style={{ fontSize: "18px" }}>Content <span className="text-danger">*</span></h2>
+
+                        <div className="row pt-40">
+                          <div className="col-xl-9 col-lg-10">
+                            <div className="tabs__content js-tabs-content">
+                              <div
+                                className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
+                                  }`}
+                              >
+                                <form method="post" name="frm" onSubmit={handleSubmit} encType="multipart/form-data" >
+                                  <div className="contactForm row y-gap-30">
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input type="text" required name="product" onChange={inputHandler} />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Product Name <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input required name='discount' type="number" onChange={inputHandler} />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Discount <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input type="number" required name='oldprice' onChange={inputHandler} />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Old Price<span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input type="number" required name='newprice' onChange={inputHandler} />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          New Price<span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <div className="col-6 col-sm-12 col-lg-12">
+                                          <div className="form-input ">
+                                            <input type="text" required name='city' onChange={inputHandler} />
+                                            <label className="lh-1 text-16 text-light-1">
+                                              city<span className="text-danger">*</span>
+                                            </label>
+                                          </div>
+                                        </div>
+                                        {/* <select class="form-select" aria-label="Default select example">
+                            <option selected >City
+
+                            </option>
+                            <option value={formData.city} name='city' onChange={inputHandler}>Indore</option>
+                           
+                          </select> */}
+
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+
+                                        <div className="col-6 col-sm-12 col-lg-12">
+                                          <div className="form-input ">
+                                            <input type="text" required name='country' onChange={inputHandler} />
+                                            <label className="lh-1 text-16 text-light-1">
+                                              country<span className="text-danger">*</span>
+                                            </label>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-12 col-lg-12">
+                                      <div className="form-input ">
+                                        <input type="Date" required name='time' onChange={inputHandler} />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Date<span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="col-12">
+                                      <h4 className="text-18 fw-500 mb-20">Gallery</h4>
+
+                                      <div className="row x-gap-20 y-gap-20">
+
+                                        <div className="col-auto  ">
+                                          <label
+                                            htmlFor="imageInp1"
+                                            className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                          >
+                                            <img
+                                              alt="image"
+                                              src={"/img/dashboard/upload.svg"}
+                                            />
+
+                                            <div className="text-16 fw-500 text-accent-1 mt-10">
+                                              Upload Images
+                                            </div>
+                                          </label>
+                                          <input
+                                            onChange={FileHandler}
+                                            name="imageSrc"
+                                            accept="image/*"
+                                            id="imageInp1"
+                                            type="file"
+                                            style={{ display: "none" }}
+                                          />
+                                        </div>
+
+
+                                      </div>
+
+                                      <div className="text-14 mt-20">
+                                        PNG or JPG no bigger than 800px wide and tall.
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <button class="btn mt-20" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Update</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {/* <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* --------------------------------- */}
+
 
           </div>
           <section className="layout-pt-xl">
@@ -440,7 +596,7 @@ export default function AddProduct() {
                     <i class="fa-sharp fa-solid fa-trash "></i>
                   </Button>
                   <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
-                          data-bs-target="#modelExample" onClick={() => {
+                          data-bs-target="#editModal" onClick={() => {
                             edit_article(elm._id);
                           }}>
                      <i class="fa-solid fa-pen-to-square fs-6  " ></i>
