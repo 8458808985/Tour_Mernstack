@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function DBListing() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -14,6 +15,7 @@ export default function DBListing() {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
 
+  const navigate =useNavigate()
   //handle next
   const handleNext = () => {
     if (page === pageCount) return page;
@@ -72,6 +74,23 @@ export default function DBListing() {
     }
     
   };
+
+  const edit_tour =async(eid)=>{
+    try {
+      let tour =await axios.get(`${BASE_URL}/tours/${eid}`)
+      // console.log(book.data.edit_book)
+      console.log(tour)
+      localStorage.setItem("tour_edit", JSON.stringify(tour.data));
+      
+      navigate("/UpdateTour")
+        
+    } catch (error) {
+    console.log(error)  
+    }
+    
+        
+      
+}
 
   // const delete_Tour = async(id) => {
   //   try {
@@ -178,9 +197,8 @@ export default function DBListing() {
                           }}>
                     <i class="fa-sharp fa-solid fa-trash "></i>
                   </Button>
-                  <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
-                          data-bs-target="#modelExample" onClick={() => {
-                            edit_article(elm._id);
+                  <Button style={{marginLeft:"7px"}} onClick={() => {
+                            edit_tour(elm._id);
                           }}>
                      <i class="fa-solid fa-pen-to-square fs-6  " ></i>
                   </Button>
