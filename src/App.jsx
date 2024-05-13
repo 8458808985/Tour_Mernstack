@@ -58,6 +58,7 @@ import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
 import { Protected } from "./components/protected/protected";
 import DBAddArticlePage from "./pages/dashboard/db-add-article";
 import UpdateTour from "./components/dasboard/main/UpdateTour";
+import DBUpdateTourPage from "./pages/dashboard/db-update-tour";
 
 function App() {
   useEffect(() => {
@@ -130,7 +131,7 @@ function App() {
             <Route path="/invoice" element={<InvoicePage />} />
             <Route path="/ui-elements" element={<UIElementsPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/UpdateTour" element={<DBAddTourPage />} />
+            <Route path="/UpdateTour" element={<DBUpdateTourPage />} />
 
 
             <Route path="/404" element={<NotFoundPage />} />
