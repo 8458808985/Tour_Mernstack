@@ -14,7 +14,7 @@ export default function DBAddTourPage() {
     <>
       <MetaComponent meta={metadata} />
       <main>
-        <UpdateTour />
+        <AddTour />
       </main>
     </>
   );

@@ -112,7 +112,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="title" onChange={inputHandler} 
-                                          value={formData.length > 0 ? formData[0].title : "" }
+                                        
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -123,7 +123,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required  name="duration" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].duration : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -134,7 +134,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="price" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].price : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -145,7 +145,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="feature" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].feature : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -156,8 +156,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="spead" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].spead : "" }
-                              
+                                                                       
                               />
                               <label className="lh-1 text-16 text-light-1">
                               Spead
@@ -167,7 +166,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="location" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].location : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -178,7 +177,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="rating" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].rating : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -189,7 +188,7 @@ export default function UpdateTour() {
                           <div className="col-6">
                             <div className="form-input ">
                               <input type="text" required name="ratingCount" onChange={inputHandler}
-                                          value={formData.length > 0 ? formData[0].ratingCount : "" }
+                                         
                               
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -201,11 +200,12 @@ export default function UpdateTour() {
                                         <label htmlFor="formFile" style={{fontWeight:"700"}} className="form-label mx-3">
                                         Select File Here
                                         </label>
-                                        <input className="form-control fs-6" style={{border:"1px solid black"}} type="file" id="formFile" name="imageSrc" onChange={FileHandler}
-                                          value={formData.length > 0 ? formData[0].file : "" }
+                                        <input className="form-cont
+                                        rol fs-6" style={{border:"1px solid black"}} type="file" id="formFile" name="imageSrc" onChange={FileHandler}
+                                        //   value={formData.length > 0 ? formData[0].file : "" }
                                         
                                         />
-                                        <input type="hidden" value={formData[0]._id} />
+                                        {/* <input type="hidden" value={formData[0]._id} /> */}
                                     </div>
 
                           <div className="col-12">
