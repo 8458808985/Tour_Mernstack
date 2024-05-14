@@ -1,10 +1,20 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Header({ setSideBarOpen }) {
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [data , setData]=useState('')
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const localdata=localStorage.getItem("role")
+    // console.log(localdata)
+    setData(localdata)
+  })
   const logoutData = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role")
+    setLoggedIn(false);
     navigate('/login');
   }
   return (
@@ -102,6 +112,7 @@ export default function Header({ setSideBarOpen }) {
 
         
         <div>
+          
          <button className="btn"  style={{backgroundColor:"#78006E",color:"white"}} onClick={logoutData} >Logout</button>
         </div>
       

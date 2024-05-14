@@ -54,7 +54,7 @@ export default function AddBanner() {
         frm.reset()
         toast.success("Successfully Add Banner ", {
           position: "top-center",
-          autoClose: 300
+          autoClose: 500
         })
       }
 

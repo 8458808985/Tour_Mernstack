@@ -8,6 +8,23 @@ import MobileMenu from "../components/MobileMenu";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Header1() {
+  const [data , setData]=useState('')
+
+  useEffect(()=>{
+    const localdata=localStorage.getItem("role")
+    // console.log(localdata)
+    setData(localdata)
+  })
+
+  const logoutData = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role")
+    setLoggedIn(false);
+    navigate('/');
+  }
+
+// console.log("sata", data)
+
   const navigate = useNavigate();
 
   const pageNavigate = (pageName) => {
@@ -19,6 +36,7 @@ export default function Header1() {
   const [addClass, setAddClass] = useState(false);
 
   // Add a class to the element when scrolled 50px
+
   const handleScroll = () => {
     if (window.scrollY >= 50) {
       setAddClass(true);
@@ -81,16 +99,41 @@ export default function Header1() {
             <Destinations />
             <Activities />
             <Currency />
-            <Link to="/register" className="ml-10">
-              Sign up
-            </Link>
 
-            <Link
-              to="/login"
-              className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-30"
-            >
-              Log in
-            </Link>
+            {data === "admin" ? (
+              
+  <>
+
+    <Link to="/db-main" className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-30">
+      Dashboard
+    </Link>
+
+
+  </>
+) : (
+  <>
+{data === 'user'?
+(
+<Link  className="ml-30 button -sm -dark-1 bg-accent-1 rounded-200 text-white"  onClick={logoutData}>
+      Logout
+    </Link>
+):(
+<>
+  <Link to="/register" className="ml-10">
+      Sign up
+    </Link>
+    <Link to="/login" className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-30">
+      Log in
+    </Link>
+    </>
+)
+}
+
+
+  
+  </>
+)}
+
 
             {/* <button
               onClick={() => setMobileMenuOpen(true)}
