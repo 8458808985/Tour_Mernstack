@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Map from "../pages/contact/Map";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +13,8 @@ const tabs = ["Content", "Location", "Pricing", "Included"];
 export default function AddBanner() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [banner, setBanner] = useState([]);
+  const [bannerToDelete, setBannerToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE_URL}/banner`)
@@ -64,28 +66,59 @@ export default function AddBanner() {
       setSubmitting(false);
     }
   };
- 
-    const delete_banner = async(id) => {
-      try {
-        const result =await axios.delete(`${BASE_URL}/banner/${id}`);
-      if (result.status === 200) {
-  
+  const deleteBanner = async (id) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/banner/${id}`);
+      if (response.status === 200) {
         setBanner(banner.filter(banner => banner._id !== id));
+        hideDeleteModal();
         // If the deletion is successful, show a success message
-        toast.success("Successfully deleted the Banner", {
+        toast.success("Successfully deleted the banner", {
           position: "top-center",
-          autoClose: 500
-  
+          autoClose: 2000
         });
       } else {
         // Handle other status codes or errors if necessary
-        alert("failed deleted")
+        toast.error("Failed to delete the banner");
       }
-      } catch (error) {
-        console.log(error)
-      }
+    } catch (error) {
+      console.error("Error deleting banner:", error);
+    }
+  };
+
+  // Function to show the delete confirmation modal
+  const showDeleteModal = (id) => {
+    setBannerToDelete(id);
+    setShowModal(true);
+  };
+
+  // Function to close the delete confirmation modal
+  const hideDeleteModal = () => {
+    setShowModal(false);
+    setBannerToDelete(null);
+  };
+
+    // const delete_banner = async(id) => {
+    //   try {
+    //     const result =await axios.delete(`${BASE_URL}/banner/${id}`);
+    //   if (result.status === 200) {
+  
+    //     setBanner(banner.filter(banner => banner._id !== id));
+    //     // If the deletion is successful, show a success message
+    //     toast.success("Successfully deleted the Banner", {
+    //       position: "top-center",
+    //       autoClose: 500
+  
+    //     });
+    //   } else {
+    //     // Handle other status codes or errors if necessary
+    //     alert("failed deleted")
+    //   }
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
       
-    };
+    // };
   return (
     <>
         <ToastContainer />
@@ -130,9 +163,28 @@ export default function AddBanner() {
                   />
                 </td>
                 <td  className="mt-10">
-                  <Button style={{ backgroundColor: "red", marginLeft: "100px", border:"none" }} onClick={()=>{delete_banner(elm._id)}}>
-                    <i class="fa-sharp fa-solid fa-trash "></i>
-                  </Button>
+                <Button 
+              style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }}
+              onClick={() => showDeleteModal(elm._id)}
+            >
+              <i className="fa-sharp fa-solid fa-trash "></i>
+            </Button>
+                             {/* Delete confirmation modal */}
+       {/* Delete confirmation modal */}
+       <Modal show={showModal} onHide={hideDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this banner?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => deleteBanner(bannerToDelete)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
                   <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
                           data-bs-target="#modelExample" onClick={() => {
                             edit_article(elm._id);

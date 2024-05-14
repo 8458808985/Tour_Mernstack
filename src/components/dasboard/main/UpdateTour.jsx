@@ -202,7 +202,7 @@ export default function UpdateTour() {
                                         </label>
                                         <input className="form-cont
                                         rol fs-6" style={{border:"1px solid black"}} type="file" id="formFile" name="imageSrc" onChange={FileHandler}
-                                        //   value={formData.length > 0 ? formData[0].file : "" }
+                                        //   value={formData.length > 0 ? formData[0].file : "" }   
                                         
                                         />
                                         {/* <input type="hidden" value={formData[0]._id} /> */}

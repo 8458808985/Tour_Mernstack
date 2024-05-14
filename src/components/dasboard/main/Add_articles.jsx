@@ -6,7 +6,7 @@ import BASE_URL from "@/Urls/baseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 
 const tabs = ["Content", "Location", "Pricing", "Included"];
@@ -22,6 +22,8 @@ export default function AddProduct() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [tourToDelete, setTourToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   //handle next
   const handleNext = () => {
@@ -119,26 +121,58 @@ export default function AddProduct() {
     }
   };
 
-  const delete_article = async(id) => {
-    try {
-      const result =await axios.delete(`${BASE_URL}/blog/${id}`);
-    if (result.status === 200) {
+  // const delete_article = async(id) => {
+  //   try {
+  //     const result =await axios.delete(`${BASE_URL}/blog/${id}`);
+  //   if (result.status === 200) {
 
-      setBlog(blog.filter(article => article._id !== id));
-      // If the deletion is successful, show a success message
-      toast.success("Successfully deleted the article", {
-        position: "top-center",
-        autoClose: 500
+  //     setBlog(blog.filter(article => article._id !== id));
+  //     // If the deletion is successful, show a success message
+  //     toast.success("Successfully deleted the article", {
+  //       position: "top-center",
+  //       autoClose: 500
 
-      });
-    } else {
-      // Handle other status codes or errors if necessary
-      alert("failed deleted")
-    }
-    } catch (error) {
-      console.log(error)
-    }
+  //     });
+  //   } else {
+  //     // Handle other status codes or errors if necessary
+  //     alert("failed deleted")
+  //   }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
     
+  // };
+
+  const deleteTour = async (id) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/blog/${id}`);
+      if (response.status === 200) {
+        setBlog(blog.filter(blog => blog._id !== id));
+        hideDeleteModal();
+        // If the deletion is successful, show a success message
+        toast.success("Successfully deleted the tour", {
+          position: "top-center",
+          autoClose: 2000
+        });
+      } else {
+        // Handle other status codes or errors if necessary
+        toast.error("Failed to delete the tour");
+      }
+    } catch (error) {
+      console.error("Error deleting tour:", error);
+    }
+  };
+
+  // Function to show the delete confirmation modal
+  const showDeleteModal = (id) => {
+    setTourToDelete(id);
+    setShowModal(true);
+  };
+
+  // Function to close the delete confirmation modal
+  const hideDeleteModal = () => {
+    setTourToDelete(null);
+    setShowModal(false);
   };
   // Edit And Update process
   const edit_article = async (id) => {
@@ -709,11 +743,29 @@ const NewFileHandler = (event)=>{
                           </div>
                         </div>
                         <hr />
-                        <Button style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }} onClick={() => {
-                            delete_article(elm._id);
-                          }}>
+                        <Button 
+              style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }}
+              onClick={() => showDeleteModal(elm._id)}
+            >
                     <i class="fa-sharp fa-solid fa-trash "></i>
-                  </Button>
+              
+            </Button>
+                             {/* Delete confirmation modal */}
+       {/* Delete confirmation modal */}
+       <Modal show={showModal} onHide={hideDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this Article?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={hideDeleteModal}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={() => deleteTour(tourToDelete)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
                   <Button style={{marginLeft:"7px"}}  data-bs-toggle="modal"
                           data-bs-target="#modelExample" onClick={() => {
                             edit_article(elm._id);
