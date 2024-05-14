@@ -65,7 +65,7 @@ export default function Hero1() {
               className="carousel slide"
               data-bs-ride="carousel"
             >
-              <div className="carousel-inner" style={{height:"600px"}}>
+              <div className="carousel-inner" style={{height:"800px"}}>
                 {heroBanner.map((elm, i) => (
                 <div className="carousel-item active">
                 

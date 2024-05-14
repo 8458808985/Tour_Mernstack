@@ -352,8 +352,8 @@ export default function Add_destination() {
           <section className="layout-pt-xl">
             <div className="container">
               <div className="row y-gap-10 justify-between items-end">
-                <div className="col-auto">
-                  <h2 data-aos="fade-up" className="text-30 md:text-24">
+                <div className="col-auto  ">
+                  <h2 data-aos="fade-up" style={{fontSize:"10px"}} className="text-30 md:text-24">
               Trending destinations 
             </h2>
                 </div>
@@ -369,11 +369,14 @@ export default function Add_destination() {
                 </div>
               </div>
 
+  
+
               <div
                 data-aos="fade-up"
                 className="overflow-hidden pt-40 sm:pt-20 js-section-slider"
               >
                 <div className="swiper-wrapper">
+                  
                   <Swiper
                     spaceBetween={30}
                     className="w-100"
@@ -399,21 +402,10 @@ export default function Add_destination() {
                   >
                     {destinations.map((elm, i) => (
                       <SwiperSlide key={i} >
+                        
                         <div className="card  ">
                           <div className="card-body">
-                            <div className="d-flex justify-content-end mt-2 mb-3">
-                              <i
-                                class="fa-light fa-trash mx-1 text-danger"
-                                style={{ fontWeight: "700", fontSize: "20px" }}
-                                onClick={() => {
-                                  delete_destination(elm._id);
-                                }}
-                              ></i>
-                              <i
-                                class="fa-light fa-pen-to-square mx-1 text-warning" data-bs-toggle="modal" data-bs-target="#ediModal" onClick={() => {edit_article(elm._id);}}
-                                style={{ fontWeight: "700", fontSize: "20px" }}
-                              ></i>
-                            </div>
+                         
 
                             <a
                               href="#"
@@ -434,8 +426,23 @@ export default function Add_destination() {
                       {elm.tourCount}+ Tours
                     </p> */}
                             </a>
+                            <div className="d-flex justify-content-end mt-4 mb-3">
+                              <i
+                                class="fa-light fa-trash mx-1 text-danger"
+                                style={{ fontWeight: "700", fontSize: "20px" }}
+                                onClick={() => {
+                                  delete_destination(elm._id);
+                                }}
+                              ></i>
+                              <i
+                                class="fa-light fa-pen-to-square mx-1 text-warning" data-bs-toggle="modal" data-bs-target="#ediModal" onClick={() => {edit_article(elm._id);}}
+                                style={{ fontWeight: "700", fontSize: "20px" }}
+                              ></i>
+                            </div>
                           </div>
+                          
                         </div>
+                        
                       </SwiperSlide>
                     ))}
                   </Swiper>
