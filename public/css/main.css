@@ -13903,7 +13903,7 @@ button.gm-ui-hover-effect::after {
   margin-top: 50px;
   margin-bottom: 120px;
 }
-.carousel-inner{
-  height: auto;
+.hero{
+  display: none;
 }
 }

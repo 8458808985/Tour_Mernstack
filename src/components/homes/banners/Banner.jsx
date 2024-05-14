@@ -5,12 +5,12 @@ export default function Banner() {
   return (
     <section className="cta -type-2">
       <div className="cta__bg">
-        <img src="/img/cta/2/bg.png" alt="image" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT10gDoUHpHItDVlyS4eAcQf8VjoQS-9aQiyA&s" alt="image" />
 
         <div className="cta__image">
-          <img src="/img/cta/2/1.png" alt="image" />
-          <img src="/img/cta/2/shape.svg" alt="image" />
-          <img src="/img/cta/2/shape2.svg" alt="image" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
         </div>
       </div>
 
