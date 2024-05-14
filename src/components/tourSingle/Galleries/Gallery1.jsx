@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageLightBox from "./ImageLightBox";
+import BASE_URL from "@/Urls/baseUrl";
 
 const images = [
   {
@@ -20,13 +21,23 @@ const images = [
   },
 ];
 export default function Gallery1() {
+  const [productData, setProductData] = useState([]);
+
+  useEffect (() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+
+  
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
   return (
     <>
       <div className="tourSingleGrid -type-1 mt-30">
         <div className="tourSingleGrid__grid mobile-css-slider-2">
-          <img src="/img/tourSingle/1/1.png" alt="image" />
+          <img src={productData.imageSrc} alt="image" />
           <img src="/img/tourSingle/1/2.png" alt="image" />
           <img src="/img/tourSingle/1/3.png" alt="image" />
           <img src="/img/tourSingle/1/4.png" alt="image" />

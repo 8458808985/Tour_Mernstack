@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Stars from "../common/Stars";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function MainInformation({ tour }) {
+  const [productData, setProductData] = useState([]);
+
+  useEffect (() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+
   return (
     <>
       <div className="row y-gap-20 justify-between items-end">

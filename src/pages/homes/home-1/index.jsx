@@ -12,6 +12,7 @@ import FooterOne from "@/components/layout/footers/FooterOne";
 import Header1 from "@/components/layout/header/Header1";
 
 import MetaComponent from "@/components/common/MetaComponent";
+import Product from "@/components/homes/Products/Product";
 
 const metadata = {
   title: "Home-1 || ViaTour - Travel & Tour Reactjs Template",
@@ -27,6 +28,7 @@ export default function HomePage1() {
       <FeaturesOne />
       <DestinationsOne />
       <Tour1 />
+      <Product/>
       <Banner />
       <TourTypeOne />
       <TourSlderOne />

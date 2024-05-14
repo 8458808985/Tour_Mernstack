@@ -1,0 +1,118 @@
+import Stars from "@/components/common/Stars";
+import { tourData } from "@/data/tours";
+
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import BASE_URL from "@/Urls/baseUrl";
+
+export default function Product() {
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+  
+//   console.log(productData)
+
+//   console.log(productData.imageSrc[0])
+  return (
+
+    <section className="layout-pt-xl layout-pb-xl">
+      <div className="container">
+        <div className="row justify-between items-end y-gap-10">
+          <div className="col-auto">
+            <h2
+              data-aos="fade-right"
+              data-aos-delay=""
+              className="text-30 md:text-24"
+            >
+              Find Popular Product
+            </h2>
+          </div>
+
+          <div className="col-auto">
+            <Link
+              to={"/tour-list-1"}
+              data-aos="fade-left"
+              data-aos-delay=""
+              className="buttonArrow d-flex items-center "
+            >
+              <span style={{fontWeight:"700", fontSize:"20px"}}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{color:"#78006E", fontSize:"20px", fontWeight:"700"}}></i>
+
+            </Link>
+          </div>
+        </div>
+
+        <div
+          data-aos="fade-up"
+          data-aos-delay=""
+          className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
+        >
+          {productData.map((elm, i) => (
+            <div key={i} className="col-lg-3 col-md-6">
+              <Link
+                to={`/tour-single-1/${elm.id}`}
+                className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
+              >
+                <div className="tourCard__header">
+                  <div className="tourCard__image ratio ratio-28:20">
+                    <img
+                      src={elm.imageSrc[0]}
+                      alt="image"
+                      className="img-ratio rounded-12"
+                    />
+                  </div>
+
+                  <button className="tourCard__favorite">
+                    <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
+                  </button>
+                </div>
+
+                <div className="tourCard__content px-10 pt-10">
+                  <div className="tourCard__location d-flex items-center text-13 text-light-2">
+                    <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+               <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
+                  </div>
+
+                  <h3 className="tourCard__title text-16 fw-500 mt-5">
+                    <span style={{fontSize:"18px",fontWeight:"700"}}>{elm.product}</span>
+                  </h3>
+
+                  <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                    <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
+                      <Stars star={elm.rating}  />
+                    </div>
+
+                    <span className="text-dark-1 ml-10" style={{fontSize:"14px",fontWeight:"700"}}>
+                     <span className="me-5">Old Price:</span> <del>  ${elm.oldprice} </del>
+                    </span>
+                  </div>
+                  <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                    <span className="text-dark-1 ml-10" style={{fontSize:"14px",fontWeight:"700"}}>
+                     <span className="me-5">Old Price:</span>  {elm.discount}% 
+                    </span>
+                  </div>
+
+                  <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                    <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
+                      <i className="icon-clock text-16 mr-5" style={{fontSize:"7px",fontWeight:"700"}}></i>
+                      {elm.time}
+                    </div>
+
+                    <div>
+                     <span className="text-16 fw-500" style={{fontSize:"17px",fontWeight:"700"}}>${elm.newprice}</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

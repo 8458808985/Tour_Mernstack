@@ -57,11 +57,13 @@ export default function AddProduct() {
 
   const [formData, setFormData] = useState({
     product: "",
+    included:"",
+    tourType: "",
     discount: "",
     oldprice: "",
     newprice: "",
     time: "",
-    imageSrc: "",
+    imageSrc: [],
     city: "",
     country: "",
   });
@@ -74,11 +76,17 @@ export default function AddProduct() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const FileHandler = (e) => {
-    setFormData({ ...formData, imageSrc: e.target.files[0] });
-    console.log(formData)
+  // const FileHandler = (e) => {
+  //   setFormData({ ...formData, imageSrc: e.target.files[0] });
+  //   console.log(formData)
+  // };
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      imageSrc: files   
+    }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -87,13 +95,17 @@ export default function AddProduct() {
       const formDataToSend = new FormData();
 
       formDataToSend.append("product", formData.product);
+      formDataToSend.append("included", formData.included);
+      formDataToSend.append("tourType", formData.tourType);
       formDataToSend.append("discount", formData.discount);
       formDataToSend.append("oldprice", formData.oldprice);
       formDataToSend.append("country", formData.country);
       formDataToSend.append("city", formData.city);
       formDataToSend.append("newprice", formData.newprice);
       formDataToSend.append("time", formData.time);   
-      formDataToSend.append("imageSrc", formData.imageSrc);
+      formData.imageSrc.forEach((image) => {
+        formDataToSend.append("imageSrc", image);
+      });
 
       const response = await fetch("https://test1.buyjugaad.com/api/v1/product/new", {
         method: 'POST',
@@ -101,9 +113,8 @@ export default function AddProduct() {
         
       });
 
-      if (response.ok) {
-        frm.reset();
-        // throw new Error('Failed to submit form');
+      if (response.status === 200) {
+        frmAdd.reset();
         toast.success("Successfully Add Product ", {
           position: "top-center",
           autoClose: 500
@@ -241,7 +252,7 @@ export default function AddProduct() {
                                 className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
                                   }`}
                               >
-                                <form method="post" name="frm" onSubmit={handleSubmit} encType="multipart/form-data" >
+                                <form method="post" name="frmAdd" onSubmit={handleSubmit} encType="multipart/form-data" >
                                   <div className="contactForm row y-gap-30">
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
@@ -296,8 +307,8 @@ export default function AddProduct() {
 
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
-                                      <div className="form-input ">
+                                    {/* <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input "> */}
                                         {/*                            
                             <select class="form-select" aria-label="Default select example">
                             <option selected >Country
@@ -306,7 +317,7 @@ export default function AddProduct() {
                             <option  name='country' onChange={inputHandler} value={formData.country}>India</option>
                            
                           </select> */}
-                                        <div className="col-6 col-sm-12 col-lg-12">
+                                        <div className="col-6 ">
                                           <div className="form-input ">
                                             <input type="text" required name='country' onChange={inputHandler} />
                                             <label className="lh-1 text-16 text-light-1">
@@ -314,10 +325,26 @@ export default function AddProduct() {
                                             </label>
                                           </div>
                                         </div>
-
+                                        <div className="col-6 ">
+                                          <div className="form-input ">
+                                            <input type="text" required name='included' onChange={inputHandler} />
+                                            <label className="lh-1 text-16 text-light-1">
+                                            Included<span className="text-danger">*</span>
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div className="col-6  ">
+                                          <div className="form-input ">
+                                            <input type="text" required name='tourType' onChange={inputHandler} />
+                                            <label className="lh-1 text-16 text-light-1">
+                                              TourType<span className="text-danger">*</span>
+                                            </label>
+                                          </div>
+                                        </div>
+{/* 
                                       </div>
-                                    </div>
-                                    <div className="col-6 col-sm-12 col-lg-12">
+                                    </div> */}
+                                    <div className="col-6 ">
                                       <div className="form-input ">
                                         <input type="Date" required name='time' onChange={inputHandler} />
                                         <label className="lh-1 text-16 text-light-1">
@@ -325,7 +352,16 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-
+                                    <div className="col-md-12 col-sm-12 col-12">
+                    <div className="mb-3">
+                      <label htmlFor="formFile" style={{ fontWeight: "700" }} className="form-label mx-3">
+                        Select File Here
+                      </label>
+                      <input className="form-control fs-6" style={{ border: "1px solid black",  }} type="file" id="formFile" multiple name="imageSrc" onChange={handleFileChange  } accept="image/*"/>
+                    </div>
+                    
+                  </div>
+{/* 
                                     <div className="col-12">
                                       <h4 className="text-18 fw-500 mb-20">Gallery</h4>
 
@@ -361,7 +397,7 @@ export default function AddProduct() {
                                       <div className="text-14 mt-20">
                                         PNG or JPG no bigger than 800px wide and tall.
                                       </div>
-                                    </div>
+                                    </div> */}
                                   </div>
                                   <button class="btn mt-20" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button>
                                 </form>
@@ -376,7 +412,7 @@ export default function AddProduct() {
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    {/* <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button> */}
+                    
                   </div>
                 </div>
               </div>
@@ -501,7 +537,8 @@ export default function AddProduct() {
                                             </div>
                                           </label>
                                           <input
-                                            onChange={FileHandler}
+                                            multiple 
+                                            // onChange={FileHandler}
                                             name="imageSrc"
                                             accept="image/*"
                                             id="imageInp1"
@@ -511,10 +548,6 @@ export default function AddProduct() {
                                         </div>
 
 
-                                      </div>
-
-                                      <div className="text-14 mt-20">
-                                        PNG or JPG no bigger than 800px wide and tall.
                                       </div>
                                     </div>
                                   </div>
@@ -582,12 +615,10 @@ export default function AddProduct() {
                     </div>
                           <div className="blogCard__image ratio ratio-41:30">
                             <img
-                              src={elm.imageSrc}
+                              src={elm.imageSrc[0]}
                               alt="image"
                               className="img-ratio rounded-12"
                             />
-
-
                           </div>
 
 
