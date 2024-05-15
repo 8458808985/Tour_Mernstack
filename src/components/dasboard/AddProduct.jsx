@@ -279,14 +279,14 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
+                                    {/* <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
                                         <input type="number" required name='newprice' onChange={inputHandler} />
                                         <label className="lh-1 text-16 text-light-1">
                                           New Price<span className="text-danger">*</span>
                                         </label>
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
                                         <div className="col-6 col-sm-12 col-lg-12">
@@ -631,31 +631,48 @@ export default function AddProduct() {
                                   <div className="blogCard__line"></div>
                                   <div className="lh-13" style={{fontSize:"14px"}}> <label htmlFor="" className="mb-2" style={{fontSize:"15px"}}>Cuntary Name :</label> By {elm.country}</div>
                                 </div>
-
-
-                                <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
+                                <div className="d-flex justify-content-between">
+                          <p style={{fontWeight:"700",fontSize:"15px"}}>Product Name</p><b> <span style={{fontSize:"17px"}}>{elm.product}</span> </b>
                         
-                                  <p style={{fontWeight:"700", fontSize:"18px"}}>Time:</p>    {elm.time}
+                        </div>
+
+                                <h5 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
+                        
+                                  <p style={{fontWeight:"700", fontSize:"15px"}}>Time:</p>  <span style={{fontSize:"15px"}}>  {elm.time}</span>
+                                </h5>
+                                <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
+                          
+                    {elm.oldprice && (
+    <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+      Old Price: <span style={{marginLeft:"2px"}}><del>${elm.oldprice}</del></span>
+    </span>
+  )}
                                 </h3>
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p style={{fontWeight:"700" ,fontSize:"18px"}}>Old Price:</p>  {elm.oldprice}
+                                {elm.discount && (
+    <span className="text-dark-1 me-4" style={{ fontSize: "15px", fontWeight: "700" }}>
+      Discount: {elm.discount}%
+    </span>
+  )}
                                 </h3>
                                 <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p style={{fontWeight:"700",fontSize:"18px"}}>Discount:</p>      {elm.discount}
-                                </h3>
-                                <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                                <p style={{fontWeight:"700",fontSize:"18px"}}>New Price:</p>     {elm.newprice}
+                                {elm.oldprice && elm.discount && (
+      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+        New Price: ${(elm.oldprice - (elm.oldprice * elm.discount) / 100).toFixed(2)}
+      </span>
+    )}
+   {elm.oldprice && !elm.discount && (
+    <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+      New Price: ${elm.oldprice}
+    </span>
+  )}
+    
                                 </h3>
                                
                           </div>
                           
                         </Link>
-                        <div className="d-flex justify-content-between">
-                          <p style={{fontWeight:"700",fontSize:"18px"}}>Product Name</p>
-                        <div className="blogCard__badge d" style={{fontWeight:"700",fontSize:"18px"}}>{elm.product}
                         
-                        </div>
-                        </div>
                       <hr />
                       <Button 
               style={{ backgroundColor: "red", marginLeft: "10px", border:"none"  }}
