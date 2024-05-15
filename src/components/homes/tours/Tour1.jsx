@@ -13,7 +13,7 @@ export default function Tour1() {
       .then(res => res.json())
       .then(data => setTourData(data))
       .catch(err => console.error('Error fetching tours:', err));
-  }, []);
+  }, []); 
   return (
     <section className="layout-pt-xl layout-pb-xl">
       <div className="container">
@@ -29,7 +29,7 @@ export default function Tour1() {
           </div>
 
           <div className="col-auto">
-            <Link
+            <Link 
               to={"/tour-list-1"}
               data-aos="fade-left"
               data-aos-delay=""
@@ -51,6 +51,7 @@ export default function Tour1() {
             <div key={i} className="col-lg-3 col-md-6">
               <Link
                 to={`/tour-single-1/${elm.id}`}
+                
                 className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
               >
                 <div className="tourCard__header">

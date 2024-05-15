@@ -15,9 +15,6 @@ export default function Product() {
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
   
-//   console.log(productData)
-
-//   console.log(productData.imageSrc[0])
   return (
 
     <section className="layout-pt-xl layout-pb-xl">
@@ -55,7 +52,7 @@ export default function Product() {
           {productData.map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-6">
               <Link
-                to={`/tour-single-1/${elm.id}`}
+                to={`/tour-single-1/${elm._id}`}
                 className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
               >
                 <div className="tourCard__header">
@@ -87,14 +84,18 @@ export default function Product() {
                       <Stars star={elm.rating}  />
                     </div>
 
-                    <span className="text-dark-1 ml-10" style={{fontSize:"14px",fontWeight:"700"}}>
-                     <span className="me-5">Old Price:</span> <del>  ${elm.oldprice} </del>
-                    </span>
+                    {elm.oldprice && (
+    <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+      Old Price: <del>${elm.oldprice}</del>
+    </span>
+  )}
                   </div>
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    <span className="text-dark-1 ml-10" style={{fontSize:"14px",fontWeight:"700"}}>
-                     <span className="me-5">Old Price:</span>  {elm.discount}% 
-                    </span>
+                  {elm.discount && (
+    <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+      Discount: {elm.discount}%
+    </span>
+  )}
                   </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
@@ -104,7 +105,16 @@ export default function Product() {
                     </div>
 
                     <div>
-                     <span className="text-16 fw-500" style={{fontSize:"17px",fontWeight:"700"}}>${elm.newprice}</span>
+                    {elm.oldprice && elm.discount && (
+      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+        New Price: ${(elm.oldprice - (elm.oldprice * elm.discount) / 100).toFixed(2)}
+      </span>
+    )}
+   {elm.oldprice && !elm.discount && (
+    <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+      New Price: ${elm.oldprice}
+    </span>
+  )}
                     </div>
                   </div>
                 </div>

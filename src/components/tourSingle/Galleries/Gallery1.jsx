@@ -1,85 +1,66 @@
 import React, { useEffect, useState } from "react";
 import ImageLightBox from "./ImageLightBox";
 import BASE_URL from "@/Urls/baseUrl";
+import { useParams } from "react-router-dom";
 
-const images = [
-  {
-    id: 1,
-    image: `/img/tourSingle/1/1.png`,
-  },
-  {
-    id: 1,
-    image: `/img/tourSingle/1/2.png`,
-  },
-  {
-    id: 1,
-    image: `/img/tourSingle/1/3.png`,
-  },
-  {
-    id: 1,
-    image: `/img/tourSingle/1/4.png`,
-  },
-];
 export default function Gallery1() {
-  const [productData, setProductData] = useState([]);
+  const [activeLightBox, setActiveLightBox] = useState(false);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // Start from the first image
+  const [productData, setProductData] = useState(null);
+  const { id } = useParams(); // Destructure id from useParams
 
-  useEffect (() => {
-    fetch(`${BASE_URL}/product`)
+  useEffect(() => {
+    fetch(`${BASE_URL}/product/${id}`)
       .then(res => res.json())
       .then(data => setProductData(data))
-      .catch(err => console.error('Error fetching tours:', err));
-  }, []);
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
 
+  const handleSeeAllPhotos = () => {
+    setActiveLightBox(true); // Open the image lightbox
+    setCurrentSlideIndex(0); // Set the current slide index to the first image
+  };
   
-  const [activeLightBox, setActiveLightBox] = useState(false);
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
   return (
     <>
-      <div className="tourSingleGrid -type-1 mt-30">
-        <div className="tourSingleGrid__grid mobile-css-slider-2">
-          <img src={productData.imageSrc} alt="image" />
-          <img src="/img/tourSingle/1/2.png" alt="image" />
-          <img src="/img/tourSingle/1/3.png" alt="image" />
-          <img src="/img/tourSingle/1/4.png" alt="image" />
-        </div>
-
-        <div className="tourSingleGrid__button">
-          <div
-            style={{ cursor: "pointer" }}
-            className="js-gallery"
-            data-gallery="gallery1"
-          >
-            <span
-              onClick={() => setActiveLightBox(true)}
-              className="button -accent-1 py-10 px-20 rounded-200 bg-dark-1 lh-16 text-white"
-            >
-              See all photos
-            </span>
+      {productData && productData.imageSrc && (
+        <div className="tourSingleGrid -type-1 mt-30">
+          <div className="tourSingleGrid__grid mobile-css-slider-2">
+            {productData.imageSrc.map((image, index) => ( 
+              <img key={index} src={image} alt={`image ${index + 1}`} />
+            ))}
           </div>
-          <a
-            href="/img/tourSingle/1/2.png"
-            className="js-gallery"
-            data-gallery="gallery1"
-          ></a>
-          <a
-            href="/img/tourSingle/1/3.png"
-            className="js-gallery"
-            data-gallery="gallery1"
-          ></a>
-          <a
-            href="/img/tourSingle/1/4.png"
-            className="js-gallery"
-            data-gallery="gallery1"
-          ></a>
+          <div className="tourSingleGrid__button">
+            <div style={{ cursor: "pointer" }} className="js-gallery" data-gallery="gallery1">
+              <span
+                onClick={handleSeeAllPhotos}
+                className="button -accent-1 py-10 px-20 rounded-200 bg-dark-1 lh-16 text-white"
+                >
+                See all photos
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-      <ImageLightBox
-        images={images}
-        activeLightBox={activeLightBox}
-        setActiveLightBox={setActiveLightBox}
-        currentSlideIndex={currentSlideIndex}
-        setCurrentSlideIndex={setCurrentSlideIndex}
-      />
+      )}
+      
+      {activeLightBox && (
+  <div className="image-lightbox">
+    <div className="image-lightbox-content">
+      {productData.imageSrc.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`image ${index + 1}`}
+          onClick={() => setCurrentSlideIndex(index)}
+        />
+      ))}
+    </div>
+    <div className="image-lightbox-close mt-2" onClick={() => setActiveLightBox(false)}>
+      <button className="btn btn-danger">Close</button> 
+    </div>
+  </div>
+)}
+
     </>
   );
 }

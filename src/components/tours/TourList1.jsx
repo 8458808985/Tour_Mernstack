@@ -5,13 +5,26 @@ import { tourDataTwo } from "@/data/tours";
 import Stars from "../common/Stars";
 import Pagination from "../common/Pagination";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function TourList1() {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
   const dropDownContainer = useRef();
+  const [productData, setProductData] = useState(null);
+  const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
+
+
+
   useEffect(() => {
     const handleClick = (event) => {
       if (
@@ -105,13 +118,15 @@ export default function TourList1() {
                 </div>
               </div>
             </div>
-
-            <div className="row y-gap-30 pt-30">
-              {tourDataTwo.map((elm, i) => (
+            {productData === null ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="row y-gap-30 pt-30">
+              {productData.map((elm, i) => (
                 <div className="col-12" key={i}>
                   <div className="tourCard -type-2">
                     <div className="tourCard__image">
-                      <img src={elm.imageSrc} alt="image" />
+                      <img src={elm.imageSrc[0]} alt="image" />
 
                       {elm.badgeText && (
                         <div className="tourCard__badge">
@@ -139,11 +154,12 @@ export default function TourList1() {
                     <div className="tourCard__content">
                       <div className="tourCard__location">
                         <i className="icon-pin"></i>
-                        {elm.location}
-                      </div>
+                        <span className="ms-1">{elm.city}</span>
+                       <span className="ms-1"> ({elm.country}) </span>
+                       </div>
 
                       <h3 className="tourCard__title mt-5">
-                        <span>{elm.title}</span>
+                        <span>{elm.product}</span>
                       </h3>
 
                       <div className="d-flex items-center mt-5">
@@ -201,6 +217,8 @@ export default function TourList1() {
                 </div>
               ))}
             </div>
+      )}
+            
 
             <div className="d-flex justify-center flex-column mt-60">
               <Pagination />
