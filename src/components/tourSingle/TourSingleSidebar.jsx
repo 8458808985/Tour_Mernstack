@@ -58,7 +58,7 @@ const handleSubmit =()=>{
                 <i className="text-20 icon-calendar"></i>
               </div>
               <div className="searchFormItem__content">
-                <h5>From</h5>
+                <h5>Select Date</h5>
                 <div>
                   <span className="js-first-date">
                     <Calender />
@@ -72,7 +72,7 @@ const handleSubmit =()=>{
             </div>
           </div>
 
-          <div className="searchFormItem js-select-control js-form-dd">
+          {/* <div className="searchFormItem js-select-control js-form-dd">
             <div
               className="searchFormItem__button"
               onClick={() => setActiveTimeDD((pre) => !pre)}
@@ -118,7 +118,7 @@ const handleSubmit =()=>{
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

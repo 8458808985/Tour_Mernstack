@@ -18,7 +18,10 @@ export default function TourSlderOne() {
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
   return (
-    <section className="layout-pt-xl layout-pb-xl relative" >
+
+    <>
+    
+    {/* <section className="layout-pt-xl layout-pb-xl relative" >
       <div className="sectionBg -w-1530 rounded-12 bg-light-1 shadow"></div>
 
       <div className="container">
@@ -150,6 +153,8 @@ export default function TourSlderOne() {
           </div>
         </div>
       </div>
-    </section>
+    </section>   */}
+    </>
+ 
   );
 }

@@ -10,7 +10,7 @@ export default function PopulerDestinations() {
         <div className="row justify-between items-end y-gap-10">
           <div className="col-auto">
             <h2 data-aos="fade-up" data-aos-delay="" className="text-30">
-              Popular things to do dcc
+              Popular things to do 
             </h2>
           </div>
 

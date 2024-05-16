@@ -5,7 +5,9 @@ import React from "react";
 
 export default function TourTypeOne() {
   return (
-    <section className="layout-pt-xl layout-pb-xl">
+<>
+
+{/* <section className="layout-pt-xl layout-pb-xl">
       <div className="container">
         <div className="row justify-between items-end y-gap-10">
           <div className="col-auto">
@@ -53,6 +55,9 @@ export default function TourTypeOne() {
           ))}
         </div>
       </div>
-    </section>
+    </section> */}
+</>
+
+    
   );
 }

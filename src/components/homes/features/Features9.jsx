@@ -14,7 +14,7 @@ export default function Features9() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Popular things to do 
+              Popular things to do
             </h2>
 
             <p data-aos="fade-up" data-aos-delay="" className="mt-30 md:mt-10">

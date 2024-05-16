@@ -927,13 +927,10 @@ export default function AddProduct() {
                 className="row y-gap-30 pt-5 sm:pt-10"
               >
                 {pageData.map((elm, i) => (
-                  <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
+                  <div key={i} className="col-lg-5 col-md-5 col-sm-5 col-12 mx-auto ">
                     <div className="card border-0 rounded-3 mb-1 mt-1">
                       <div className="card-body">
-                        <Link
-                          to={`/blog-single/${elm.id}`}
-                          className="blogCard -type-1"
-                        >
+                     
                           <div className="btn d-flex justify-content-end"></div>
                           <div className="blogCard__image ratio ratio-41:30">
                             <img
@@ -1058,7 +1055,7 @@ export default function AddProduct() {
                               )}
                             </h3>
                           </div>
-                        </Link>
+                       
 
                         <hr />
                         <Button

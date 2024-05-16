@@ -5,7 +5,12 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 
-export default function Product() {
+export default function Product({ elm }) {
+  const [showFullTitle, setShowFullTitle] = useState(false);
+
+  const toggleTitle = () => {
+    setShowFullTitle(!showFullTitle);
+  };
   const [productData, setProductData] = useState([]);
 
   useEffect(() => {
@@ -14,6 +19,7 @@ export default function Product() {
       .then(data => setProductData(data))
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
+  
   
   return (
 
@@ -76,9 +82,15 @@ export default function Product() {
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">
-                    <span style={{fontSize:"18px",fontWeight:"700"}}>{elm.product}</span>
-                  </h3>
-
+        <span style={{ fontSize: "18px", fontWeight: "700" }}>
+          {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+        </span>
+        {elm.product.length > 20 && (
+          <button onClick={toggleTitle} className="btn-link">
+            {showFullTitle ? 'See Less' : 'See More'}
+          </button>
+        )}
+      </h3>
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
                     <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
                       <Stars star={elm.rating}  />
@@ -100,19 +112,19 @@ export default function Product() {
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                     <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
-                      <i className="icon-clock text-16 mr-5" style={{fontSize:"7px",fontWeight:"700"}}></i>
-                      {elm.time}
+                      <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
+                 <span style={{fontSize:"12px"}}> {elm.duration}</span> 
                     </div>
 
                     <div>
                     {elm.oldprice && elm.discount && (
-      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-        New Price: ${(elm.oldprice - (elm.oldprice * elm.discount) / 100).toFixed(2)}
+      <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
+      <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.oldprice - (elm.oldprice * elm.discount) / 100).toFixed(2)}</span> 
       </span>
     )}
    {elm.oldprice && !elm.discount && (
     <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-      New Price: ${elm.oldprice}
+      New Price: $       {elm.oldprice}
     </span>
   )}
                     </div>

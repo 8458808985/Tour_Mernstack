@@ -62,12 +62,12 @@ export default function SingleOne({ tour }) {
                
               </div>
 
-              <div className="line  mb-60"></div>
+              {/* <div className="line  mb-60"></div> */}
 
-              <h2 className="text-30 mb-30">Availability Calendar</h2>
+              {/* <h2 className="text-30 mb-30">Availability Calendar gd</h2> */}
               <DateCalender />
 
-              <div className="line mt-60 mb-60"></div>
+              {/* <div className="line mt-60 mb-60"></div> */}
 
               <h2 className="text-30">FAQ</h2>
 
