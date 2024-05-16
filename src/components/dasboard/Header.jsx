@@ -21,12 +21,12 @@ export default function Header({ setSideBarOpen }) {
     <div className="dashboard__content_header">
       <div className="d-flex items-center">
         <div className="mr-60">
-          {/* <button
+          <button
             onClick={() => setSideBarOpen((pre) => !pre)}
             className="d-flex js-toggle-db-sidebar"
           >
             <i className="icon-main-menu text-20"></i>
-          </button> */}
+          </button>
         </div>
 
         <div className="dashboard__content_header_search d-flex items-center py-5 px-20 rounded-200 border-1 md:d-none">
@@ -112,7 +112,6 @@ export default function Header({ setSideBarOpen }) {
 
         
         <div>
-          
          <button className="btn"  style={{backgroundColor:"#78006E",color:"white"}} onClick={logoutData} >Logout</button>
         </div>
       

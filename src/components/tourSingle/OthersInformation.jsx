@@ -1,6 +1,18 @@
-import React from "react";
+import BASE_URL from "@/Urls/baseUrl";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function OthersInformation() {
+
+  const [productData, setProductData] = useState([]);
+  const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product/${id}`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
   return (
     <>
       <div className="col-lg-3 col-6">
@@ -11,7 +23,7 @@ export default function OthersInformation() {
 
           <div className="ml-10">
             <div className="lh-16">Duration</div>
-            <div className="text-14 text-light-2 lh-16">3 days</div>
+            <div className="text-14 text-light-2 lh-16">{productData.duration}</div>
           </div>
         </div>
       </div>
@@ -24,7 +36,7 @@ export default function OthersInformation() {
 
           <div className="ml-10">
             <div className="lh-16">Group Size</div>
-            <div className="text-14 text-light-2 lh-16">10 people</div>
+            <div className="text-14 text-light-2 lh-16">{productData.groupSize} people</div>
           </div>
         </div>
       </div>
@@ -37,7 +49,7 @@ export default function OthersInformation() {
 
           <div className="ml-10">
             <div className="lh-16">Ages</div>
-            <div className="text-14 text-light-2 lh-16">18-99 yrs</div>
+            <div className="text-14 text-light-2 lh-16">{productData.ages} yrs</div>
           </div>
         </div>
       </div>
@@ -50,7 +62,7 @@ export default function OthersInformation() {
 
           <div className="ml-10">
             <div className="lh-16">Languages</div>
-            <div className="text-14 text-light-2 lh-16">English, Japanese</div>
+            <div className="text-14 text-light-2 lh-16">{productData.languages}</div>
           </div>
         </div>
       </div>

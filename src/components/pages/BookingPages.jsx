@@ -57,76 +57,7 @@ export default function BookingPages() {
                   </div>
                 </div>
 
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Country</label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">City</label>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Address 1
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Address 2
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-lg-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      State/Province/Region
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-lg-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      ZIP code/Postal code
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="form-input ">
-                    <textarea required rows="8"></textarea>
-                    <label className="lh-1 text-16 text-light-1">
-                      Tour Content
-                    </label>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="row y-gap-20 items-center justify-between">
-                    <div className="col-auto">
-                      <div className="text-14">
-                        By proceeding with this booking, I agree to tourz Terms
-                        of Use and Privacy Policy.
-                      </div>
-                    </div>
-
-                   
-                  </div>
-                </div>
+                
                 
               </div>
               

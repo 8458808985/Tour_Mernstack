@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
 import {
   durations,
@@ -9,8 +9,20 @@ import {
 } from "@/data/tourFilteringOptions";
 import RangeSlider from "../common/RangeSlider";
 import Stars from "../common/Stars";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function Sidebar() {
+
+  const [productData, setProductData] = useState([]);
+  // const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching product:', err));
+  }, []);
+console.log(productData)
   const [ddActives, setDdActives] = useState(["tourtype"]);
   return (
     <div className="sidebar -type-1 rounded-12">

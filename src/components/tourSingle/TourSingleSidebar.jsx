@@ -2,15 +2,23 @@ import React, { useEffect, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
 
 import { times } from "@/data/tourSingleContent";
+import { useNavigate, useParams } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function TourSingleSidebar() {
-  const prices = {
-    adultPrice: 94,
-    youthPrice: 84,
-    extraService: 40,
-    servicePerPerson: 40,
-  };
+  
+const navigate=useNavigate()
+  const [productData, setProductData] = useState([]);
+  const { id } = useParams(); // Destructure id from useParams
 
+  useEffect(() => {
+    fetch(`${BASE_URL}/product/${id}`)
+      .then(res => res.json())
+      .then(data => {setProductData(data);
+      })
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
+  
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);
   const [isExtraService, setisExtraService] = useState(false);
@@ -26,15 +34,21 @@ export default function TourSingleSidebar() {
     }
   }, [isExtraService, isServicePerPerson, setExtraCharge]);
 
+
   const [selectedTime, setSelectedTime] = useState("");
   const [activeTimeDD, setActiveTimeDD] = useState(false);
 
+const handleSubmit =()=>{
+  navigate("/booking-pages")
+}
+
   return (
+    <form action="" onSubmit={handleSubmit}>
     <div className="tourSingleSidebar">
-      <div className="d-flex items-center">
+      {/* <div className="d-flex items-center">
         <div>From</div>
         <div className="text-20 fw-500 ml-10">$1,200</div>
-      </div>
+      </div> */}
 
       <div className="searchForm -type-1 -sidebar mt-20">
         <div className="searchForm__form">
@@ -113,9 +127,10 @@ export default function TourSingleSidebar() {
       <div>
         <div className="d-flex items-center justify-between">
           <div className="text-14">
-            Adult (18+ years){" "}
+             Per(Person){" "}
             <span className="fw-500">
-              ${(prices.adultPrice * adultNumber).toFixed(2)}
+              
+              ${(productData.oldprice * adultNumber).toFixed(2)}
             </span>
           </div>
 
@@ -141,7 +156,7 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <div className="mt-15">
+      {/* <div className="mt-15">
         <div className="d-flex items-center justify-between">
           <div className="text-14">
             Youth (13-17 years){" "}
@@ -170,7 +185,7 @@ export default function TourSingleSidebar() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
     
 
@@ -184,23 +199,23 @@ export default function TourSingleSidebar() {
               onChange={() => setIsServicePerPerson((pre) => !pre)}
               type="checkbox"
             />
-            <div className="form-checkbox__mark">
+            {/* <div className="form-checkbox__mark">
               <div className="form-checkbox__icon">
-                <img src="/img/icons/check.svg" alt="icon" />
-              </div>
-            </div>
+                {/* <img src="/img/icons/check.svg" alt="icon" /> */}
+              {/* </div>
+            </div>  */}
           </div>
 
           <div className="ml-10">
-            Add Service per person
-            <div className="lh-16">
+            {/* Add Service per person */}
+            {/* <div className="lh-16">
               Adult: <span className="fw-500">$17.00</span> - Youth:{" "}
               <span className="fw-500">$14.00</span>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <div className="text-14">$40</div>
+        {/* <div className="text-14">$40</div> */}
       </div>
 
       <div className="line mt-20 mb-20"></div>
@@ -210,9 +225,7 @@ export default function TourSingleSidebar() {
         <div className="text-18 fw-500">
           $
           {(
-            prices.adultPrice * adultNumber +
-            prices.youthPrice * youthNumber +
-            extraCharge * 1
+            productData.oldprice * adultNumber 
           ).toFixed(2)}
         </div>
       </div>
@@ -222,5 +235,6 @@ export default function TourSingleSidebar() {
         <i className="icon-arrow-top-right ml-10"></i>
       </button>
     </div>
+    </form>
   );
 }

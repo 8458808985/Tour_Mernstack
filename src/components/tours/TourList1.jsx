@@ -164,12 +164,11 @@ export default function TourList1() {
 
                       <div className="d-flex items-center mt-5">
                         <div className="d-flex items-center x-gap-5">
-                          <Stars star={elm.rating} font={12} />
+                          <Stars star={elm} font={12} />
                         </div>
 
                         <div className="text-14 ml-10">
-                          <span className="fw-500">{elm.rating}</span> (
-                          {elm.ratingCount})
+                          <span className="fw-500">{elm.tourOverview}</span>
                         </div>
                       </div>
 
@@ -195,12 +194,12 @@ export default function TourList1() {
                         </div>
 
                         <div className="tourCard__price">
-                          <div>${elm.fromPrice}</div>
+                          <div>${elm.oldprice}</div>
 
                           <div className="d-flex items-center">
                             From{" "}
                             <span className="text-20 fw-500 ml-5">
-                              ${elm.price}
+                              ${elm.newprice}
                             </span>
                           </div>
                         </div>

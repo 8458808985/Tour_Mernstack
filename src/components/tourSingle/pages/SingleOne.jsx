@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainInformation from "../MainInformation";
 import OthersInformation from "../OthersInformation";
 import Overview from "../Overview";
@@ -12,8 +12,20 @@ import Gallery1 from "../Galleries/Gallery1";
 import DateCalender from "../DateCalender";
 import RoadMap2 from "../Roadmap2";
 import CommentBox from "../CommentBox";
+import { useParams } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
 
 export default function SingleOne({ tour }) {
+  
+  const [productData, setProductData] = useState([]);
+  const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product/${id}`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
   return (
     <>
       <section className="">
@@ -41,18 +53,18 @@ export default function SingleOne({ tour }) {
 
               <div className="line mt-60 mb-60"></div>
 
-              <h2 className="text-30">Itinerary</h2>
+              
 
-              <RoadMap2 />
-
-              <h2 className="text-30 mt-60 mb-30">Tour Map</h2>
+              <h2 className="text-30 mt-60">Tour Map</h2>
               <div className="mapTourSingle">
-                <Map />
+                <p>onClick link redirect map location</p>
+               <a href="https://www.google.com/maps" className="fs-3" style={{color:"blue"}} >{productData.tourMap}</a>
+               
               </div>
 
-              <div className="line mt-60 mb-60"></div>
+              <div className="line  mb-60"></div>
 
-              <h2 className="text-30">Availability Calendar</h2>
+              <h2 className="text-30 mb-30">Availability Calendar</h2>
               <DateCalender />
 
               <div className="line mt-60 mb-60"></div>
@@ -63,28 +75,17 @@ export default function SingleOne({ tour }) {
                 <Faq />
               </div>
 
-              <div className="line mt-60 mb-60"></div>
+              
 
-              <h2 className="text-30">Customer Reviews</h2>
-
-              <div className="mt-30">
-                <Rating />
-              </div>
-
-              <Reviews />
-
-              <button className="button -md -outline-accent-1 text-accent-1 mt-30">
-                See more reviews
-                <i className="icon-arrow-top-right text-16 ml-10"></i>
-              </button>
-              <CommentBox />
+            
+              
             </div>
 
             <div className="col-lg-4">
-              <div className="d-flex justify-end js-pin-content">
-                <TourSingleSidebar />
-              </div>
-            </div>
+        <div className="d-flex justify-end js-pin-content">
+          <TourSingleSidebar />
+        </div>
+      </div>
           </div>
         </div>
       </section>

@@ -27,7 +27,7 @@ export default function HomePage1() {
       <Hero1 />
       <FeaturesOne />
       <DestinationsOne />
-      <Tour1 />
+      {/* <Tour1 /> */}
       <Product/>
       <Banner />
       <TourTypeOne />

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import BASE_URL from "@/Urls/baseUrl";
@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
-
+const navigate=useNavigate()
   const [formData, setFormData]=useState({
     firstname: '',
     lastname: '',
@@ -34,10 +34,13 @@ const handleSubmit =async (e) => {
 
         console.log(response)
       // alert('Signup successful');
-      toast.success("Successfully SignUp ", {
-        position: "top-center"
-      })
-  } catch (error) {
+      if(response.status === 200){
+navigate("/login")
+        toast.success("Successfully SignUp ", {
+          position: "top-center"
+        })
+      }
+      } catch (error) {
       console.error('Error signing up:', error);
       // alert('Signup failed');
       toast.failed("Failed SignUp ", {

@@ -1,7 +1,7 @@
 export const toursTypes = [
-  "Nature Tours",
-  "Adventure Tours",
-  "Cultural Tours",
+  "Solo Tours",
+  "Family Tours",
+  "Group Tours",
   "Food Tours",
   "City Tours",
   "Cruises Tours",

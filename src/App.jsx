@@ -33,7 +33,7 @@ import BookingPage from "./pages/pages/booking-pages";
 import DBMainPage from "./pages/dashboard/db-main";
 import DBBookingPage from "./pages/dashboard/db-booking";
 import DBListingPage from "./pages/dashboard/db-listing";
-import DBAddTourPage from "./pages/dashboard/db-add-tour";
+// import DBAddTourPage from "./pages/dashboard/db-add-tour";
 import DBAddProductPage from "./pages/dashboard/db-add-product";
 // import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
 // import DBFavoritesPage from "./pages/dashboard/db-favorites";
@@ -108,7 +108,7 @@ function App() {
             <Route path='/db-main' element={<Protected Component={DBMainPage} />}></Route>
             <Route path="/db-booking" element={<DBBookingPage />} />
             <Route path="/db-listing" element={<DBListingPage />} />
-            <Route path="/db-add-tour" element={<DBAddTourPage />} />
+            {/* <Route path="/db-add-tour" element={<DBAddTourPage />} /> */}
             <Route path="/db-add-product" element={<DBAddProductPage />} />
             <Route path="/db-add-destination" element={<DBAddDestinationPage />} />
             <Route path="/db-add-banner" element={<DBAddBannerPage />} />

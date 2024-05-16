@@ -26,7 +26,7 @@ export default function Product() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Find Popular Product
+              Find Popular Tours
             </h2>
           </div>
 

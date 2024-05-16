@@ -11,19 +11,8 @@ export const sidebarItems = [
     iconClass: "icon-calendar text-26",
     label: "My Booking",
   },
-  {
-    id: 3,
-    href: "/db-listing",
-    iconClass: "icon-menu text-26",
-    label: "My Listings",
-  },
-  {
-    id: 4,
-    href: "/db-add-tour",
-    iconClass: "icon-clipboard text-26",
-    label: "Add Tour",
-  },
-  
+ 
+
   {
     id: 6,
     href: "/db-add-article",
@@ -34,7 +23,7 @@ export const sidebarItems = [
   {
     id: 8,
     href: "/db-add-product",
-    iconClass: "icon-account text-26",
+    iconClass: "icon-clipboard text-26",
     label: "Product",
   },
   {
@@ -46,11 +35,11 @@ export const sidebarItems = [
   {
     id: 10,
     href: "/db-add-destination",
-    iconClass: "icon-account text-26",
+    iconClass: "icon-menu text-26",
     label: "Destination",
   },
 
-  { id: 11, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
+  { id: 11, href: "/", iconClass: "icon-logout text-26", label: "Home" },
 ];
 
 export const states = [
