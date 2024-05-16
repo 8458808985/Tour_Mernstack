@@ -4,11 +4,17 @@ import Header from "./Header";
 import Pagination from "../common/Pagination";
 import { bookingData } from "@/data/dashboard";
 import BASE_URL from "@/Urls/baseUrl";
+import { Button, Modal } from "react-bootstrap";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 export default function DbBooking() {
   const [booking , setBooking]=useState([])
+  const [bannerToDelete, setBannerToDelete] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE_URL}/booking`)
@@ -16,13 +22,48 @@ export default function DbBooking() {
       .then(data=>setBooking(data))
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
-  // console.log(booking)
+
+  const deleteBanner = async (id) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/booking/${id}`);
+      if (response.status === 200) {
+        setBooking(booking.filter((dest) => dest._id !== id));
+        hideDeleteModal();
+        toast.success("Successfully deleted the banner", {
+          position: "top-center",
+          autoClose: 500,
+        });
+      } else {
+        toast.error("Failed to delete the banner");
+      }
+    } catch (error) {
+      console.error("Error deleting banner:", error);
+    }
+  };
+
+  const showDeleteModal = (id) => {
+    setBannerToDelete(id);
+    setShowModal(true);
+  };
+
+  const hideDeleteModal = () => {
+    setShowModal(false);
+    setBannerToDelete(null);
+  };
+
+  const handleEdit = (id) => {
+    fetchDestinationForEdit(id);
+  };
+
+  console.log(booking)
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("Pending");
   return (
+    <>
+    <ToastContainer />
     <div
-      className={`dashboard ${
-        sideBarOpen ? "-is-sidebar-visible" : ""
+    className={`dashboard ${
+      sideBarOpen ? "-is-sidebar-visible" : ""
       } js-dashboard`}
     >
       <Sidebar setSideBarOpen={setSideBarOpen} />
@@ -31,114 +72,68 @@ export default function DbBooking() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <h1 className="text-30">My Booking</h1>
-         
+          <h1 className="text-30 mb-5">My Booking</h1>
 
-          <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:mb-20 mt-60">
-            <div className="tabs -underline-2 js-tabs">
-              <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                {tabs.map((elm, i) => (
-                  <div
-                    key={i}
-                    className="col-auto"
-                    onClick={() => setcurrentTab(elm)}
-                  >
-                    <button
-                      className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
-                        elm == currentTab ? "is-tab-el-active" : ""
-                      }`}
-                    >
-                      {elm}
-                    </button>
-                  </div>
-                ))}
-              </div>
+          <div className="table-responsive mt-5">
+          <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {booking.map((items, index)=>{
+      return(
+<tr key={index}>
+      <th scope="row"><span>{index+1}</span></th>
+      <td >{items.name}</td>
+      <td >{items.email}</td>
+      <td>{items.phone}</td>
+      <td style={{display:"flex"}}>  <Button
+className="btn btn-sm me-3 mb-3"
+style={{ backgroundColor: "red", marginLeft: "0px", border: "none" }}
+onClick={() => showDeleteModal(items._id)} // Assuming elm._id is defined elsewhere
+>
+<i className="fa-sharp fa-solid fa-trash fs-6"></i>
+</Button>
 
-              <div className="tabs__content js-tabs-content">
-                <div className="tabs__pane -tab-item-1 is-tab-el-active">
-                  <div className="overflowAuto">
-                    <table className="tableTest mb-30">
-                      <thead className="bg-light-1 rounded-12">
-                        <tr>
-                          <th>ID</th>
-                          <th>Title</th>
-                          <th>Start date</th>
-                          <th>End date</th>
-                          <th>Details</th>
-                          <th>Price</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
+{/* Delete confirmation modal */}
+<Modal show={showModal} onHide={hideDeleteModal}>
+<Modal.Header closeButton>
+<Modal.Title>Confirm Delete</Modal.Title>
+</Modal.Header>
+<Modal.Body>Are you sure you want to delete this Destination?</Modal.Body>
+<Modal.Footer>
+<Button variant="secondary" onClick={hideDeleteModal}>
+  Cancel
+</Button>
+<Button variant="danger" onClick={() => deleteBanner(bannerToDelete)}>
+  Delete
+</Button>
+</Modal.Footer>
+</Modal>
+<Button className="btn btn-sm me-3 fs-6 mb-3"   data-bs-toggle="modal"
+                    data-bs-target="#ediModal" onClick={() => {
+                      handleEdit(items._id);
+                    }}>
+               <i class="fa-solid fa-pen-to-square fs-6   " ></i>
+            </Button></td>
+    </tr>
 
-                      <tbody>
-                        {booking
-                          .filter((elm) => elm.status == currentTab)
-                          .map((elm, i) => (
-                            <tr key={i}>
-                              <td>{elm.id}</td>
+      )
+    })}
+    
+  </tbody>
+</table>
+</div>
 
-                              <td className="min-w-300">
-                                <div className="d-flex items-center">
-                                  {/* <img src={elm.imageUrl} alt="image" /> */}
-                                  <div className="ml-20">{elm.title}</div>
-                                </div>
-                              </td>
-
-                              <td>{elm.startDate}</td>
-
-                              <td>{elm.endDate}</td>
-
-                              <td>{elm.details}</td>
-
-                              <td>{500}</td>
-
-                              <td>
-                                <div
-                                  className={`circle ${
-                                    elm.status == "Approved"
-                                      ? "text-purple-1"
-                                      : elm.status == "Pending"
-                                      ? "text-yellow-1"
-                                      : "text-red-2"
-                                  } `}
-                                >
-                                  {elm.status}
-                                </div>
-                              </td>
-
-                              <td>
-                                <div className="d-flex items-center">
-                                  <button className="button -dark-1 size-35 bg-light-1 rounded-full flex-center">
-                                    <i className="icon-pencil text-14"></i>
-                                  </button>
-
-                                  <button className="button -dark-1 size-35 bg-light-1 rounded-full flex-center ml-10">
-                                    <i className="icon-delete text-14"></i>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* <Pagination /> */}
-
-                  <div className="text-14 text-center mt-20">
-                    Showing results 1-30 of 1,415
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center pt-30">
-            © Copyright Viatours {new Date().getFullYear()}
-          </div>
         </div>
       </div>
     </div>
+    </>
   );
 }

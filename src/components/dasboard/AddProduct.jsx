@@ -110,7 +110,7 @@ export default function AddProduct() {
       formDataToSend.append("newprice", formData.newprice);
       formDataToSend.append("rating", formData.rating);
       formDataToSend.append("duration", formData.duration);
-      formDataToSend.append("groupSize", formData.groupSize);
+      // formDataToSend.append("groupSize", formData.groupSize);
       formDataToSend.append("ages", formData.ages);
       formDataToSend.append("languages", formData.languages);
       formDataToSend.append("tourMap", formData.tourMap);
@@ -460,21 +460,7 @@ export default function AddProduct() {
                                       </div>
                                     </div>
 
-                                    <div className="col-6">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="groupSize"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          GroupSize
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
-
+                                    
                                     <div className="col-6">
                                       <div className="form-input ">
                                         <input

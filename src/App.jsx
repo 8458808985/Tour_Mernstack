@@ -122,7 +122,7 @@ function App() {
             <Route path="/blog-list-3" element={<BlogListPage3 />} />
             <Route path="/blog-single/:id" element={<BlogSinglePage />} />
 
-            <Route path="/destinations" element={<DestinationsPage />} />
+            <Route path="/destinations/:id" element={<DestinationsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/help-center" element={<HelpCenterPage />} />
             <Route path="/terms" element={<TermsPage />} />

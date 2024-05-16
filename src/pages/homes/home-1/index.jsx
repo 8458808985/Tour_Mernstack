@@ -30,9 +30,9 @@ export default function HomePage1() {
       {/* <Tour1 /> */}
       <Product/>
       <Banner />
-      <TourTypeOne />
-      <TourSlderOne />
-      <TestimonialOne />
+      {/* <TourTypeOne /> */}
+      {/* <TourSlderOne /> */}
+      {/* <TestimonialOne /> */}
       {/* <BannerOne /> */}
       <ArticlesThree />
       <FooterOne />

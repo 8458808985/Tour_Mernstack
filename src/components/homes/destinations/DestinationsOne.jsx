@@ -21,7 +21,7 @@ export default function DestinationsOne() {
       <div className="container">
         <div className="row y-gap-10 justify-between items-end">
           <div className="col-auto">
-            <h2 data-aos="fade-up" className="text-30 md:text-24">
+            <h2 data-aos="fade-up" className="text-30 mt-30 md:text-24">
               Trending destinations 
             </h2>
           </div>
@@ -65,9 +65,9 @@ export default function DestinationsOne() {
                 },
               }}
             >
-              {destinations.slice(0, 8).map((elm, i) => (
+              {destinations.slice(0, 12).map((elm, i) => (
                 <SwiperSlide key={i}>
-                  <Link to={"/destinations"}>
+                  <Link to={`/destinations/${elm._id}`}>
                     <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
                       <img
                         src={elm.imageSrc}

@@ -95,6 +95,7 @@ export default function Add_destination() {
     }
   };
 
+  
   const deleteBanner = async (id) => {
     try {
       const response = await axios.delete(`${BASE_URL}/destination/${id}`);
@@ -126,7 +127,6 @@ export default function Add_destination() {
   const handleEdit = (id) => {
     fetchDestinationForEdit(id);
   };
-
   const fetchDestinationForEdit = async (id) => {
     try {
       const response = await axios.get(`${BASE_URL}/destination/${id}`);
