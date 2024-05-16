@@ -6,7 +6,7 @@ import { testimonialsOne } from "@/data/testimonials";
 export default function TestimonialOne() {
   return (
 <>
-<section className="relative layout-pt-xl layout-pb-xl">
+{/* <section className="relative layout-pt-xl layout-pb-xl">
       <div className="sectionBg md:d-none">
         <img src="/img/testimonials/1/1.png" alt="image" />
       </div>
@@ -19,7 +19,7 @@ export default function TestimonialOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Customer Reviews
+              Customer Reviews gd
             </h2>
           </div>
         </div>
@@ -105,10 +105,10 @@ export default function TestimonialOne() {
           </div>
         </div>
       </div>
-    </section>
+    </section> */}
 
 
-    <div className="container-fluid">
+    {/* <div className="container-fluid">
     <div
   id="carouselExampleCaptions"
   className="carousel slide"
@@ -180,7 +180,7 @@ export default function TestimonialOne() {
 </div>
 
 
-    </div>
+    </div> */}
 </>
 
   );

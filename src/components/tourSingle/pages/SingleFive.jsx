@@ -124,7 +124,7 @@ export default function SingleFive({ tour }) {
                       activeTab == "Itinerary" ? "is-tab-el-active" : ""
                     }`}
                   >
-                    <h2 className="text-30">Itinerary</h2>
+                    <h2 className="text-30">Itinerary </h2>
 
                     <div className="mt-30">
                       <RoadMap />

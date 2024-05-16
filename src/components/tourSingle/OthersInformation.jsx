@@ -15,7 +15,7 @@ export default function OthersInformation() {
   }, [id]); // Add id to dependency array
   return (
     <>
-      <div className="col-lg-3 col-6">
+      <div className="col-sm-3 col-md-3 col-6">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-clock"></i>
@@ -28,7 +28,7 @@ export default function OthersInformation() {
         </div>
       </div>
 
-      <div className="col-lg-3 col-6">
+      {/* <div className="col-lg-3 col-6">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-teamwork"></i>
@@ -39,9 +39,9 @@ export default function OthersInformation() {
             <div className="text-14 text-light-2 lh-16">{productData.groupSize} people</div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="col-lg-3 col-6">
+      {/* <div className="col-lg-3 col-6">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-birthday-cake"></i>
@@ -52,9 +52,9 @@ export default function OthersInformation() {
             <div className="text-14 text-light-2 lh-16">{productData.ages} yrs</div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="col-lg-3 col-6">
+      <div className="col-md-3 col-sm-3 col-6">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-translate"></i>
@@ -66,6 +66,7 @@ export default function OthersInformation() {
           </div>
         </div>
       </div>
+      <div className="col-md-6"></div>
     </>
   );
 }

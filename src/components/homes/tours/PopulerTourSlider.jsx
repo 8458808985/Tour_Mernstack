@@ -13,7 +13,7 @@ export default function PopularTourSlider() {
         <div className="row y-gap-10 justify-between items-center y-gap-10">
           <div className="col-auto">
             <h2 data-aos="fade-up" data-aos-delay="" className="text-30">
-              Find Popular Tours
+              Find Popular Tours 
             </h2>
           </div>
         </div>

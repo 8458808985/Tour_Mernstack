@@ -192,7 +192,7 @@ export default function Add_destination() {
                                   activeTab === "Content"
                                     ? "is-tab-el-active"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 <form
                                   name="formrv"
@@ -298,7 +298,7 @@ export default function Add_destination() {
                                   activeTab === "Content"
                                     ? "is-tab-el-active"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 <form
                                   name="formrv"
