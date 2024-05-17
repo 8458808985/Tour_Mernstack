@@ -26,7 +26,7 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="text-30 md:text-24 " style={{fontSize:"700"}}
             >
-              Travel Articles
+              Travel Articles111
             </h2>
           </div>
 
@@ -50,7 +50,7 @@ export default function ArticlesThree() {
         >
           {blog.slice(0, 3).map((elm, i) => (
             <div key={i} className="col-lg-4 col-md-6">
-              <Link to={`/blog-single/${elm.id}`} className="blogCard -type-1">
+              <div className="blogCard -type-1">
                 <div className="blogCard__image ratio ratio-41:30">
                   <img
                     src={elm.imageSrc}
@@ -73,7 +73,7 @@ export default function ArticlesThree() {
                     {elm.title}
                   </h3>
                 </div>
-              </Link>
+              </div>
             </div>
           ))}
         </div>

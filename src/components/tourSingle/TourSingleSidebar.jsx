@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
 
 import { times } from "@/data/tourSingleContent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
 
 export default function TourSingleSidebar() {
   const [productData, setProductData] = useState([]);
   const { id } = useParams(); // Destructure id from useParams
+
+  const navigate= useNavigate()
 
   useEffect(() => {
     fetch(`${BASE_URL}/product/${id}`)
@@ -16,6 +18,9 @@ export default function TourSingleSidebar() {
       .catch(err => console.error('Error fetching product:', err));
   }, [id]);
 
+  const book=()=>{
+    navigate("/booking-pages")
+  }
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);
   
@@ -126,7 +131,7 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <button className="button -md -dark-1 col-12 bg-accent-1 text-white mt-20" type="submit"> 
+      <button className="button -md -dark-1 col-12 bg-accent-1 text-white mt-20" type="submit" onClick={book}> 
         Book Now
         <i className="icon-arrow-top-right ml-10"></i>
       </button>

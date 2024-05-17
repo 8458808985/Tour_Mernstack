@@ -362,7 +362,7 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
+                                    {/* <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
                                         <input
                                           type="number"
@@ -375,7 +375,7 @@ export default function AddProduct() {
                                           <span className="text-danger">*</span>
                                         </label>
                                       </div>
-                                    </div>
+                                    </div> */}
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
                                         <div className="col-6 col-sm-12 col-lg-12">
@@ -533,20 +533,6 @@ export default function AddProduct() {
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                         ChildPrice
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <div className="col-6">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="ages"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Ages
                                           <span className="text-danger">*</span>
                                         </label>
                                       </div>
