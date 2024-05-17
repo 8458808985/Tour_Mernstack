@@ -5,12 +5,16 @@ import { useParams } from "react-router-dom";
 
 export default function Included() {
   const [productData, setProductData] = useState([]);
+  const [include, setInclude] = useState([]);
   const { id } = useParams(); // Destructure id from useParams
 
   useEffect(() => {
     fetch(`${BASE_URL}/product/${id}`)
       .then(res => res.json())
-      .then(data => setProductData(data))
+      .then(data =>{ setProductData(data);
+        setInclude(data.included
+        )
+      })
       .catch(err => console.error('Error fetching product:', err));
   }, [id]); // Add id to dependency array
 
@@ -18,21 +22,10 @@ export default function Included() {
     <div className="row x-gap-130 y-gap-20 pt-20">
       <div className="col-lg-6">
         <div className="y-gap-15">
-          {included.map((elm, i) => (
+          {include.map((elm, i) => (
             <div key={i} className="d-flex">
               <i className="icon-check flex-center text-10 size-24 rounded-full text-green-2 bg-green-1 mr-15"></i>
-              {elm.text}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="col-lg-6">
-        <div className="y-gap-15">
-          {included.map((elm, i) => (
-            <div key={i} className="d-flex">
-              <i className="icon-cross flex-center text-10 size-24 rounded-full text-red-3 bg-red-4 mr-15"></i>
-              {elm.text}
+              {elm}
             </div>
           ))}
         </div>

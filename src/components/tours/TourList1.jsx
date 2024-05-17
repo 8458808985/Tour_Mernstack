@@ -23,7 +23,7 @@ export default function TourList1() {
       .catch(err => console.error('Error fetching product:', err));
   }, []); // Add id to dependency array
 
-
+console.log("productData",productData )
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -69,7 +69,7 @@ export default function TourList1() {
                   style={sidebarActive ? { maxHeight: "2000px" } : {}}
                 >
                   <div className="pt-20">
-                    <Sidebar />
+                    <Sidebar  />
                   </div>
                 </div>
               </div>

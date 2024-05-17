@@ -1,3 +1,4 @@
+import React from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useEffect, useState } from "react";
@@ -55,8 +56,8 @@ export default function AddProduct() {
 
   const [formData, setFormData] = useState({
     product: "",
-    included: "",
-    tourType: "",
+    included: [""],
+    tourType: [""],
     discount: "",
     adultOldPrice: "",
     adultNewPrice: "",
@@ -66,14 +67,14 @@ export default function AddProduct() {
     country: "",
     rating: "",
     duration: "",
-    groupSize: "",
+    childPrice: "",
     ages: "",
     languages: "",
     tourOverview: "",
     tourMap: "",
-    faq: "",
-    childPrice:""
+    faq: [{ question: "", answer: "" }],
   });
+
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
@@ -83,10 +84,6 @@ export default function AddProduct() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const FileHandler = (e) => {
-  //   setFormData({ ...formData, imageSrc: e.target.files[0] });
-  //   console.log(formData)
-  // };
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setFormData((prevFormData) => ({
@@ -94,6 +91,61 @@ export default function AddProduct() {
       imageSrc: files,
     }));
   };
+
+  const handleAddTourType = () => {
+    setFormData({ ...formData, tourType: [...formData.tourType, ""] });
+  };
+
+  const handleRemoveTourType = (index) => {
+    setFormData({
+      ...formData,
+      tourType: formData.tourType.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleTourTypeChange = (index, value) => {
+    const newTourTypes = [...formData.tourType];
+    newTourTypes[index] = value;
+    setFormData({ ...formData, tourType: newTourTypes });
+  };
+
+  const handleAddIncluded = () => {
+    setFormData({ ...formData, included: [...formData.included, ""] });
+  };
+
+  const handleRemoveIncluded = (index) => {
+    setFormData({
+      ...formData,
+      included: formData.included.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleIncludedChange = (index, value) => {
+    const newIncluded = [...formData.included];
+    newIncluded[index] = value;
+    setFormData({ ...formData, included: newIncluded });
+  };
+
+  const handleAddFaq = () => {
+    setFormData({
+      ...formData,
+      faq: [...formData.faq, { question: "", answer: "" }],
+    });
+  };
+
+  const handleRemoveFaq = (index) => {
+    setFormData({
+      ...formData,
+      faq: formData.faq.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleFaqChange = (index, field, value) => {
+    const newFaqs = [...formData.faq];
+    newFaqs[index][field] = value;
+    setFormData({ ...formData, faq: newFaqs });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -101,27 +153,31 @@ export default function AddProduct() {
     try {
       const formDataToSend = new FormData();
 
-      formDataToSend.append("product", formData.product);
-      formDataToSend.append("included", formData.included);
-      formDataToSend.append("tourType", formData.tourType);
-      formDataToSend.append("discount", formData.discount);
-      formDataToSend.append("adultOldPrice", formData.adultOldPrice);
-      formDataToSend.append("country", formData.country);
-      formDataToSend.append("city", formData.city);
-      formDataToSend.append("adultNewPrice", formData.adultNewPrice);
-      formDataToSend.append("childPrice", formData.childPrice);
-      formDataToSend.append("rating", formData.rating);
-      formDataToSend.append("duration", formData.duration);
-      // formDataToSend.append("groupSize", formData.groupSize);
-      formDataToSend.append("ages", formData.ages);
-      formDataToSend.append("languages", formData.languages);
-      formDataToSend.append("tourMap", formData.tourMap);
-      formDataToSend.append("tourOverview", formData.tourOverview);
-      formDataToSend.append("faq", formData.faq);
-      formDataToSend.append("time", formData.time);
-      formData.imageSrc.forEach((image) => {
-        formDataToSend.append("imageSrc", image);
-      });
+      for (const key in formData) {
+        if (formData.hasOwnProperty(key)) {
+          const value = formData[key];
+          if (key === "imageSrc") {
+            value.forEach((image) => {
+              formDataToSend.append("imageSrc", image);
+            });
+          } else if (key === "tourType") {
+            formData.tourType.forEach((type, index) => {
+              formDataToSend.append(`tourType[${index}]`, type);
+            });
+          } else if (key === "included") {
+            formData.included.forEach((include, index) => {
+              formDataToSend.append(`included[${index}]`, include);
+            });
+          } else if (key === "faq") {
+            formData.faq.forEach((faq, index) => {
+              formDataToSend.append(`faq[${index}][question]`, faq.question);
+              formDataToSend.append(`faq[${index}][answer]`, faq.answer);
+            });
+          } else {
+            formDataToSend.append(key, value);
+          }
+        }
+      }
 
       const response = await fetch(
         "https://test1.buyjugaad.com/api/v1/product/new",
@@ -133,7 +189,7 @@ export default function AddProduct() {
 
       if (response.status === 200) {
         frmAdd.reset();
-        toast.success("Successfully Add Product ", {
+        toast.success("Successfully Add Product", {
           position: "top-center",
           autoClose: 500,
         });
@@ -146,6 +202,7 @@ export default function AddProduct() {
       setSubmitting(false);
     }
   };
+
   const deleteTour = async (id) => {
     try {
       const response = await axios.delete(`${BASE_URL}/product/${id}`);
@@ -276,57 +333,46 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                <div className="col-6 col-sm-6 col-lg-6">
-    <div className="form-input">
-        <input
-            type="number"
-            required
-            name="adultOldPrice"
-            id="oldPriceInput"
-            onChange={inputHandler}
-        />
-        <label className="lh-1 text-16 text-light-1">
-            Adult Old Price
-            <span className="text-danger">*</span>
-        </label>
-    </div>
-</div>
-<div className="col-6 col-sm-6 col-lg-6">
-    <div className="form-input">
-        <input
-            type="number"
-            required
-            name="discount"
-            id="discountInput"
-            onChange={inputHandler}
-        />
-        <label className="lh-1 text-16 text-light-1">
-            Discount
-            <span className="text-danger">*</span>
-        </label>
-    </div>
-</div>
-<div className="col-6 col-sm-6 col-lg-6">
-    <div className="form-input">
-        <input
-            required
-            name="adultNewPrice"
-            id="newPriceInput"
-            type="number"
-            readOnly
-        />
-        <label className="lh-1 text-16 text-light-1">
-            Adult New Price
-            <span className="text-danger">*</span>
-        </label>
-    </div>
-</div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input
+                                          required
+                                          name="discount"
+                                          type="number"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Discount{" "}
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
 
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
-                                        <input type="number" required name='childPrice' onChange={inputHandler} />
+                                        <input
+                                          type="number"
+                                          required
+                                          name="adultOldPrice"
+                                          onChange={inputHandler}
+                                        />
                                         <label className="lh-1 text-16 text-light-1">
-                                        Child Price<span className="text-danger">*</span>
+                                         Adult Old Price
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-6 col-lg-6">
+                                      <div className="form-input ">
+                                        <input
+                                          type="number"
+                                          required
+                                          name="adultNewPrice"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Adult New Price
+                                          <span className="text-danger">*</span>
                                         </label>
                                       </div>
                                     </div>
@@ -349,24 +395,13 @@ export default function AddProduct() {
                                           </div>
                                         </div>
                                         {/* <select class="form-select" aria-label="Default select example">
-                            <option selected >City
-
-                            </option>
-                            <option value={formData.city} name='city' onChange={inputHandler}>Indore</option>
-                           
-                          </select> */}
+                                        <option selected >City
+                                         </option>
+                                       <option value={formData.city} name='city' onChange={inputHandler}>Indore</option>
+                                         </select> */}
                                       </div>
                                     </div>
-                                    {/* <div className="col-6 col-sm-6 col-lg-6">
-                                      <div className="form-input "> */}
-                                    {/*                            
-                            <select class="form-select" aria-label="Default select example">
-                            <option selected >Country
 
-                            </option>
-                            <option  name='country' onChange={inputHandler} value={formData.country}>India</option>
-                           
-                          </select> */}
                                     <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
@@ -381,43 +416,85 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 ">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="included"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Included
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
+
                                     <div className="col-6">
-                                      <div className="form-input position-relative">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="tourType"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          TourType
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                        <i
-                                          className="fa-sharp fa-solid fa-plus position-absolute top-50 translate-y-minus-50 right-10" 
-                                          style={{
-                                            position: "absolute",
-                                            top: "50%",
-                                            right: "10px",
-                                            transform: "translateY(-50%)",
-                                          }} 
-                                        ></i>
-                                      </div>
+                                      {formData.included.map((item, index) => (
+                                        <div className="form-input" key={index}>
+                                          <input
+                                            type="text"
+                                            required
+                                            name={`included-${index}`}
+                                            value={item}
+                                            onChange={(e) =>
+                                              handleIncludedChange(
+                                                index,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                          <label className="lh-1 text-16 text-light-1">
+                                            Included{" "}
+                                            <span className="text-danger">
+                                              *
+                                            </span>
+                                          </label>
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleRemoveIncluded(index)
+                                            }
+                                          >
+                                            Remove
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button
+                                        type="button"
+                                        onClick={handleAddIncluded}
+                                      >
+                                        Add Included
+                                      </button>
                                     </div>
+
+                                    <div className="col-6">
+                                      {formData.tourType.map((type, index) => (
+                                        <div className="form-input" key={index}>
+                                          <input
+                                            type="text"
+                                            required
+                                            name={`tourType-${index}`}
+                                            value={type}
+                                            onChange={(e) =>
+                                              handleTourTypeChange(
+                                                index,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                          <label className="lh-1 text-16 text-light-1">
+                                            TourType {index + 1}{" "}
+                                            <span className="text-danger">
+                                              *
+                                            </span>
+                                          </label>
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleRemoveTourType(index)
+                                            }
+                                          >
+                                            Remove
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button
+                                        type="button"
+                                        onClick={handleAddTourType}
+                                      >
+                                        Add TourType
+                                      </button>
+                                    </div>
+
                                     <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
@@ -432,7 +509,6 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-
                                     <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
@@ -447,8 +523,20 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-
-                                    
+                                    <div className="col-6">
+                                      <div className="form-input">
+                                        <input
+                                          type="text"
+                                          required
+                                          name="childPrice"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                        ChildPrice
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
                                     <div className="col-6">
                                       <div className="form-input ">
                                         <input
@@ -463,7 +551,6 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                  
                                     <div className="col-6">
                                       <div className="form-input ">
                                         <input
@@ -480,19 +567,65 @@ export default function AddProduct() {
                                     </div>
 
                                     <div className="col-6">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="faq"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Faq
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
+                                      {formData.faq.map((faq, index) => (
+                                        <div key={index}>
+                                          <div className="form-input">
+                                            <input
+                                              type="text"
+                                              required
+                                              name={`faq-question-${index}`}
+                                              value={faq.question}
+                                              onChange={(e) =>
+                                                handleFaqChange(
+                                                  index,
+                                                  "question",
+                                                  e.target.value
+                                                )
+                                              }
+                                            />
+                                            <label className="lh-1 text-16 text-light-1">
+                                              Question{" "}
+                                              <span className="text-danger">
+                                                *
+                                              </span>
+                                            </label>
+                                          </div>
+                                          <div className="form-input mt-4">
+                                            <input
+                                              type="text"
+                                              required
+                                              name={`faq-answer-${index}`}
+                                              value={faq.answer}
+                                              onChange={(e) =>
+                                                handleFaqChange(
+                                                  index,
+                                                  "answer",
+                                                  e.target.value
+                                                )
+                                              }
+                                            />
+                                            <label className="lh-1 text-16 text-light-1 mt-2">
+                                              Answer{" "}
+                                              <span className="text-danger">
+                                                *
+                                              </span>
+                                            </label>
+                                          </div>
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleRemoveFaq(index)
+                                            }
+                                          >
+                                            Remove FAQ
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button type="button" onClick={handleAddFaq}>
+                                        Add FAQ
+                                      </button>
                                     </div>
+
                                     <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
@@ -653,7 +786,7 @@ export default function AddProduct() {
                                         <input
                                           type="number"
                                           required
-                                          name="oldprice"
+                                          name="adultOldPrice"
                                           onChange={inputHandler}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
@@ -667,7 +800,7 @@ export default function AddProduct() {
                                         <input
                                           type="number"
                                           required
-                                          name="newprice"
+                                          name="adultNewPrice"
                                           onChange={inputHandler}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
@@ -761,11 +894,11 @@ export default function AddProduct() {
                                             <input
                                               type="text"
                                               required
-                                              name="groupSize"
+                                              name="childPrice"
                                               onChange={inputHandler}
                                             />
                                             <label className="lh-1 text-16 text-light-1">
-                                              GroupSize
+                                            ChildPrice
                                               <span className="text-danger">
                                                 *
                                               </span>
@@ -902,10 +1035,13 @@ export default function AddProduct() {
                 className="row y-gap-30 pt-5 sm:pt-10"
               >
                 {pageData.map((elm, i) => (
-                  <div key={i} className="col-lg-5 col-md-5 col-sm-5 col-12 mx-auto ">
+                  <div key={i} className="col-lg-4 col-md-4 col-sm-4 col-12">
                     <div className="card border-0 rounded-3 mb-1 mt-1">
                       <div className="card-body">
-                     
+                        <Link
+                          to={`/blog-single/${elm.id}`}
+                          className="blogCard -type-1"
+                        >
                           <div className="btn d-flex justify-content-end"></div>
                           <div className="blogCard__image ratio ratio-41:30">
                             <img
@@ -1030,7 +1166,7 @@ export default function AddProduct() {
                               )}
                             </h3>
                           </div>
-                       
+                        </Link>
 
                         <hr />
                         <Button
