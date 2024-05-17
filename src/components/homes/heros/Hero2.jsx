@@ -217,7 +217,7 @@ export default function Hero2() {
                     <div className="hero__slide swiper-slide">
                       <div className="hero__content">
                         <h1
-                          className="hero__title"
+                          className="hero__title "
                           data-aos="fade-up"
                           data-aos-delay="300"
                         >
