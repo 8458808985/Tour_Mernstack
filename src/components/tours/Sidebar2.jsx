@@ -10,8 +10,10 @@ import {
 import RangeSlider from "../common/RangeSlider";
 import Stars from "../common/Stars";
 
-export default function Sidebar2() {
+export default function Sidebar2({price, newValue}) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
+  
+  
   return (
     <div className="sidebar -type-1 rounded-12">
       <div className="sidebar__content">
@@ -110,7 +112,7 @@ export default function Sidebar2() {
                 }
               >
                 <div className="pt-15">
-                  <RangeSlider />
+                  <RangeSlider/>
                 </div>
               </div>
             </div>

@@ -1,7 +1,19 @@
+import BASE_URL from "@/Urls/baseUrl";
 import { excluded, included } from "@/data/tourSingleContent";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function Included() {
+  const [productData, setProductData] = useState([]);
+  const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product/${id}`)
+      .then(res => res.json())
+      .then(data => setProductData(data))
+      .catch(err => console.error('Error fetching product:', err));
+  }, [id]); // Add id to dependency array
+
   return (
     <div className="row x-gap-130 y-gap-20 pt-20">
       <div className="col-lg-6">
@@ -17,7 +29,7 @@ export default function Included() {
 
       <div className="col-lg-6">
         <div className="y-gap-15">
-          {excluded.map((elm, i) => (
+          {included.map((elm, i) => (
             <div key={i} className="d-flex">
               <i className="icon-cross flex-center text-10 size-24 rounded-full text-red-3 bg-red-4 mr-15"></i>
               {elm.text}

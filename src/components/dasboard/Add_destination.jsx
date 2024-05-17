@@ -71,7 +71,7 @@ export default function Add_destination() {
         body: formDataToSend,
       });
 
-      if (response.ok) {
+      if (response.status===200) {
         if (editDestination) {
           toast.success("Successfully updated destination", {
             position: "top-center",

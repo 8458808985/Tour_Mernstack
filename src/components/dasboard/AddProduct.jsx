@@ -58,8 +58,8 @@ export default function AddProduct() {
     included: "",
     tourType: "",
     discount: "",
-    oldprice: "",
-    newprice: "",
+    adultOldPrice: "",
+    adultNewPrice: "",
     time: "",
     imageSrc: [],
     city: "",
@@ -72,6 +72,7 @@ export default function AddProduct() {
     tourOverview: "",
     tourMap: "",
     faq: "",
+    childPrice:""
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -104,10 +105,11 @@ export default function AddProduct() {
       formDataToSend.append("included", formData.included);
       formDataToSend.append("tourType", formData.tourType);
       formDataToSend.append("discount", formData.discount);
-      formDataToSend.append("oldprice", formData.oldprice);
+      formDataToSend.append("adultOldPrice", formData.adultOldPrice);
       formDataToSend.append("country", formData.country);
       formDataToSend.append("city", formData.city);
-      formDataToSend.append("newprice", formData.newprice);
+      formDataToSend.append("adultNewPrice", formData.adultNewPrice);
+      formDataToSend.append("childPrice", formData.childPrice);
       formDataToSend.append("rating", formData.rating);
       formDataToSend.append("duration", formData.duration);
       // formDataToSend.append("groupSize", formData.groupSize);
@@ -144,37 +146,6 @@ export default function AddProduct() {
       setSubmitting(false);
     }
   };
-
-  //   const delete_product =async(id)=>{
-  // const results =await axios.delete(`${BASE_URL}/product/${id}`)
-  // if(results){
-  //   toast.success("Successfully Delete Product ", {
-  //     position: "top-center"
-  //   })
-  // }
-  //   }
-  // const delete_product = async(id) => {
-  //   try {
-  //     const result =await axios.delete(`${BASE_URL}/product/${id}`);
-  //   if (result.status === 200) {
-
-  //     setProduct(product.filter(product => product._id !== id));
-  //     // If the deletion is successful, show a success message
-  //     toast.success("Successfully deleted the Product", {
-  //       position: "top-center",
-  //       autoClose: 500
-
-  //     });
-  //   } else {
-  //     // Handle other status codes or errors if necessary
-  //     alert("failed deleted")
-  //   }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // };
-
   const deleteTour = async (id) => {
     try {
       const response = await axios.delete(`${BASE_URL}/product/${id}`);
@@ -305,40 +276,57 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
-                                      <div className="form-input ">
-                                        <input
-                                          required
-                                          name="discount"
-                                          type="number"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Discount{" "}
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
+                                <div className="col-6 col-sm-6 col-lg-6">
+    <div className="form-input">
+        <input
+            type="number"
+            required
+            name="adultOldPrice"
+            id="oldPriceInput"
+            onChange={inputHandler}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            Adult Old Price
+            <span className="text-danger">*</span>
+        </label>
+    </div>
+</div>
+<div className="col-6 col-sm-6 col-lg-6">
+    <div className="form-input">
+        <input
+            type="number"
+            required
+            name="discount"
+            id="discountInput"
+            onChange={inputHandler}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            Discount
+            <span className="text-danger">*</span>
+        </label>
+    </div>
+</div>
+<div className="col-6 col-sm-6 col-lg-6">
+    <div className="form-input">
+        <input
+            required
+            name="adultNewPrice"
+            id="newPriceInput"
+            type="number"
+            readOnly
+        />
+        <label className="lh-1 text-16 text-light-1">
+            Adult New Price
+            <span className="text-danger">*</span>
+        </label>
+    </div>
+</div>
 
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
-                                        <input
-                                          type="number"
-                                          required
-                                          name="oldprice"
-                                          onChange={inputHandler}
-                                        />
+                                        <input type="number" required name='childPrice' onChange={inputHandler} />
                                         <label className="lh-1 text-16 text-light-1">
-                                          Old Price
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
-                                      <div className="form-input ">
-                                        <input type="number" required name='newprice' onChange={inputHandler} />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          New Price<span className="text-danger">*</span>
+                                        Child Price<span className="text-danger">*</span>
                                         </label>
                                       </div>
                                     </div>
@@ -475,6 +463,7 @@ export default function AddProduct() {
                                         </label>
                                       </div>
                                     </div>
+                                  
                                     <div className="col-6">
                                       <div className="form-input ">
                                         <input
@@ -984,7 +973,7 @@ export default function AddProduct() {
                               </span>
                             </h5>
                             <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                              {elm.oldprice && (
+                              {elm.adultOldPrice && (
                                 <span
                                   className="text-dark-1 me-4"
                                   style={{
@@ -994,7 +983,7 @@ export default function AddProduct() {
                                 >
                                   Old Price:{" "}
                                   <span style={{ marginLeft: "2px" }}>
-                                    <del>${elm.oldprice}</del>
+                                    <del>${elm.adultOldPrice}</del>
                                   </span>
                                 </span>
                               )}
@@ -1013,7 +1002,7 @@ export default function AddProduct() {
                               )}
                             </h3>
                             <h3 className="blogCard__title text-18 fw-500 mt-10  d-flex justify-content-between">
-                              {elm.oldprice && elm.discount && (
+                              {elm.adultOldPrice && elm.discount && (
                                 <span
                                   className="text-16 fw-500"
                                   style={{
@@ -1023,12 +1012,12 @@ export default function AddProduct() {
                                 >
                                   New Price: $
                                   {(
-                                    elm.oldprice -
-                                    (elm.oldprice * elm.discount) / 100
+                                    elm.adultOldPrice -
+                                    (elm.adultOldPrice * elm.discount) / 100
                                   ).toFixed(2)}
                                 </span>
                               )}
-                              {elm.oldprice && !elm.discount && (
+                              {elm.adultOldPrice && !elm.discount && (
                                 <span
                                   className="text-16 fw-500"
                                   style={{
@@ -1036,7 +1025,7 @@ export default function AddProduct() {
                                     fontWeight: "700",
                                   }}
                                 >
-                                  New Price: ${elm.oldprice}
+                                  New Price: ${elm.adultOldPrice}
                                 </span>
                               )}
                             </h3>

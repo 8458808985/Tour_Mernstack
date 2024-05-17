@@ -7,9 +7,11 @@ import Hero from "@/components/pages/destinations/Hero";
 import Information from "@/components/pages/destinations/Information";
 import TourList1 from "@/components/pages/destinations/TourList";
 import TourSlider from "@/components/pages/destinations/TourSlider";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import MetaComponent from "@/components/common/MetaComponent";
+import { useParams } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
 
 const metadata = {
   title: "Destinations || ViaTour - Travel & Tour Reactjs Template",
@@ -17,18 +19,31 @@ const metadata = {
 };
 
 export default function DestinationsPage() {
+  const [destinationData, setDestinationData] = useState([]);
+  const [destData, setDestData] = useState("");
+
+  const { id } = useParams(); // Destructure id from useParams
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/destination/${id}`)
+      .then(res => res.json())
+      .then(data =>{ setDestinationData(data);
+        setDestData(data.data[0].name);
+      })
+      .catch(err => console.error('Error fetching destination data:', err));
+  }, [id]); 
   return (
     <>
       <MetaComponent meta={metadata} />
       <main>
         <Header1 />
         <Hero />
-        <SpacialOffer />
-        <TourSlider />
-        <TourList1 />
-        <TestimonialOne />
-        <Information />
-        <ArticlesOne />
+        {/* <SpacialOffer /> */}
+        {/* <TourSlider /> */}
+        <TourList1 destData={destData}/>
+        {/* <TestimonialOne /> */}
+        {/* <Information /> */}
+        {/* <ArticlesOne /> */}
         <FooterOne />
       </main>
     </>

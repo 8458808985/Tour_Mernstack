@@ -96,9 +96,9 @@ export default function Product({ elm }) {
                       <Stars star={elm.rating}  />
                     </div>
 
-                    {elm.oldprice && (
+                    {elm.adultOldPrice && (
     <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-      Old Price: <del>${elm.oldprice}</del>
+      Old Price: <del>${elm.adultOldPrice}</del>
     </span>
   )}
                   </div>
@@ -117,14 +117,14 @@ export default function Product({ elm }) {
                     </div>
 
                     <div>
-                    {elm.oldprice && elm.discount && (
+                    {elm.adultOldPrice && elm.discount && (
       <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
-      <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.oldprice - (elm.oldprice * elm.discount) / 100).toFixed(2)}</span> 
+      <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
       </span>
     )}
-   {elm.oldprice && !elm.discount && (
+   {elm.adultOldPrice && !elm.discount && (
     <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-      New Price: $       {elm.oldprice}
+      New Price: $   {elm.adultOldPrice}
     </span>
   )}
                     </div>

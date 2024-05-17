@@ -20,6 +20,8 @@ export default function RangeSlider() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // console.log(value)
+  
   return (
     <>
       <div className="js-price-rangeSlider" style={{ padding: "20px 15px" }}>

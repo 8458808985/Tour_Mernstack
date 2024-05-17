@@ -13,15 +13,15 @@ export default function TourList1() {
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
   const dropDownContainer = useRef();
-  const [productData, setProductData] = useState(null);
-  const { id } = useParams(); // Destructure id from useParams
+  const [productData, setProductData] = useState([]);
+  // const { id } = useParams(); // Destructure id from useParams
 
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
       .then(res => res.json())
       .then(data => setProductData(data))
       .catch(err => console.error('Error fetching product:', err));
-  }, [id]); // Add id to dependency array
+  }, []); // Add id to dependency array
 
 
 
@@ -194,12 +194,12 @@ export default function TourList1() {
                         </div>
 
                         <div className="tourCard__price">
-                          <div>${elm.oldprice}</div>
+                          <div>${elm.adultOldPrice}</div>
 
                           <div className="d-flex items-center">
                             From{" "}
                             <span className="text-20 fw-500 ml-5">
-                              ${elm.newprice}
+                              ${elm.adultOldPrice}
                             </span>
                           </div>
                         </div>
