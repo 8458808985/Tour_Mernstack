@@ -57,8 +57,8 @@ export default function SingleOne({ tour }) {
 
               <h2 className="text-30 mt-60">Tour Map</h2>
               <div className="mapTourSingle">
-                <p>onClick link redirect map location</p>
-               <a href="https://www.google.com/maps" className="fs-3" style={{color:"blue"}} >{productData.tourMap}</a>
+                {/* <p>onClick link redirect map location</p> */}
+               <a href="https://www.google.com/maps" className="fs-3" style={{fontSize:"10px", color:"blue"}} ><span style={{fontSize:"18px",}}> {productData.tourMap}</span></a>
                
               </div>
 

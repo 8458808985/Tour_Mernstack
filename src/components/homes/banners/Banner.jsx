@@ -5,24 +5,24 @@ export default function Banner() {
   return (
     <section className="cta -type-2">
       <div className="cta__bg">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT10gDoUHpHItDVlyS4eAcQf8VjoQS-9aQiyA&s" alt="image" />
+        <img src="https://swarnatara.tours/images/upload/package/1659607346andaman-travel-agency-in-chennai.png" alt="image" />
 
         <div className="cta__image">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYQvHsIbmep9r8w2oO0WF9kz58x7x7J1UBWGrEMiFg2A&s" alt="image" />
+          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
+          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
+          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
         </div>
       </div>
 
       <div className="container">
         <div className="row">
-          <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-7">
-            <div className="cta__content">
+          <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-8 col-sm-12">
+            <div className="cta__content ">
               <h2
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="text-40 md:text-30  lh-13"
-              >
+                className="" 
+            style={{color:"white", fontSize:"30px" , fontWeight:"700"}}  >
                 Grab up to <span className="text-accent-1">35% off</span>
                 <br className="lg:d-none" />
                 on your favorite
@@ -30,7 +30,7 @@ export default function Banner() {
                 Destination
               </h2>
 
-              <p data-aos="fade-up" data-aos-delay="" className="mt-10">
+              <p data-aos="fade-up" data-aos-delay="" style={{fontSize:"30px", color:"white"}} className="mt-10">
                 Limited time offer, don't miss the opportunity
               </p>
 
@@ -41,7 +41,7 @@ export default function Banner() {
                   className="button -md -dark-1 bg-accent-1 text-white"
                 >
                   <Link to="/tour-list-1">
-                    Book Now
+                <span className="flot-end"> Book Now</span>   
                     <i className="icon-arrow-top-right ml-10 text-16"></i>
                   </Link>
                 </button>
