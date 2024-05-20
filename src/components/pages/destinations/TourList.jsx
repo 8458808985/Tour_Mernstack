@@ -18,16 +18,31 @@ export default function TourList1({ destData }) {
       .then(data => setProductData(data))
       .catch(err => console.error('Error fetching product:', err));
   }, []);
-
   useEffect(() => {
     if (destData && productData && productData.length > 0) {
       const filteredData = productData.filter(product => product.city === destData);
-      setFilteredProductData(filteredData);
-      setPrice(filteredData[0].adultOldPrice)
+      if (filteredData.length > 0) {
+        setFilteredProductData(filteredData);
+        setPrice(filteredData[0].adultOldPrice);
+      } else {
+        // Handle case where no products match the condition
+        // For example, you can set a default price or show a message to the user
+      }
     }
   }, [destData, productData]);
-
-  // console.log("filterdata", filteredProductData[0].adultOldPrice)
+useEffect(() => {
+  if (destData && productData && productData.length > 0) {
+    const filteredData = productData.filter(product => product.city === destData);
+    if (filteredData.length > 0) {
+      setFilteredProductData(filteredData);
+      setPrice(filteredData[0].adultOldPrice);
+    } else {
+      // Handle case where no products match the condition
+      // For example, you can set a default price or show a message to the user
+    }
+  }
+}, [destData, productData]);
+  
 
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -61,16 +76,16 @@ export default function TourList1({ destData }) {
             </h2>
           </div>
           <div className="col-auto">
-            <Link to={"/tour-list-1"} className="buttonArrow d-flex items-center ">
+            {/* <Link to={"/tour-list-1"} className="buttonArrow d-flex items-center ">
               <span>See all</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar2 price={price} />
+              {/* <Sidebar2 price={price} /> */}
             </div>
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
               <div className={`accordion__item col-12 ${sidebarActive ? "is-active" : ""} `}>
@@ -202,10 +217,10 @@ export default function TourList1({ destData }) {
                           </div>
                         </div>
                         <button className="button -outline-accent-1 text-accent-1">
-                          <Link to={`/tour-single-1/${elm.id}`}>
+                          {/* <Link to={`/tour-single-1/${elm.id}`}> */}
                             View Details
                             <i className="icon-arrow-top-right ml-10"></i>
-                          </Link>
+                          {/* </Link> */}
                         </button>
                       </div>
                     </div>

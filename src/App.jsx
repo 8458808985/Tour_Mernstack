@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/style.css";
 import Aos from "aos";
 import HomePage1 from "./pages/homes/home-1";
@@ -33,12 +33,8 @@ import BookingPage from "./pages/pages/booking-pages";
 import DBMainPage from "./pages/dashboard/db-main";
 import DBBookingPage from "./pages/dashboard/db-booking";
 import DBListingPage from "./pages/dashboard/db-listing";
-// import DBAddTourPage from "./pages/dashboard/db-add-tour";
 import DBAddProductPage from "./pages/dashboard/db-add-product";
-// import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
-// import DBFavoritesPage from "./pages/dashboard/db-favorites";
 import DBMessagesPage from "./pages/dashboard/db-messages";
-// import DBProfilePage from "./pages/dashboard/db-profile";
 import BlogListPage1 from "./pages/blogs/blog-list-1";
 import BlogListPage2 from "./pages/blogs/blog-list-2";
 import BlogListPage3 from "./pages/blogs/blog-list-3";
@@ -55,10 +51,12 @@ import NotFoundPage from "./pages/pages/404";
 import ContactPage from "./pages/pages/contact";
 import DBAddBannerPage from "./pages/dashboard/db-add-banner";
 import DBAddDestinationPage from "./pages/dashboard/db-add-destination";
-import { Protected } from "./components/protected/protected";
 import DBAddArticlePage from "./pages/dashboard/db-add-article";
 import UpdateTour from "./components/dasboard/main/UpdateTour";
 import DBUpdateTourPage from "./pages/dashboard/db-update-tour";
+import { Navigate } from "react-router-dom";
+import { Protected } from "./components/protected/protected";
+// import PrivateRouteComponent from './components/protected/protected';
 
 function App() {
   useEffect(() => {
@@ -68,13 +66,15 @@ function App() {
     });
   }, []);
 
+
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<HomePage1 />} />
-            <Route path="/home-2" element={<HomePage2 />} />
+            {/* <Route path="/home-2" element={<HomePage2 />} />
             <Route path="/home-3" element={<HomePage3 />} />
             <Route path="/home-4" element={<HomePage4 />} />
             <Route path="/home-5" element={<HomePage5 />} />
@@ -82,10 +82,10 @@ function App() {
             <Route path="/home-7" element={<HomePage7 />} />
             <Route path="/home-8" element={<HomePage8 />} />
             <Route path="/home-9" element={<HomePage9 />} />
-            <Route path="/home-10" element={<HomePage10 />} />
+            <Route path="/home-10" element={<HomePage10 />} /> */}
 
             <Route path="/tour-list-1" element={<TourListPage1 />} />
-            <Route path="/tour-list-2" element={<TourListPage2 />} />
+            {/* <Route path="/tour-list-2" element={<TourListPage2 />} />
             <Route path="/tour-list-3" element={<TourListPage3 />} />
             <Route path="/tour-list-4" element={<TourListPage4 />} />
             <Route path="/tour-list-5" element={<TourListPage5 />} />
@@ -93,36 +93,30 @@ function App() {
             <Route path="/tour-list-7" element={<TourListPage7 />} />
             <Route path="/tour-list-8" element={<TourListPage8 />} />
             <Route path="/tour-list-9" element={<TourListPage9 />} />
-            <Route path="/tour-list-10" element={<TourListPage10 />} />
+            <Route path="/tour-list-10" element={<TourListPage10 />} /> */}
 
-            <Route path="/tour-single-1/:id" element={<TourSinglePage1 />} />
+            <Route path="/tour-single-1/:id" element={< Protected Component={TourSinglePage1}/>} />
             <Route path="/tour-single-2/:id" element={<TourSinglePage2 />} />
             <Route path="/tour-single-3/:id" element={<TourSinglePage3 />} />
             <Route path="/tour-single-4/:id" element={<TourSinglePage4 />} />
             <Route path="/tour-single-5/:id" element={<TourSinglePage5 />} />
-
-            <Route path="/booking-pages" element={<BookingPage />} />
-
-            {/* <Route path="/db-main" element={<DBMainPage />} /> */}
-            {/* <Route path='/db-main' element={<Protected Component={<DBMainPage/>} />}></Route> */}
-            <Route path='/db-main' element={<Protected Component={DBMainPage} />}></Route>
+            {/* <Route path="/booking-pages" element={< PrivateRouteComponent Component={BookingPage} />} /> */}
+            <Route path="/booking-pages" element={< Protected Component={BookingPage}/>}/>
+            <Route path='/db-main' element={<Protected Component={DBMainPage} />} />
             <Route path="/db-booking" element={<DBBookingPage />} />
             <Route path="/db-listing" element={<DBListingPage />} />
-            {/* <Route path="/db-add-tour" element={<DBAddTourPage />} /> */}
             <Route path="/db-add-product" element={<DBAddProductPage />} />
             <Route path="/db-add-destination" element={<DBAddDestinationPage />} />
             <Route path="/db-add-banner" element={<DBAddBannerPage />} />
             <Route path="/db-add-article" element={<DBAddArticlePage />} />
-            {/* <Route path="/db-favorites" element={<DBFavoritesPage />} /> */}
             <Route path="/db-messages" element={<DBMessagesPage />} />
-            {/* <Route path="/db-profile" element={<DBProfilePage />} /> */}
 
             <Route path="/blog-list-1" element={<BlogListPage1 />} />
             <Route path="/blog-list-2" element={<BlogListPage2 />} />
             <Route path="/blog-list-3" element={<BlogListPage3 />} />
             <Route path="/blog-single/:id" element={<BlogSinglePage />} />
 
-            <Route path="/destinations/:id" element={<DestinationsPage />} />
+            <Route path="/destinations/:id" element={< Protected Component={DestinationsPage}/>} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/help-center" element={<HelpCenterPage />} />
             <Route path="/terms" element={<TermsPage />} />
@@ -132,7 +126,6 @@ function App() {
             <Route path="/ui-elements" element={<UIElementsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/UpdateTour" element={<DBUpdateTourPage />} />
-
 
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="/*" element={<NotFoundPage />} />
@@ -144,5 +137,15 @@ function App() {
     </>
   );
 }
+// PrivateRoute component
+// function PrivateRoute({ component: Component, ...rest }) {
+//   const { isLoggedIn } = React.useContext(AuthContext);
+
+//   return isLoggedIn ? (
+//     <Component {...rest} />
+//   ) : (
+//     <Navigate to="/login" replace />
+//   );
+// }
 
 export default App;

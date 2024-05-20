@@ -18,14 +18,21 @@ import BASE_URL from "@/Urls/baseUrl";
 export default function SingleOne({ tour }) {
   
   const [productData, setProductData] = useState([]);
+  const [price, setPrice] = useState([]);
   const { id } = useParams(); // Destructure id from useParams
 
   useEffect(() => {
     fetch(`${BASE_URL}/product/${id}`)
       .then(res => res.json())
-      .then(data => setProductData(data))
+      .then(data =>{setProductData(data);
+      })
       .catch(err => console.error('Error fetching product:', err));
   }, [id]); // Add id to dependency array
+
+  useEffect(()=>{
+    
+    localStorage.setItem("bookingData", JSON.stringify(productData))
+  })
   return (
     <>
       <section className="">
@@ -57,10 +64,11 @@ export default function SingleOne({ tour }) {
 
               <h2 className="text-30 mt-60">Tour Map</h2>
               <div className="mapTourSingle">
-                {/* <p>onClick link redirect map location</p> */}
-               <a href="https://www.google.com/maps" className="fs-3" style={{fontSize:"10px", color:"blue"}} ><span style={{fontSize:"18px",}}> {productData.tourMap}</span></a>
-               
-              </div>
+  {/* <p>onClick link redirect map location</p> */}
+  <a href="https://www.google.com/maps/place/Eiffel+Tower/@48.8584,2.2945,17z" className="fs-3" style={{fontSize:"10px"}}>
+    <span style={{fontSize:"18px"}}>{productData.tourMap}</span> Great location-show Map
+  </a>
+</div>
 
               {/* <div className="line  mb-60"></div> */}
 
@@ -74,16 +82,11 @@ export default function SingleOne({ tour }) {
               <div className="accordion -simple row y-gap-20 mt-30 js-accordion">
                 <Faq productData={productData} />
               </div>
-
-              
-
-            
-              
             </div>
 
             <div className="col-lg-4">
         <div className="d-flex justify-end js-pin-content">
-          <TourSingleSidebar />
+          <TourSingleSidebar  productData={productData}/>
         </div>
       </div>
           </div>

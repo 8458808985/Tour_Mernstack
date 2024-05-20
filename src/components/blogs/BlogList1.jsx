@@ -83,9 +83,6 @@ export default function BlogList1() {
         <div className="d-flex justify-center flex-column mt-60">
           <Pagination />
 
-          <div className="text-14 text-center mt-20">
-            Showing results 1-30 of 1,415
-          </div>
         </div>
       </div>
     </section>

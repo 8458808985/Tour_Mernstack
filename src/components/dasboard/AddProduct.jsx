@@ -417,43 +417,19 @@ export default function AddProduct() {
                                       </div>
                                     </div>
 
-                                    <div className="col-6">
-                                      {formData.included.map((item, index) => (
-                                        <div className="form-input" key={index}>
-                                          <input
-                                            type="text"
-                                            required
-                                            name={`included-${index}`}
-                                            value={item}
-                                            onChange={(e) =>
-                                              handleIncludedChange(
-                                                index,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            Included{" "}
-                                            <span className="text-danger">
-                                              *
-                                            </span>
-                                          </label>
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveIncluded(index)
-                                            }
-                                          >
-                                            Remove
-                                          </button>
-                                        </div>
-                                      ))}
-                                      <button
-                                        type="button"
-                                        onClick={handleAddIncluded}
-                                      >
-                                        Add Included
-                                      </button>
+                                    <div className="col-6 ">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          name="duration"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Duration
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
                                     </div>
 
                                     <div className="col-6">
@@ -494,21 +470,45 @@ export default function AddProduct() {
                                         Add TourType
                                       </button>
                                     </div>
-
-                                    <div className="col-6 ">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="duration"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Duration
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
+                                    <div className="col-6">
+                                      {formData.included.map((item, index) => (
+                                        <div className="form-input" key={index}>
+                                          <input
+                                            type="text"
+                                            required
+                                            name={`included-${index}`}
+                                            value={item}
+                                            onChange={(e) =>
+                                              handleIncludedChange(
+                                                index,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                          <label className="lh-1 text-16 text-light-1">
+                                            Included{" "}
+                                            <span className="text-danger">
+                                              *
+                                            </span>
+                                          </label>
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleRemoveIncluded(index)
+                                            }
+                                          >
+                                            Remove
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button
+                                        type="button"
+                                        onClick={handleAddIncluded}
+                                      >
+                                        Add Included
+                                      </button>
                                     </div>
+                                    
                                     <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
@@ -552,7 +552,37 @@ export default function AddProduct() {
                                       </div>
                                     </div>
 
-                                    <div className="col-6">
+                                    
+
+                                    <div className="col-6 ">
+                                      <div className="form-input ">
+                                        <input
+                                          type="Date"
+                                          required
+                                          name="time"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Date
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6 col-sm-12 col-lg-12">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          name="tourOverview"
+                                          onChange={inputHandler}
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          TourOverview
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-12  ">
                                       {formData.faq.map((faq, index) => (
                                         <div key={index}>
                                           <div className="form-input">
@@ -610,35 +640,6 @@ export default function AddProduct() {
                                       <button type="button" onClick={handleAddFaq}>
                                         Add FAQ
                                       </button>
-                                    </div>
-
-                                    <div className="col-6 ">
-                                      <div className="form-input ">
-                                        <input
-                                          type="Date"
-                                          required
-                                          name="time"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          Date
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
-                                    <div className="col-6 col-sm-12 col-lg-12">
-                                      <div className="form-input ">
-                                        <input
-                                          type="text"
-                                          required
-                                          name="tourOverview"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          TourOverview
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
                                     </div>
                                     <div className="col-md-12 col-sm-12 col-12">
                                       <div className="mb-3">

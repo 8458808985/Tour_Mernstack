@@ -4,7 +4,7 @@ import React from "react";
 
 export default function FeaturesOne() {
   return (
-    <section className="layout-pt-xl">
+    <section className="layout-pt-xl my-20">
       <div className="container">
         <div className="row">
           <div className="col-auto">

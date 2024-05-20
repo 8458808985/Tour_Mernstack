@@ -1,19 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios"; // Import axios
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BASE_URL from "@/Urls/baseUrl";
+// import { bookingData } from "@/data/dashboard";
 
 
-
+// console.log(bookingData)
 
 export default function BookingPages() {
+  const [booking, setBooking]=useState({})
+  const [date, setDate]=useState()
   const [data, setData] = useState({ 
     name: "", 
     email: "", 
     phone: "" });
 
-
+    useEffect(() => {
+      const bookingDataString = localStorage.getItem("bookingData");
+      // console.log("Booking data string:", bookingDataString);
+      try {
+        const bookingData = JSON.parse(bookingDataString);
+        setBooking(bookingData);
+      } catch (error) {
+        console.error("Error parsing booking data:", error);
+      }
+    }, []);
+    useEffect(() => {
+      const date = localStorage.getItem("selectedDate");
+      // console.log("Selected date string:", date);
+      try {
+        // const selectDate = JSON.parse(date);
+        setDate(date);
+      } catch (error) {
+        console.error("Error parsing selected date:", error);
+      }
+    }, []);
+    
+    console.log("date", date)
+   
   const inputHandler = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -29,9 +54,9 @@ export default function BookingPages() {
         // If response is successful, reset form and show success message
          formrv.reset() 
         // formrv.reset();
-        toast.success("Successfully added destination", {
+        toast.success("Your Booking Confirm", {
           position: "top-center",
-          autoClose: 500,
+          autoClose: 1000,
         });
       }
     } catch (error) {
@@ -112,10 +137,11 @@ export default function BookingPages() {
               <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20">
                 <h2 className="text-20 fw-500">Your booking details</h2>
 
-                <div className="d-flex mt-30">
-                  <img src="/img/tourSingle/booking/1.png" alt="image" />
-                  <div className="ml-20">
-                    Zipline 18 Platform and ATV Adventure Tour From Phuket
+                <div className=" mt-30">
+                 <span style={{width:"50", height:"50"}}> <img src={booking.imageSrc} alt="image" /></span>
+                  
+                  <div className="ml-2 mt-5">
+                   <span className="fs-4"> {booking.product}</span>
                   </div>
                 </div>
 
@@ -124,17 +150,17 @@ export default function BookingPages() {
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Date:</div>
-                    <div className="">06 April 2023</div>
+                    <div className="">{date}</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
+                  {/* <div className="d-flex items-center justify-between">
                     <div className="fw-500">Time:</div>
                     <div className="">10:00 am</div>
-                  </div>
+                  </div> */}
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Duration:</div>
-                    <div className="">12 Days</div>
+                    <div className="">{booking.duration}</div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
@@ -146,13 +172,13 @@ export default function BookingPages() {
                     <div className="fw-500"></div>
                     <div className="">Youth x3 = $383</div>
                   </div>
-
+{/* 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"></div>
                     <div className="">Children x6 = $394</div>
-                  </div>
+                  </div> */}
                 </div>
-
+{/* 
                 <div className="line mt-20 mb-20"></div>
 
                 <div className="y-gap-15">
@@ -167,7 +193,7 @@ export default function BookingPages() {
                     </div>
                     <div className="">$179.00</div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="line mt-20 mb-20"></div>
 
@@ -177,8 +203,8 @@ export default function BookingPages() {
                     <div className="">$382</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Total</div>
+                  {/* <div className="d-flex items-center justify-between"> */}
+                    {/* <div className="fw-500">Total</div>
                     <div className="">$23</div>
                   </div>
 
@@ -190,7 +216,7 @@ export default function BookingPages() {
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Due</div>
                     <div className="">$43.242</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

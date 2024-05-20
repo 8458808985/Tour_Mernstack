@@ -4,6 +4,8 @@ import BookingPages from "@/components/pages/BookingPages";
 import React from "react";
 
 import MetaComponent from "@/components/common/MetaComponent";
+import { useParams } from "react-router-dom";
+import Product from "@/components/homes/Products/Product";
 
 const metadata = {
   title: "Booking-page || ViaTour - Travel & Tour Reactjs Template",
@@ -11,6 +13,7 @@ const metadata = {
 };
 
 export default function BookingPage() {
+  
   return (
     <>
       <MetaComponent meta={metadata} />

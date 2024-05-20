@@ -26,7 +26,7 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="text-30 md:text-24 " style={{fontSize:"700"}}
             >
-              Travel Articles111
+              Travel Articles
             </h2>
           </div>
 

@@ -27,12 +27,12 @@ export default function HomePage1() {
       <Hero1 />
       <FeaturesOne />
       <DestinationsOne />
+      <TestimonialOne />
       {/* <Tour1 /> */}
       <Product/>
       <Banner />
       {/* <TourTypeOne /> */}
       {/* <TourSlderOne /> */}
-      {/* <TestimonialOne /> */}
       {/* <BannerOne /> */}
       <ArticlesThree />
       <FooterOne />
