@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
 
 export default function SingleOne({ tour }) {
-  
+
   const [productData, setProductData] = useState([]);
   const { id } = useParams(); // Destructure id from useParams
 
@@ -53,13 +53,14 @@ export default function SingleOne({ tour }) {
 
               <div className="line mt-60 mb-60"></div>
 
-              
+
 
               <h2 className="text-30 mt-60">Tour Map</h2>
               <div className="mapTourSingle">
                 {/* <p>onClick link redirect map location</p> */}
-               <a href="https://www.google.com/maps" className="fs-3" style={{fontSize:"10px", color:"blue"}} ><span style={{fontSize:"18px",}}> {productData.tourMap}</span></a>
-               
+                <a href="https://www.google.com/maps/place/Eiffel+Tower/@48.8584,2.2945,17z" className="fs-3" style={{ fontSize: "10px" }}>
+                  <span style={{ fontSize: "18px" }}>{productData.tourMap}</span> Great location-show Map
+                </a>
               </div>
 
               {/* <div className="line  mb-60"></div> */}
@@ -75,17 +76,17 @@ export default function SingleOne({ tour }) {
                 <Faq productData={productData} />
               </div>
 
-              
 
-            
-              
+
+
+
             </div>
 
             <div className="col-lg-4">
-        <div className="d-flex justify-end js-pin-content">
-          <TourSingleSidebar />
-        </div>
-      </div>
+              <div className="d-flex justify-end js-pin-content">
+                <TourSingleSidebar />
+              </div>
+            </div>
           </div>
         </div>
       </section>
