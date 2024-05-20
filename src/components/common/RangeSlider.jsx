@@ -15,10 +15,11 @@ const theme = createTheme({
   },
 });
 
-export default function RangeSlider() {
-  const [value, setValue] = useState([200, 60000]);
+export default function RangeSlider({sendData }) {
+  const [value, setValue] = useState([200, 30000]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    sendData(newValue);
   };
   // console.log(value)
   
@@ -32,7 +33,7 @@ export default function RangeSlider() {
               value={value}
               onChange={handleChange}
               valueLabelDisplay="auto"
-              max={100000}
+              max={30000}
               min={0}
               disableSwap
             />

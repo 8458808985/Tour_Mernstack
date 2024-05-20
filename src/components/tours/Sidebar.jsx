@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
+import PropTypes from "prop-types";
+
 import {
   durations,
   languages,
@@ -10,56 +12,73 @@ import {
 import RangeSlider from "../common/RangeSlider";
 import Stars from "../common/Stars";
 import BASE_URL from "@/Urls/baseUrl";
+import axios from "axios";
 
-export default function Sidebar() {
-  const [ddActives, setDdActives] = useState(["tourtype"]);
-  const [solve , setSolve]=useState([])
-  const [selectedTourTypes, setSelectedTourTypes] = useState([]);
+  export default function Sidebar({sendData, sendRange }) {
+    const [ddActives, setDdActives] = useState(["tourtype"]);
+    const [solve , setSolve]=useState([])
+    const [selectedTourTypes, setSelectedTourTypes] = useState([]);
+    const [filter, setFilter] = useState([]);
+    const [productData, setProductData] = useState([]);
+    const [finalData, setFinalData] = useState([]);
+    // const { id } = useParams(); // Destructure id from useParams
+    
+    const receiveDataFromChild = (data) => {
+      // Data received from child component
+      setFinalData(data);
+      sendRange(data);
+    };
   
-  const [productData, setProductData] = useState([]);
+    // console.log("range", finalData)
 useEffect(() => {
   fetch(`${BASE_URL}/product`)
     .then((res) => res.json())
     .then((data) => {
       setProductData(data);
+      const tourTypes = data.map(product => product.tourType);
+      // Assuming `setSolve` is meant to set some state related to tour types
+      setSolve(tourTypes);
     })
     .catch((err) => console.error("Error fetching product:", err));
 }, []);
 
-// console.log("solve" , tourTypes)
-const toggleTourType = (type) => {
-  setSelectedTourTypes((prevTypes) =>
-    prevTypes.includes(type)
-      ? prevTypes.filter((t) => t !== type)
-      : [...prevTypes, type]
+const tourTypeString = selectedTourTypes.join(',');
+
+useEffect(() => {
+  const fetchTourTypes = async () => {
+    try {
+      const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/tourtype/${tourTypeString}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch tour types');
+      }
+
+      const data = await response.json();
+      setFilter(data);
+      sendData(data)
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      // Optionally, handle the error state here
+    }
+  };
+
+  if (selectedTourTypes.length > 0) {
+    fetchTourTypes();
+  } else {
+    // Handle case when no tour types are selected
+    setFilter([]);
+  }
+}, [selectedTourTypes, sendData]);
+
+const toggleTourType = (tourType) => {
+  setSelectedTourTypes((prevSelected) =>
+    prevSelected.includes(tourType)
+      ? prevSelected.filter((item) => item !== tourType)
+      : [...prevSelected, tourType]
   );
 };
 
-// Filter products based on selected tour types
-const filteredProductData = useMemo(() => {
-  if (selectedTourTypes.length === 0) {
-    return productData; // No filter applied, return all products
-  }
-
-  return productData.map(products => {
-    // If products is not an array, return it as it is
-    if (!Array.isArray(products)) {
-      return products;
-    }
-
-    // Filter products within each index based on tourTypes
-    return products.filter(product =>
-      product && product.tourTypes && product.tourTypes.some(type => selectedTourTypes.includes(type))
-    );
-  });
-}, [productData, selectedTourTypes]);
-
-
-
-  console.log("Product Data:", productData);
-  console.log("Selected Tour Types:", selectedTourTypes);
-  console.log("fiterData", filteredProductData)
-
+const uniqueTourTypes = solve.filter((tourType, index) => solve.findIndex(t => t === tourType) === index);
   
   const handleSeeMore = () => {
     // Implement logic for 'See More' link if needed
@@ -99,16 +118,16 @@ const filteredProductData = useMemo(() => {
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item js-accordion-item-active ${
-                ddActives.includes("tourtype") ? "is-active" : ""
+                ddActives.includes("tourType") ? "is-active" : ""
               } `}
             >
               <div
                 className="accordion__button d-flex items-center justify-between"
                 onClick={() =>
                   setDdActives((pre) =>
-                    pre.includes("tourtype")
-                      ? pre.filter((elm) => elm !== "tourtype")
-                      : [...pre, "tourtype"]
+                    pre.includes("tourType")
+                      ? pre.filter((elm) => elm !== "tourType")
+                      : [...pre, "tourType"]
                   )
                 }
               >
@@ -121,31 +140,35 @@ const filteredProductData = useMemo(() => {
               <div
                 className="accordion__content"
                 style={
-                  ddActives.includes("tourtype") ? { maxHeight: "300px" } : {}
+                  ddActives.includes("tourType") ? { maxHeight: "300px" } : {}
                 }
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {toursTypes.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center">
-                          <div className="form-checkbox ">
-                            <input
-                              type="checkbox"
-                              name={elm}
-                              checked={selectedTourTypes.includes(elm)}
-                              onChange={() => toggleTourType(elm)}
-                            />
-                            <div className="form-checkbox__mark">
-                              <div className="form-checkbox__icon">
-                                <img src="/img/icons/check.svg" alt="icon" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="lh-11 ml-10">{elm}</div>
-                        </div>
-                      </div>
-                    ))}
+                  
+
+{uniqueTourTypes.map((tourType, index) => (
+  <div key={index}>
+    <div className="d-flex items-center">
+      <div className="form-checkbox">
+        <input
+          type="checkbox"
+          name={tourType}
+          checked={selectedTourTypes.includes(tourType)}
+          onChange={() => toggleTourType(tourType)}
+        />
+        <div className="form-checkbox__mark">
+          <div className="form-checkbox__icon">
+            <img src="/img/icons/check.svg" alt="icon" />
+          </div>
+        </div>
+      </div>
+      <div className="lh-11 ml-10">{tourType}</div>
+    </div>
+  </div>
+))}
+
+
                   </div>
                   <a
                     href="#"
@@ -196,7 +219,7 @@ const filteredProductData = useMemo(() => {
                 }
               >
                 <div className="pt-15">
-                  <RangeSlider />
+                  <RangeSlider sendData={receiveDataFromChild}/>
                 </div>
               </div>
             </div>
