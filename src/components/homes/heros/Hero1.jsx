@@ -2,12 +2,16 @@ import BASE_URL from "@/Urls/baseUrl";
 import Calender from "@/components/common/dropdownSearch/Calender";
 import Location from "@/components/common/dropdownSearch/Location";
 import TourType from "@/components/common/dropdownSearch/TourType";
+import axios from "axios";
 
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Hero1() {
+export default function Hero1({onDataChange }) {
   const [heroBanner, setHeroBanner]=useState([])
+  const [searchData, setSearchData]=useState("")
+  const [filter, setFilter]=useState([])
+  
   useEffect(() => {
     fetch(`${BASE_URL}/banner`)
       .then(res => res.json())
@@ -18,7 +22,37 @@ export default function Hero1() {
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
 
-  console.log(heroBanner)
+  // const searchDataAsString = JSON.stringify(searchData);
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/city/${searchData}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch product data');
+        }
+        const data = await response.json();
+        // console.log("object", data)
+        setFilter(data);
+        onDataChange(data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        // Optionally, handle the error state here
+      }
+    };
+
+    if (searchData) {
+      fetchData();
+    }
+  }, [searchData]);
+
+// console.log("filter", filter)
+// console.log("SearchData", searchData)
+  // search handler
+  
+
+  // console.log(heroBanner)
   const navigate = useNavigate();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [location, setLocation] = useState("");
@@ -89,6 +123,9 @@ export default function Hero1() {
                     </span>
                     <input
                       type="text"
+                      // name="search"
+                      // onChange={searchHandler}
+                      onChange={(e) => setSearchData(e.target.value)}
                       className="form-control bg-white py-3  "
                       placeholder="search destination activity"
                       aria-label="Sizing example input"

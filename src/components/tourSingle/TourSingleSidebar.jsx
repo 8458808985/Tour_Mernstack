@@ -25,9 +25,17 @@ export default function TourSingleSidebar({productData}) {
       setNewPrice(productData.adultOldPrice);
     }
   };
+console.log("newPrice",newPrice)
+useEffect(() => {
+  // Convert newPrice to a string before storing it in localStorage
+  localStorage.setItem("newPrice",    newPrice * adultNumber +
+  productData.childPrice * youthNumber +
+
+  extraCharge * 1);
+}, [newPrice]);
 
   
-// console.log(newPrice)
+console.log(newPrice)
   // Call calculateNewPrice when component mounts
   useEffect(() => {
     calculateNewPrice();

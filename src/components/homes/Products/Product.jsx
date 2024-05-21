@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import BASE_URL from "@/Urls/baseUrl";
 
-export default function Product({ elm }) {
+export default function Product({ elm, data }) {
   const [showFullTitle, setShowFullTitle] = useState(false);
-
+// console.log("Home", data)
   const toggleTitle = () => {
     setShowFullTitle(!showFullTitle);
   };
@@ -55,84 +55,166 @@ export default function Product({ elm }) {
           data-aos-delay=""
           className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
         >
-          {productData.map((elm, i) => (
-            <div key={i} className="col-lg-3 col-md-6">
-              <Link
-                to={`/tour-single-1/${elm._id}`}
-                className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
-              >
-                <div className="tourCard__header">
-                  <div className="tourCard__image ratio ratio-28:20">
-                    <img
-                      src={elm.imageSrc[0]}
-                      alt="image"
-                      className="img-ratio rounded-12"
-                    />
-                  </div>
-
-                  <button className="tourCard__favorite">
-                    <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
-                  </button>
-                </div>
-
-                <div className="tourCard__content px-10 pt-10">
-                  <div className="tourCard__location d-flex items-center text-13 text-light-2">
-                    <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-               <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
-                  </div>
-
-                  <h3 className="tourCard__title text-16 fw-500 mt-5">
-        <span style={{ fontSize: "18px", fontWeight: "700" }}>
-          {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
-        </span>
-        {elm.product.length > 20 && (
-          <button onClick={toggleTitle} className="btn-link">
-            {showFullTitle ? 'See Less' : 'See More'}
-          </button>
-        )}
-      </h3>
-                  <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
-                      <Stars star={elm.rating}  />
+          {data.length === 0 ?(
+            productData.map((elm, i) => (
+              <div key={i} className="col-lg-3 col-md-6">
+                <Link
+                  to={`/tour-single-1/${elm._id}`}
+                  className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
+                >
+                  <div className="tourCard__header">
+                    <div className="tourCard__image ratio ratio-28:20">
+                      <img
+                        src={elm.imageSrc[0]}
+                        alt="image"
+                        className="img-ratio rounded-12"
+                      />
                     </div>
-
-                    {elm.adultOldPrice && (
-    <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-      Old Price: <del>${elm.adultOldPrice}</del>
-    </span>
-  )}
+  
+                    <button className="tourCard__favorite">
+                      <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
+                    </button>
                   </div>
-                  <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                  {elm.discount && (
-    <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-      Discount: {elm.discount}%
-    </span>
-  )}
-                  </div>
-
-                  <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                    <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
-                      <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
-                 <span style={{fontSize:"12px"}}> {elm.duration}</span> 
+  
+                  <div className="tourCard__content px-10 pt-10">
+                    <div className="tourCard__location d-flex items-center text-13 text-light-2">
+                      <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                 <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
                     </div>
-
-                    <div>
-                    {elm.adultOldPrice && elm.discount && (
-      <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
-      <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
+  
+                    <h3 className="tourCard__title text-16 fw-500 mt-5">
+          <span style={{ fontSize: "18px", fontWeight: "700" }}>
+            {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+          </span>
+          {elm.product.length > 20 && (
+            <button onClick={toggleTitle} className="btn-link">
+              {showFullTitle ? 'See Less' : 'See More'}
+            </button>
+          )}
+        </h3>
+                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                      <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
+                        <Stars star={elm.rating}  />
+                      </div>
+  
+                      {elm.adultOldPrice && (
+      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+        Old Price: <del>${elm.adultOldPrice}</del>
       </span>
     )}
-   {elm.adultOldPrice && !elm.discount && (
-    <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-      New Price: $   {elm.adultOldPrice}
-    </span>
-  )}
+                    </div>
+                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                    {elm.discount && (
+      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+        Discount: {elm.discount}%
+      </span>
+    )}
+                    </div>
+  
+                    <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                      <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
+                        <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
+                   <span style={{fontSize:"12px"}}> {elm.duration}</span> 
+                      </div>
+  
+                      <div>
+                      {elm.adultOldPrice && elm.discount && (
+        <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
+        <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
+        </span>
+      )}
+     {elm.adultOldPrice && !elm.discount && (
+      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+        New Price: $   {elm.adultOldPrice}
+      </span>
+    )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            ))
+          ):(
+            data.map((elm, i) => (
+              <div key={i} className="col-lg-3 col-md-6">
+                <Link
+                  to={`/tour-single-1/${elm._id}`}
+                  className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow border-0 shadow"
+                >
+                  <div className="tourCard__header">
+                    <div className="tourCard__image ratio ratio-28:20">
+                      <img
+                        src={elm.imageSrc[0]}
+                        alt="image"
+                        className="img-ratio rounded-12"
+                      />
+                    </div>
+  
+                    <button className="tourCard__favorite">
+                      <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
+                    </button>
+                  </div>
+  
+                  <div className="tourCard__content px-10 pt-10">
+                    <div className="tourCard__location d-flex items-center text-13 text-light-2">
+                      <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                 <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
+                    </div>
+  
+                    <h3 className="tourCard__title text-16 fw-500 mt-5">
+          <span style={{ fontSize: "18px", fontWeight: "700" }}>
+            {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+          </span>
+          {elm.product.length > 20 && (
+            <button onClick={toggleTitle} className="btn-link">
+              {showFullTitle ? 'See Less' : 'See More'}
+            </button>
+          )}
+        </h3>
+                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                      <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
+                        <Stars star={elm.rating}  />
+                      </div>
+  
+                      {elm.adultOldPrice && (
+      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+        Old Price: <del>${elm.adultOldPrice}</del>
+      </span>
+    )}
+                    </div>
+                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                    {elm.discount && (
+      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+        Discount: {elm.discount}%
+      </span>
+    )}
+                    </div>
+  
+                    <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                      <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
+                        <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
+                   <span style={{fontSize:"12px"}}> {elm.duration}</span> 
+                      </div>
+  
+                      <div>
+                      {elm.adultOldPrice && elm.discount && (
+        <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
+        <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
+        </span>
+      )}
+     {elm.adultOldPrice && !elm.discount && (
+      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+        New Price: $   {elm.adultOldPrice}
+      </span>
+    )}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))
+          )}
+          
         </div>
       </div>
     </section>

@@ -13,6 +13,7 @@ import Header1 from "@/components/layout/header/Header1";
 
 import MetaComponent from "@/components/common/MetaComponent";
 import Product from "@/components/homes/Products/Product";
+import { useState } from "react";
 
 const metadata = {
   title: "Home-1 || ViaTour - Travel & Tour Reactjs Template",
@@ -20,16 +21,21 @@ const metadata = {
 };
 
 export default function HomePage1() {
+  const [data ,setData]=useState([])
+console.log("data", data)
+  const handleDataChange = (newData) => {
+    setData(newData);
+  };
   return (
     <main>
       <MetaComponent meta={metadata} />
       <Header1 />
-      <Hero1 />
+      <Hero1 onDataChange={handleDataChange} />
       <FeaturesOne />
       <DestinationsOne />
       <TestimonialOne />
       {/* <Tour1 /> */}
-      <Product/>
+      <Product data={data}/>
       <Banner />
       {/* <TourTypeOne /> */}
       {/* <TourSlderOne /> */}

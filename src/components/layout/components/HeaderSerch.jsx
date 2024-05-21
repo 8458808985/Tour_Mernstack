@@ -1,13 +1,28 @@
+import BASE_URL from "@/Urls/baseUrl";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function HeaderSerch({ white }) {
   const [selected, setSelected] = useState("");
+  const [search, setSearch] = useState("");
   const [ddActive, setDdActive] = useState(false);
   const inputRef = useRef();
-  useEffect(() => {
-    inputRef.current.value = selected;
-  }, [selected]);
+  const [product, setProductData]=useState([])
+  // useEffect(() => {
+  //   inputRef.current.value = selected;
+  // }, [selected]);
 
+
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then((data)=>{
+        setProductData(data);
+        // setTotalPages(Math.ceil(data.length/6))
+      })
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+// console.log("product", product )
   const searchData = [
     {
       id: 1, // Unique ID
@@ -77,9 +92,9 @@ export default function HeaderSerch({ white }) {
       >
         <i className="icon-search text-18"></i>
         <input
-          onChange={(e) => setSelected(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           ref={inputRef}
-          onClick={() => setDdActive((pre) => !pre)}
+          // onClick={() => setDdActive((pre) => !pre)}
           type="text"
           placeholder="Search destinations or activities"
           className={`js-search ${white ? "text-white" : ""}`}

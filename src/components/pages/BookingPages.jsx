@@ -1,72 +1,85 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios"; 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Razorpay from "razorpay";
 import BASE_URL from "@/Urls/baseUrl";
-// import { bookingData } from "@/data/dashboard";
-
-
-// console.log(bookingData)
 
 export default function BookingPages() {
-  const [booking, setBooking]=useState({})
-  const [date, setDate]=useState()
-  const [data, setData] = useState({ 
-    name: "", 
-    email: "", 
-    phone: "" });
+  const [booking, setBooking] = useState({});
+  const [date, setDate] = useState("");
+  const [price, setPrice] = useState(0);
+  const [data, setData] = useState({ name: "", email: "", phone: "" });
 
-    useEffect(() => {
-      const bookingDataString = localStorage.getItem("bookingData");
-      // console.log("Booking data string:", bookingDataString);
-      try {
-        const bookingData = JSON.parse(bookingDataString);
-        setBooking(bookingData);
-      } catch (error) {
-        console.error("Error parsing booking data:", error);
-      }
-    }, []);
-    useEffect(() => {
-      const date = localStorage.getItem("selectedDate");
-      // console.log("Selected date string:", date);
-      try {
-        // const selectDate = JSON.parse(date);
-        setDate(date);
-      } catch (error) {
-        console.error("Error parsing selected date:", error);
-      }
-    }, []);
-    
-    console.log("date", date)
-   
+  useEffect(() => {
+    const bookingDataString = localStorage.getItem("bookingData");
+    try {
+      const bookingData = JSON.parse(bookingDataString);
+      setBooking(bookingData);
+    } catch (error) {
+      console.error("Error parsing booking data:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const date = localStorage.getItem("selectedDate");
+    setDate(date);
+  }, []);
+
+  useEffect(() => {
+    const price = localStorage.getItem("newPrice");
+    try {
+      const newPrice = JSON.parse(price);
+      setPrice(newPrice);
+    } catch (error) {
+      console.error("Error parsing booking data:", error);
+    }
+  }, []);
+
   const inputHandler = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const handlePayment = async () => {
+    const options = {
+      key: "rzp_live_r6xgB2cMwMewpY,xwl4YJBXJ7y6Pe9zijWvfuIC", // Replace with your actual Razorpay key
+      amount: price * 100, // Amount in smallest currency unit (e.g., cents)
+      currency: "USD",
+      name: "Your Company Name",
+      description: "Booking Payment",
+      image: "/your_logo.png", // Replace with your company logo
+      handler: function (response) {
+        // Handle successful payment
+        toast.success("Your Booking is Confirmed!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+        console.log("Payment Successful!", response);
+      },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
       // Send POST request to the server
       let response = await axios.post(`${BASE_URL}/booking`, data);
 
-      if (response.status===200) {
-        // If response is successful, reset form and show success message
-         formrv.reset() 
-        // formrv.reset();
-        toast.success("Your Booking Confirm", {
+      if (response.status === 200) {
+        toast.success("Your Booking is Confirmed!", {
           position: "top-center",
-          autoClose: 1000,
+          autoClose: 3000,
         });
       }
     } catch (error) {
       console.log(error);
-   
     }
   };
 
   return (
-    
     <section className="layout-pt-md layout-pb-lg mt-header">
       <ToastContainer />
       <div className="container">
@@ -85,7 +98,6 @@ export default function BookingPages() {
                           type="text"
                           required
                           name="name"
-                          // value={formData.name}
                           onChange={inputHandler}
                         />
                         <label className="lh-1 text-16 text-light-1">
@@ -100,7 +112,6 @@ export default function BookingPages() {
                           type="text"
                           required
                           name="email"
-                          // value={formData.email}
                           onChange={inputHandler}
                         />
                         <label className="lh-1 text-16 text-light-1">
@@ -115,7 +126,6 @@ export default function BookingPages() {
                           type="text"
                           required
                           name="phone"
-                          // value={formData.phone}
                           onChange={inputHandler}
                         />
                         <label className="lh-1 text-16 text-light-1">
@@ -125,7 +135,7 @@ export default function BookingPages() {
                     </div>
                   </div>
                   <button className="btn btn-success btn-lg mt-4" type="submit">
-                    Submit
+                    Book Now
                   </button>
                 </form>
               </div>
@@ -138,10 +148,12 @@ export default function BookingPages() {
                 <h2 className="text-20 fw-500">Your booking details</h2>
 
                 <div className=" mt-30">
-                 <span style={{width:"50", height:"50"}}> <img src={booking.imageSrc} alt="image" /></span>
-                  
+                  <span style={{ width: "50", height: "50" }}>
+                    {" "}
+                    <img src={booking.imageSrc} alt="image" />
+                  </span>
                   <div className="ml-2 mt-5">
-                   <span className="fs-4"> {booking.product}</span>
+                    <span className="fs-4"> {booking.product}</span>
                   </div>
                 </div>
 
@@ -153,70 +165,19 @@ export default function BookingPages() {
                     <div className="">{date}</div>
                   </div>
 
-                  {/* <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Time:</div>
-                    <div className="">10:00 am</div>
-                  </div> */}
-
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Duration:</div>
                     <div className="">{booking.duration}</div>
                   </div>
-
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Tickets:</div>
-                    <div className="">Adult x2 = $98</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"></div>
-                    <div className="">Youth x3 = $383</div>
-                  </div>
-{/* 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"></div>
-                    <div className="">Children x6 = $394</div>
-                  </div> */}
                 </div>
-{/* 
-                <div className="line mt-20 mb-20"></div>
-
-                <div className="y-gap-15">
-                  <div className="d-flex justify-between">
-                    <div className="fw-500">Service per booking</div>
-                    <div className="">$30.00</div>
-                  </div>
-
-                  <div className="d-flex justify-between">
-                    <div className="fw-500">
-                      Service per person 1 Adult, 2 Youth, 4 Children
-                    </div>
-                    <div className="">$179.00</div>
-                  </div>
-                </div> */}
 
                 <div className="line mt-20 mb-20"></div>
 
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Subtotal</div>
-                    <div className="">$382</div>
+                    <div className="">${price}</div>
                   </div>
-
-                  {/* <div className="d-flex items-center justify-between"> */}
-                    {/* <div className="fw-500">Total</div>
-                    <div className="">$23</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Amount Paid</div>
-                    <div className="">$3.482</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Amount Due</div>
-                    <div className="">$43.242</div>
-                  </div> */}
                 </div>
               </div>
 
@@ -239,7 +200,7 @@ export default function BookingPages() {
               </div>
 
               <div className="mt-30">
-                <button className="button -md -dark-1 bg-accent-1 text-white col-12">
+                <button className="button -md -dark-1 bg-accent-1 text-white col-12" onClick={handlePayment}>
                   Complete My Order
                   <i className="icon-arrow-top-right text-16 ml-10"></i>
                 </button>

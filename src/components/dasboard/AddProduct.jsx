@@ -33,13 +33,23 @@ export default function AddProduct() {
     if (page === 1) return page;
     setPage(page - 1);
   };
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/product`)
+const getAllProduct=()=>{
+  try {  
+ fetch(`${BASE_URL}/product`)
       .then((res) => res.json())
       .then((data) => setProduct(data))
       .catch((err) => console.error("Error fetching tours:", err));
-  }, [page, product]);
+  } catch (error) {
+    console.log(error)
+  }
+}
+  useEffect(() => {
+    getAllProduct()
+    // fetch(`${BASE_URL}/product`)
+    //   .then((res) => res.json())
+    //   .then((data) => setProduct(data))
+    //   .catch((err) => console.error("Error fetching tours:", err));
+  }, [page]);
 
   //pagination useEffect
   useEffect(() => {

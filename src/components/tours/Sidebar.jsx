@@ -30,19 +30,26 @@ import axios from "axios";
     };
   
     // console.log("range", finalData)
-useEffect(() => {
-  fetch(`${BASE_URL}/product`)
-    .then((res) => res.json())
-    .then((data) => {
-      setProductData(data);
-      const tourTypes = data.map(product => product.tourType);
-      // Assuming `setSolve` is meant to set some state related to tour types
-      setSolve(tourTypes);
-    })
-    .catch((err) => console.error("Error fetching product:", err));
-}, []);
+    useEffect(() => {
+      fetch(`${BASE_URL}/product`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`Failed to fetch product: ${res.status} ${res.statusText}`);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setProductData(data);
+          const tourTypes = data.map(product => product.tourType);
+          // Assuming `setSolve` is meant to set some state related to tour types
+          setSolve(tourTypes);
+        })
+        .catch((err) => console.error("Error fetching product:", err));
+    }, []);
+    
 
 const tourTypeString = selectedTourTypes.join(',');
+    
 
 useEffect(() => {
   const fetchTourTypes = async () => {
@@ -52,23 +59,26 @@ useEffect(() => {
       if (!response.ok) {
         throw new Error('Failed to fetch tour types');
       }
-
+      
       const data = await response.json();
       setFilter(data);
-      sendData(data)
+      sendData(data);
     } catch (error) {
       console.error("Error fetching product:", error);
       // Optionally, handle the error state here
     }
   };
 
+  // Only fetch tour types when selectedTourTypes change
   if (selectedTourTypes.length > 0) {
     fetchTourTypes();
   } else {
     // Handle case when no tour types are selected
     setFilter([]);
   }
-}, [selectedTourTypes, sendData]);
+}, [sendData, selectedTourTypes, tourTypeString]); // Added tourTypeString to dependency array
+// console.log("selectedTourTypes", selectedTourTypes);
+
 
 const toggleTourType = (tourType) => {
   setSelectedTourTypes((prevSelected) =>
@@ -147,7 +157,7 @@ const uniqueTourTypes = solve.filter((tourType, index) => solve.findIndex(t => t
                   <div className="d-flex flex-column y-gap-15">
                   
 
-{uniqueTourTypes.map((tourType, index) => (
+{toursTypes.map((tourType, index) => (
   <div key={index}>
     <div className="d-flex items-center">
       <div className="form-checkbox">

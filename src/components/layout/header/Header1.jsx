@@ -74,9 +74,9 @@ export default function Header1() {
               <img src="/img/Logo/renomadic-color-logo.png" style={{width:"120px"}} alt="logo icon" />
             </Link>
 
-            <div className="xl:d-none ml-30">
+            {/* <div className="xl:d-none ml-30">
               <HeaderSerch />
-            </div>
+            </div> */}
           </div>
 
           <div className="headerMobile__right">

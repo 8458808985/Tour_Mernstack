@@ -24,16 +24,21 @@ export default function Add_destination() {
   const [error, setError] = useState(null);
   const [editDestination, setEditDestination] = useState(null);
   console.log("eee",editDestination)
-  useEffect(() => {
-    fetchDestinations();
-  }, []);
+  
 
   const fetchDestinations = () => {
-    fetch(`${BASE_URL}/destination`)
+    try {
+      fetch(`${BASE_URL}/destination`)
       .then((res) => res.json())
       .then((data) => setDestinations(data))
       .catch((err) => console.error("Error fetching destinations:", err));
+    } catch (error) {
+      console.log(error)
+    }
   };
+  useEffect(() => {
+    fetchDestinations();
+  }, []);
 
   useEffect(() => {
     if (editDestination) {
@@ -79,13 +84,14 @@ export default function Add_destination() {
           });
           setEditDestination(null);
         } else {
-          formrv.reset();
+          formDt.reset();
           toast.success("Successfully added destination", {
             position: "top-center",
             autoClose: 500,
           });
+
         }
-        fetchDestinations(); // Refresh destination list after adding/updating
+        // fetchDestinations(); // Refresh destination list after adding/updating
       }
       setSubmitted(true);
     } catch (error) {
@@ -95,7 +101,7 @@ export default function Add_destination() {
     }
   };
 
-  
+
   const deleteBanner = async (id) => {
     try {
       const response = await axios.delete(`${BASE_URL}/destination/${id}`);
@@ -195,7 +201,7 @@ export default function Add_destination() {
                                   }`}
                               >
                                 <form
-                                  name="formrv"
+                                  name="formDt"
                                   method="post"
                                   onSubmit={handleSubmit}
                                   encType="multipart/form-data"
@@ -301,7 +307,7 @@ export default function Add_destination() {
                                   }`}
                               >
                                 <form
-                                  name="formrv"
+                                  // name="formrv"
                                   method="post"
                                   onSubmit={handleSubmit}
                                   encType="multipart/form-data"
