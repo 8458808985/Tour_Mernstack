@@ -19,8 +19,8 @@ export default function Product({ elm, data }) {
       .then(data => setProductData(data))
       .catch(err => console.error('Error fetching tours:', err));
   }, []);
-  
-  
+
+
   return (
 
     <section className="layout-pt-xl layout-pb-xl">
@@ -43,8 +43,8 @@ export default function Product({ elm, data }) {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span style={{fontWeight:"700", fontSize:"20px"}}>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10" style={{color:"#78006E", fontSize:"20px", fontWeight:"700"}}></i>
+              <span style={{ fontWeight: "700", fontSize: "20px" }}>See all</span>
+              <i className="icon-arrow-top-right text-16 ml-10" style={{ color: "#78006E", fontSize: "20px", fontWeight: "700" }}></i>
 
             </Link>
           </div>

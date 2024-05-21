@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import BASE_URL from "@/Urls/baseUrl";
 
 export default function SingleOne({ tour }) {
-  
+
   const [productData, setProductData] = useState([]);
   const [price, setPrice] = useState([]);
   const { id } = useParams(); // Destructure id from useParams
@@ -45,7 +45,7 @@ export default function SingleOne({ tour }) {
       <section className="layout-pt-md js-pin-container">
         <div className="container">
           <div className="row y-gap-30 justify-between">
-            <div className="col-lg-8">
+            <div className="col-lg-8 col-sm-8 col-12" >
               <div className="row y-gap-20 justify-between items-center layout-pb-md">
                 <OthersInformation />
               </div>
@@ -60,9 +60,10 @@ export default function SingleOne({ tour }) {
 
               <div className="line mt-60 mb-60"></div>
 
-              
 
-              <h2 className="text-30 mt-60">Tour Map</h2>
+
+              <h2 className="text-30 mt-60" id="map">Tour Map</h2>
+              
               <div className="mapTourSingle">
   {/* <p>onClick link redirect map location</p> */}
   <a href="https://www.google.com/maps/place/Eiffel+Tower/@48.8584,2.2945,17z" className="fs-3" style={{fontSize:"10px"}}>
@@ -84,9 +85,11 @@ export default function SingleOne({ tour }) {
               </div>
             </div>
 
-            <div className="col-lg-4">
-        <div className="d-flex justify-end js-pin-content">
+            <div className="col-lg-4 col-md-4 col-12" >
+            <div className="sticky-top">
+        <div className="d-flex justify-end js-pin-content" >
           <TourSingleSidebar  productData={productData}/>
+          </div>
         </div>
       </div>
           </div>
@@ -95,3 +98,4 @@ export default function SingleOne({ tour }) {
     </>
   );
 }
+
