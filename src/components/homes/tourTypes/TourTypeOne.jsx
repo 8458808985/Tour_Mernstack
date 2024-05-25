@@ -2,6 +2,13 @@ import { destinationsSix } from "@/data/destinations";
 
 import { Link } from "react-router-dom";
 import React from "react";
+import {
+  durations,
+  languages,
+  toursTypes,
+  features,
+  rating,
+} from "@/data/tourFilteringOptions";
 
 export default function TourTypeOne() {
   return (
@@ -38,18 +45,18 @@ export default function TourTypeOne() {
           data-aos-delay=""
           className="grid -type-1 pt-40 sm:pt-20"
         >
-          {destinationsSix.map((elm, i) => (
+          {toursTypes.map((elm, i) => (
             <Link
-              to={"/tour-list-4"}
+              to={`/tour-list-2/${elm._id}`}
               key={i}
               className="featureCard -type-1 -hover-1 overflow-hidden rounded-12 px-30 py-30"
             >
               <div className="featureCard__image">
-                <img src={elm.imgSrc} alt="image"/>
+                <img src="https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600" alt="image"/>
               </div>
 
               <div className="featureCard__content">
-                <h4 className="text-white">{elm.title}</h4>
+                <h4 className="text-white">{elm}</h4>
               </div>
             </Link>
           ))}

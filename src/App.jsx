@@ -86,7 +86,8 @@ function App() {
             <Route path="/home-10" element={<HomePage10 />} /> */}
 
             <Route path="/tour-list-1" element={<TourListPage1 />} />
-            {/* <Route path="/tour-list-2" element={<TourListPage2 />} />
+            <Route path="/tour-list-2/:id" element={<TourListPage2 />} />
+            {/* 
             <Route path="/tour-list-3" element={<TourListPage3 />} />
             <Route path="/tour-list-4" element={<TourListPage4 />} />
             <Route path="/tour-list-5" element={<TourListPage5 />} />

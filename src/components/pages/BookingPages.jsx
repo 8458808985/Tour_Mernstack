@@ -190,7 +190,7 @@ export default function BookingPages() {
 
               <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
                 <h2 className="text-20 fw-500">Do you have a promo code?</h2>
-
+{/* 
                 <div className="contactForm mt-25">
                   <div className="form-input ">
                     <input type="text" required />
@@ -198,7 +198,7 @@ export default function BookingPages() {
                       Promo code
                     </label>
                   </div>
-                </div>
+                </div> */}
 
                 <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                   Apply

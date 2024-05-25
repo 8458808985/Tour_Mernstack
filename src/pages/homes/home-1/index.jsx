@@ -15,6 +15,7 @@ import MetaComponent from "@/components/common/MetaComponent";
 import Product from "@/components/homes/Products/Product";
 import { useState } from "react";
 
+
 const metadata = {
   title: "Home-1 || ViaTour - Travel & Tour Reactjs Template",
   description: "ViaTour - Travel & Tour Reactjs Template",
@@ -26,6 +27,8 @@ console.log("data", data)
   const handleDataChange = (newData) => {
     setData(newData);
   };
+
+  
   return (
     <main>
       <MetaComponent meta={metadata} />
