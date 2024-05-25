@@ -211,10 +211,10 @@ export default function TourList1() {
                         </div>
 
                         <button className="button -outline-accent-1 text-accent-1">
-                          {/* <Link to={`/tour-single-1/${elm.id}`}> */}
+                          <Link to={`/tour-single-1/${elm._id}`}>
                             View Details
                             <i className="icon-arrow-top-right ml-10"></i>
-                          {/* </Link> */}
+                          </Link>
                         </button>
                       </div>
                     </div>
