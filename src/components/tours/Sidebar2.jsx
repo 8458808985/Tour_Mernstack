@@ -14,7 +14,7 @@ import Stars from "../common/Stars";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
 
-  export default function Sidebar({sendData, sendRange }) {
+  export default function Sidebar({sendData, sendRange, filteredProductData }) {
     const [ddActives, setDdActives] = useState(["tourtype"]);
     const [solve , setSolve]=useState([])
     const [selectedTourTypes, setSelectedTourTypes] = useState([]);
@@ -30,6 +30,7 @@ import axios from "axios";
     };
   
     // console.log("range", finalData)
+    console.log("ak",filteredProductData)
     useEffect(() => {
       fetch(`${BASE_URL}/product`)
         .then((res) => {
@@ -54,7 +55,7 @@ const tourTypeString = selectedTourTypes.join(',');
 useEffect(() => {
   const fetchTourTypes = async () => {
     try {
-      const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/tourtype/${tourTypeString}`);
+      const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/city/${filteredProductData.city}/tourtype/${tourTypeString}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch tour types');
@@ -64,10 +65,11 @@ useEffect(() => {
       setFilter(data);
       sendData(data);
     } catch (error) {
-      console.error("Error fetching product:", error);
+      console.error("Error fetching tour types:", error);
       // Optionally, handle the error state here
     }
   };
+  
 
   // Only fetch tour types when selectedTourTypes change
   if (selectedTourTypes.length > 0) {

@@ -28,7 +28,7 @@ export default function DestinationsOne() {
 
           <div data-aos="fade-up" className="col-auto">
             <Link
-              to={"/"}
+              to={"/tour-list-1"}
               className="buttonArrow d-flex items-center "
             >
               <span style={{fontWeight:"700" , fontSize:"20px"}}>See all</span>
