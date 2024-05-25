@@ -38,8 +38,8 @@ export default function DestinationsPage() {
       <main>
         <Header1 />
         <Hero />
-        {/* <SpacialOffer /> */}
-        {/* <TourSlider /> */}
+        {/* <SpacialOffer />
+        <TourSlider /> */}
         <TourList1 destData={destData}/>
         {/* <TestimonialOne /> */}
         {/* <Information /> */}

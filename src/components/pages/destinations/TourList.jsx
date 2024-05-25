@@ -11,6 +11,8 @@ export default function TourList1({ destData }) {
   const [productData, setProductData] = useState([]);
   const [filteredProductData, setFilteredProductData] = useState([]);
   const [price , setPrice]=useState("")
+  const [finalData, setFinalData] = useState([]);
+
 
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
@@ -66,6 +68,13 @@ useEffect(() => {
     };
   }, []);
 
+
+
+  const receiveDataFromChild = (data) => {
+    // Data received from child component
+    setFinalData(data);
+  };
+
   return (
     <section className="layout-pb-xl">
       <div className="container">
@@ -85,7 +94,7 @@ useEffect(() => {
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              {/* <Sidebar2 price={price} /> */}
+              <Sidebar2 price={price}  sendData={receiveDataFromChild}/>
             </div>
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
               <div className={`accordion__item col-12 ${sidebarActive ? "is-active" : ""} `}>
@@ -98,7 +107,7 @@ useEffect(() => {
                 </button>
                 <div className="accordion__content" style={sidebarActive ? { maxHeight: "2000px" } : {}}>
                   <div className="pt-20">
-                    <Sidebar2 filteredProductData={filteredProductData}/>
+                    <Sidebar2 filteredProductData={filteredProductData} sendData={receiveDataFromChild} />
                   </div>
                 </div>
               </div>
@@ -107,7 +116,7 @@ useEffect(() => {
 
           
          
-          <div className="col-xl-9 col-lg-8">
+          <div className="col-xl-8 col-lg-7">
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>1362 results</div>
