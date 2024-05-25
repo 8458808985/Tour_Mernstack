@@ -1,3 +1,4 @@
+import BASE_URL from "@/Urls/baseUrl";
 import { useState, useEffect, useRef } from "react";
 
 const buttonData = [
@@ -345,6 +346,10 @@ const tabContent = [
 export default function Destinations() {
   const [currentdestinationTab, setCurrentdestinationTab] = useState("Europe");
   const [currentdd, setCurrentdd] = useState("");
+  const [productData, setProductData]=useState([])
+  const [product, setProduct]=useState([])
+  const [filteredProducts, setFilteredProducts]=useState([])
+  const [filteredCity, setFilteredCity]=useState([])
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -362,6 +367,44 @@ export default function Destinations() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => {
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setProduct(data)
+          // Create a Set to store unique country names
+          const uniqueCountries = new Set();
+          data.forEach(item => uniqueCountries.add(item.country));
+  
+          // Convert Set back to an array if necessary
+          const countries = [...uniqueCountries];
+  
+          setProductData(countries); // or do whatever you want with countries
+        }
+      })
+      .catch(err => console.error('Error fetching tours:', err));
+  }, []);
+   
+  const handleButtonClick =(elm)=>{
+    const filtered = product.filter(product => product.country === elm);
+    setFilteredProducts(filtered);
+    // const filterCity = filtered.city.map((city=>{
+    //   setFilteredCity(filterCity)
+    // }))
+    const filteredCities = filtered.map(product => product.city);
+  // Flatten the array of arrays to get a single array of cities
+  const allCities = filteredCities.flat();
+  // Remove duplicates (if any)
+  const uniqueCities = [...new Set(allCities)];
+  setFilteredCity(uniqueCities);
+
+  }
+  // console.log("filteredCity",filteredCity)
+  console.log(filteredProducts)
+
+  
 
   return (
     <div
@@ -388,9 +431,9 @@ export default function Destinations() {
             <div className="tabs js-tabs">
               <div className="tabsMenu__tabs">
                 <div className="tabs__controls js-tabs-controls">
-                  {buttonData.map((elm, i) => (
+                  {productData&&productData.map((elm, i) => (
                     <button
-                      onClick={() => setCurrentdestinationTab(elm)}
+                      onClick={() => handleButtonClick(elm)}
                       key={i}
                       className={`tabs__button js-tabs-button ${
                         currentdestinationTab == elm ? "is-tab-el-active" : ""
@@ -406,30 +449,19 @@ export default function Destinations() {
               <div className="tabsMenu__content">
                 <div className="tabs__content js-tabs-content">
                   <div className="tabs__pane -tab-item-1 is-tab-el-active">
-                    <div className="tabsMenu__lists">
-                      {tabContent
-                        .filter(
-                          (elm) => elm.heading == currentdestinationTab,
-                        )[0]
-                        .tours.map((elm2, i2) => (
-                          <div key={i2} className="tabsMenu-list">
-                            <div className="tabsMenu-list__title">
-                              {
-                                tabContent.filter(
-                                  (elm) => elm.heading == currentdestinationTab,
-                                )[0].heading
-                              }{" "}
-                              Travel Guide
-                            </div>
+                    <div className="tabsMenu__lists">                     
                             <div className="tabsMenu-list__content">
-                              {elm2.map((elm3, i3) => (
-                                <div key={i3} className="tabsMenu-list__item">
-                                  <a href={elm3.href}>{elm3.name}</a>
+                            {Array.from(new Set(filteredProducts.map(product => product.country))).map((country, index) => (
+    <h5 key={index}>{country} Travel Guide</h5>
+  ))}
+                              {filteredCity.map((elm, i) => (
+                                <div key={i} className="tabsMenu-list__item">
+                                  <a href={elm.href}>{elm}</a>
                                 </div>
                               ))}
                             </div>
-                          </div>
-                        ))}
+                          {/* </div> */}
+                        
                     </div>
                   </div>
                 </div>

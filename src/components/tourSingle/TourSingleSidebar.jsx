@@ -15,7 +15,8 @@ export default function TourSingleSidebar({productData}) {
     servicePerPerson: 40,
   };
   const [newPrice, setNewPrice] = useState(null);
-
+  const [adultNumber, setAdultNumber] = useState(1);
+  const [youthNumber, setYouthNumber] = useState(1);
   // Function to calculate and set the new price
   const calculateNewPrice = () => {
     if (productData.adultOldPrice && productData.discount) {
@@ -26,23 +27,21 @@ export default function TourSingleSidebar({productData}) {
     }
   };
 console.log("newPrice",newPrice)
-useEffect(() => {
-  // Convert newPrice to a string before storing it in localStorage
-  localStorage.setItem("newPrice",    newPrice * adultNumber +
+
+useEffect(() => {  localStorage.setItem("newPrice",    newPrice * adultNumber +
   productData.childPrice * youthNumber +
 
   extraCharge * 1);
-}, [newPrice]);
+}, [newPrice,adultNumber, youthNumber]);
 
   
-console.log(newPrice)
+// console.log(newPrice)
   // Call calculateNewPrice when component mounts
   useEffect(() => {
     calculateNewPrice();
   }, [productData]);
 console.log(productData)
-  const [adultNumber, setAdultNumber] = useState(1);
-  const [youthNumber, setYouthNumber] = useState(1);
+
   const [childrenNumber, setChildrenNumber] = useState(4);
   const [isExtraService, setisExtraService] = useState(false);
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);

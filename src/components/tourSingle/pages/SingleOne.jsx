@@ -33,6 +33,7 @@ export default function SingleOne({ tour }) {
     
     localStorage.setItem("bookingData", JSON.stringify(productData))
   })
+  console.log("productDataddd", productData)
   return (
     <>
       <section className="">

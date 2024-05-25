@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/style.css";
+
 import Aos from "aos";
 import HomePage1 from "./pages/homes/home-1";
 import { useEffect } from "react";

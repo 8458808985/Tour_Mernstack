@@ -23,7 +23,7 @@ export default function Add_destination() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
   const [editDestination, setEditDestination] = useState(null);
-  console.log("eee",editDestination)
+  // console.log("eee",editDestination)
   
 
   const fetchDestinations = () => {
@@ -71,10 +71,10 @@ export default function Add_destination() {
         method = "PUT";
       }
       
-      const response = await fetch(url, {
-        method: method,
-        body: formDataToSend,
-      });
+        const response = await fetch(url, {
+          method: method,
+          body: formDataToSend,
+        });
 
       if (response.status===200) {
         if (editDestination) {
@@ -91,7 +91,7 @@ export default function Add_destination() {
           });
 
         }
-        // fetchDestinations(); // Refresh destination list after adding/updating
+        fetchDestinations();
       }
       setSubmitted(true);
     } catch (error) {

@@ -11,7 +11,8 @@ export default function Product({ elm, data }) {
   const toggleTitle = () => {
     setShowFullTitle(!showFullTitle);
   };
-  const [productData, setProductData] = useState([]);
+  const [productData, setProductData] = useState([])
+  
 
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
@@ -56,7 +57,7 @@ export default function Product({ elm, data }) {
           className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
         >
           {data.length === 0 ?(
-            productData.map((elm, i) => (
+          productData.slice(0 , 12).map((elm, i) => (
               <div key={i} className="col-lg-3 col-md-6">
                 <Link
                   to={`/tour-single-1/${elm._id}`}
@@ -70,10 +71,6 @@ export default function Product({ elm, data }) {
                         className="img-ratio rounded-12"
                       />
                     </div>
-  
-                    <button className="tourCard__favorite">
-                      <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
-                    </button>
                   </div>
   
                   <div className="tourCard__content px-10 pt-10">

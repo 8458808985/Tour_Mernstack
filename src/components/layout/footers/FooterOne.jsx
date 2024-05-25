@@ -5,13 +5,13 @@ import Socials from "../components/Socials";
 
 export default function FooterOne() {
   return (
-    <footer className="footer -type-1">
+    <footer className="footer -type-1 mt-80">
+    
       <div className="footer__main">
-        <div className="footer__bg">
-          <img src="/img/footer/1/bg.svg" alt="image" />
+        <div className="footer__bg  " >
+          <img src="/img/footer/1/bg.svg" alt="image"  />
         </div>
 
-        <div className="container">
           <div className="footer__info">
             <div className="row y-gap-20 justify-between">
               <div className="col-auto">
@@ -86,7 +86,7 @@ export default function FooterOne() {
             </div>
           </div>
         </div>
-      </div>
+     
 
       <div className="container">
         <div className="footer__bottom">

@@ -61,6 +61,7 @@ export default function BookingPages() {
     const rzp = new Razorpay(options);
     rzp.open();
   };
+  // console.log("booking", booking.imageSrc[0])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -148,10 +149,16 @@ export default function BookingPages() {
                 <h2 className="text-20 fw-500">Your booking details</h2>
 
                 <div className=" mt-30">
-                  <span style={{ width: "50", height: "50" }}>
-                    {" "}
-                    <img src={booking.imageSrc} alt="image" />
-                  </span>
+                <span style={{ width: "50px", height: "50px" }}>
+    {booking && booking.imageSrc && booking.imageSrc.length > 0 ? (
+        // If booking.imageSrc exists and has elements, render the image
+        <img src={booking.imageSrc[0]} alt="image" />
+    ) : (
+        // Otherwise, render a placeholder or an error message
+        <p>No image available</p>
+    )}
+</span>
+
                   <div className="ml-2 mt-5">
                     <span className="fs-4"> {booking.product}</span>
                   </div>

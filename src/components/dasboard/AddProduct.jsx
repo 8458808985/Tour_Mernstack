@@ -20,8 +20,7 @@ export default function AddProduct() {
   const [pageCount, setPageCount] = useState(0);
   const [tourToDelete, setTourToDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  // console.log(pageCount)
+  const [editDestination, setEditDestination] = useState(null);
 
   //handle next
   const handleNext = () => {
@@ -157,61 +156,73 @@ const getAllProduct=()=>{
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    console.log(formData);
-    try {
-      const formDataToSend = new FormData();
+  e.preventDefault();
+  setSubmitting(true);
+  console.log(formData);
+  try {
+    const formDataToSend = new FormData();
 
-      for (const key in formData) {
-        if (formData.hasOwnProperty(key)) {
-          const value = formData[key];
-          if (key === "imageSrc") {
-            value.forEach((image) => {
-              formDataToSend.append("imageSrc", image);
-            });
-          } else if (key === "tourType") {
-            formData.tourType.forEach((type, index) => {
-              formDataToSend.append(`tourType[${index}]`, type);
-            });
-          } else if (key === "included") {
-            formData.included.forEach((include, index) => {
-              formDataToSend.append(`included[${index}]`, include);
-            });
-          } else if (key === "faq") {
-            formData.faq.forEach((faq, index) => {
-              formDataToSend.append(`faq[${index}][question]`, faq.question);
-              formDataToSend.append(`faq[${index}][answer]`, faq.answer);
-            });
-          } else {
-            formDataToSend.append(key, value);
-          }
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key)) {
+        const value = formData[key];
+        if (key === "imageSrc") {
+          value.forEach((image) => {
+            formDataToSend.append("imageSrc", image);
+          });
+        } else if (key === "tourType") {
+          formData.tourType.forEach((type, index) => {
+            formDataToSend.append(`tourType[${index}]`, type);
+          });
+        } else if (key === "included") {
+          formData.included.forEach((include, index) => {
+            formDataToSend.append(`included[${index}]`, include);
+          });
+        } else if (key === "faq") {
+          formData.faq.forEach((faq, index) => {
+            formDataToSend.append(`faq[${index}][question]`, faq.question);
+            formDataToSend.append(`faq[${index}][answer]`, faq.answer);
+          });
+        } else {
+          formDataToSend.append(key, value);
         }
       }
-
-      const response = await fetch(
-        "https://test1.buyjugaad.com/api/v1/product/new",
-        {
-          method: "POST",
-          body: formDataToSend,
-        }
-      );
-
-      if (response.status === 200) {
-        frmAdd.reset();
-        toast.success("Successfully Add Product", {
-          position: "top-center",
-          autoClose: 500,
-        });
-      }
-
-      setSubmitted(true);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setSubmitting(false);
     }
-  };
+    let url = `${BASE_URL}/product/new`;
+    let method = "POST";
+    if (editDestination) {
+      url = `${BASE_URL}/product/${editDestination._id}`;
+      method = "PUT";
+    }
+    const response = await fetch(url, {
+      method: method,
+      body: formDataToSend,
+    });
+    
+    if (response.status === 200) {
+      if (editDestination) {
+        toast.success("Successfully updated Product", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      } else {
+        toast.success("Successfully added Product", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+          frmAdd.reset();
+      }
+    }
+    
+
+    // setSubmitted(true);
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setSubmitting(false);
+  }
+};
+
+  
 
   const deleteTour = async (id) => {
     try {
@@ -244,15 +255,39 @@ const getAllProduct=()=>{
     setTourToDelete(null);
     setShowModal(false);
   };
-  const edit_product = async (eid) => {
-    let product = await axios.get(`${BASE_URL}/product/${eid}`);
-    // console.log(book.data.edit_book)
-    console.log(product.data);
-    // localStorage.setItem("product_edit", JSON.stringify(book.data.edit_book));
-
-    // navigate("/update_book")
+    // const edit_product = async (eid) => {
+    //   try {
+    //     // Fetch product data
+    //     const response = await axios.get(`${BASE_URL}/product/${eid}`);
+        
+    //     // Set data into input field
+    //     setFormData(response.data);
+    //   } catch (error) {
+    //     // Handle errors if any
+    //     console.error('Error fetching product data:', error);
+    //   }
+    // };
+    
+  
+  const edit_product = (id) => {
+    fetchDestinationForEdit(id);
   };
+  const fetchDestinationForEdit = async (id) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/product/${id}`);
+      setEditDestination( response.data); 
+    } catch (error) {
+      console.error("Error fetching destination for edit:", error);
+    }
+  };
+  console.log('EDIT',editDestination)
 
+  useEffect(() => {
+    if (editDestination) {
+      setFormData({ product: editDestination.product,adultOldPrice: editDestination.adultOldPrice ,discount: editDestination.discount, time:editDestination.time, city:editDestination.city, country:editDestination.country,duration:editDestination.duration,childPrice:editDestination.childPrice,ages:editDestination.ages,languages:editDestination.languages,tourMap:editDestination.tourMap,tourOverview:editDestination.tourOverview,included:editDestination.included, tourType:editDestination.tourType,faq:editDestination.faq,imageSrc:editDestination.imageSrc});
+    }
+  }, [editDestination]);
+  // console.log(formData)
   return (
     <>
       <ToastContainer />
@@ -323,8 +358,8 @@ const getAllProduct=()=>{
                                 }`}
                               >
                                 <form
-                                  method="post"
                                   name="frmAdd"
+                                  method="post"
                                   onSubmit={handleSubmit}
                                   encType="multipart/form-data"
                                 >
@@ -443,36 +478,28 @@ const getAllProduct=()=>{
                                     </div>
 
                                     <div className="col-6">
-                                      {formData.tourType.map((type, index) => (
-                                        <div className="form-input" key={index}>
-                                          <input
-                                            type="text"
-                                            required
-                                            name={`tourType-${index}`}
-                                            value={type}
-                                            onChange={(e) =>
-                                              handleTourTypeChange(
-                                                index,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            TourType {index + 1}{" "}
-                                            <span className="text-danger">
-                                              *
-                                            </span>
-                                          </label>
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveTourType(index)
-                                            }
-                                          >
-                                            Remove
-                                          </button>
-                                        </div>
-                                      ))}
+                                    {formData && formData.tourType && Array.isArray(formData.tourType) && formData.tourType.map((type, index) => (
+    <div className="form-input" key={index}>
+        <input
+            type="text"
+            required
+            name={`tourType-${index}`}
+            value={type}
+            onChange={(e) => handleTourTypeChange(index, e.target.value)}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            TourType {index + 1}{" "}
+            <span className="text-danger">*</span>
+        </label>
+        <button
+            type="button"
+            onClick={() => handleRemoveTourType(index)}
+        >
+            Remove
+        </button>
+    </div>
+))}
+
                                       <button
                                         type="button"
                                         onClick={handleAddTourType}
@@ -481,36 +508,28 @@ const getAllProduct=()=>{
                                       </button>
                                     </div>
                                     <div className="col-6">
-                                      {formData.included.map((item, index) => (
-                                        <div className="form-input" key={index}>
-                                          <input
-                                            type="text"
-                                            required
-                                            name={`included-${index}`}
-                                            value={item}
-                                            onChange={(e) =>
-                                              handleIncludedChange(
-                                                index,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            Included{" "}
-                                            <span className="text-danger">
-                                              *
-                                            </span>
-                                          </label>
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveIncluded(index)
-                                            }
-                                          >
-                                            Remove
-                                          </button>
-                                        </div>
-                                      ))}
+                                    {formData && formData.included && Array.isArray(formData.included) && formData.included.map((item, index) => (
+    <div className="form-input" key={index}>
+        <input
+            type="text"
+            required
+            name={`included-${index}`}
+            value={item}
+            onChange={(e) => handleIncludedChange(index, e.target.value)}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            Included{" "}
+            <span className="text-danger">*</span>
+        </label>
+        <button
+            type="button"
+            onClick={() => handleRemoveIncluded(index)}
+        >
+            Remove
+        </button>
+    </div>
+))}
+
                                       <button
                                         type="button"
                                         onClick={handleAddIncluded}
@@ -526,6 +545,7 @@ const getAllProduct=()=>{
                                           required
                                           name="languages"
                                           onChange={inputHandler}
+                                          value={formData.included}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           Languages
@@ -593,60 +613,41 @@ const getAllProduct=()=>{
                                       </div>
                                     </div>
                                     <div className="col-12  ">
-                                      {formData.faq.map((faq, index) => (
-                                        <div key={index}>
-                                          <div className="form-input">
-                                            <input
-                                              type="text"
-                                              required
-                                              name={`faq-question-${index}`}
-                                              value={faq.question}
-                                              onChange={(e) =>
-                                                handleFaqChange(
-                                                  index,
-                                                  "question",
-                                                  e.target.value
-                                                )
-                                              }
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                              Question{" "}
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                          <div className="form-input mt-4">
-                                            <input
-                                              type="text"
-                                              required
-                                              name={`faq-answer-${index}`}
-                                              value={faq.answer}
-                                              onChange={(e) =>
-                                                handleFaqChange(
-                                                  index,
-                                                  "answer",
-                                                  e.target.value
-                                                )
-                                              }
-                                            />
-                                            <label className="lh-1 text-16 text-light-1 mt-2">
-                                              Answer{" "}
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleRemoveFaq(index)
-                                            }
-                                          >
-                                            Remove FAQ
-                                          </button>
-                                        </div>
-                                      ))}
+                                    {formData && formData.faq && Array.isArray(formData.faq) && formData.faq.map((faq, index) => (
+    <div key={index}>
+        <div className="form-input">
+            <input
+                type="text"
+                required
+                name={`faq-question-${index}`}
+                value={faq.question}
+                onChange={(e) => handleFaqChange(index, "question", e.target.value)}
+            />
+            <label className="lh-1 text-16 text-light-1">
+                Question <span className="text-danger">*</span>
+            </label>
+        </div>
+        <div className="form-input mt-4">
+            <input
+                type="text"
+                required
+                name={`faq-answer-${index}`}
+                value={faq.answer}
+                onChange={(e) => handleFaqChange(index, "answer", e.target.value)}
+            />
+            <label className="lh-1 text-16 text-light-1 mt-2">
+                Answer <span className="text-danger">*</span>
+            </label>
+        </div>
+        <button
+            type="button"
+            onClick={() => handleRemoveFaq(index)}
+        >
+            Remove FAQ
+        </button>
+    </div>
+))}
+
                                       <button type="button" onClick={handleAddFaq}>
                                         Add FAQ
                                       </button>
@@ -661,6 +662,7 @@ const getAllProduct=()=>{
                                           Select File Here
                                         </label>
                                         <input
+                                     
                                           className="form-control fs-6"
                                           style={{ border: "1px solid black" }}
                                           type="file"
@@ -743,17 +745,18 @@ const getAllProduct=()=>{
                                 }`}
                               >
                                 <form
-                                  method="post"
-                                  name="frm"
+                                  method="PUT"
+                                  // name="frmUpdate"
                                   onSubmit={handleSubmit}
                                   encType="multipart/form-data"
                                 >
                                   <div className="contactForm row y-gap-30">
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
-                                        <input
+                                        <input 
                                           type="text"
-                                          required
+                                          // required
+                                          value={formData.product}
                                           name="product"
                                           onChange={inputHandler}
                                         />
@@ -768,8 +771,10 @@ const getAllProduct=()=>{
                                         <input
                                           required
                                           name="discount"
+                                          value={formData.discount}
                                           type="number"
                                           onChange={inputHandler}
+
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           Discount{" "}
@@ -783,29 +788,18 @@ const getAllProduct=()=>{
                                         <input
                                           type="number"
                                           required
+                                          value={formData.adultOldPrice}
                                           name="adultOldPrice"
                                           onChange={inputHandler}
+
                                         />
                                         <label className="lh-1 text-16 text-light-1">
-                                          Old Price
+                                         Adult Old Price
                                           <span className="text-danger">*</span>
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
-                                      <div className="form-input ">
-                                        <input
-                                          type="number"
-                                          required
-                                          name="adultNewPrice"
-                                          onChange={inputHandler}
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          New Price
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                      </div>
-                                    </div>
+
                                     <div className="col-6 col-sm-6 col-lg-6">
                                       <div className="form-input ">
                                         <div className="col-6 col-sm-12 col-lg-12">
@@ -813,8 +807,10 @@ const getAllProduct=()=>{
                                             <input
                                               type="text"
                                               required
+                                          value={formData.city}
                                               name="city"
                                               onChange={inputHandler}
+
                                             />
                                             <label className="lh-1 text-16 text-light-1">
                                               city
@@ -824,110 +820,163 @@ const getAllProduct=()=>{
                                             </label>
                                           </div>
                                         </div>
-                                        {/* <select class="form-select" aria-label="Default select example">
-                            <option selected >City
-
-                            </option>
-                            <option value={formData.city} name='city' onChange={inputHandler}>Indore</option>
-                           
-                          </select> */}
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-6 col-lg-6">
+
+                                    <div className="col-6 ">
                                       <div className="form-input ">
-                                        <div className="col-6 col-sm-12 col-lg-12">
-                                          <div className="form-input ">
-                                            <input
-                                              type="text"
-                                              required
-                                              name="country"
-                                              onChange={inputHandler}
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                              country
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.country}
+                                          name="country"
+                                          onChange={inputHandler}
 
-                                        <div className="col-6 col-sm-12 col-lg-12">
-                                          <div className="form-input ">
-                                            <input
-                                              type="text"
-                                              required
-                                              name="duration"
-                                              onChange={inputHandler}
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                              Duration
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
-
-                                        <div className="col-6 col-sm-12 col-lg-12">
-                                          <div className="form-input ">
-                                            <input
-                                              type="text"
-                                              required
-                                              name="languages"
-                                              onChange={inputHandler}
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                              Languages
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
-
-                                        <div className="col-6 col-sm-12 col-lg-12">
-                                          <div className="form-input ">
-                                            <input
-                                              type="text"
-                                              required
-                                              name="childPrice"
-                                              onChange={inputHandler}
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                            ChildPrice
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
-
-                                        <div className="col-6 col-sm-12 col-lg-12">
-                                          <div className="form-input ">
-                                            <input
-                                              type="text"
-                                              required
-                                              name="ages"
-                                              onChange={inputHandler}
-                                            />
-                                            <label className="lh-1 text-16 text-light-1">
-                                              Ages
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </div>
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          country
+                                          <span className="text-danger">*</span>
+                                        </label>
                                       </div>
                                     </div>
-                                    <div className="col-6 col-sm-12 col-lg-12">
+
+                                    <div className="col-6 ">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.duration}
+                                          name="duration"
+                                          onChange={inputHandler}
+
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Duration
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="col-6">
+                                    {formData && formData.tourType && Array.isArray(formData.tourType) && formData.tourType.map((type, index) => (
+    <div className="form-input" key={index}>
+        <input
+            type="text"
+            required
+            name={`tourType-${index}`}
+            value={type}
+            onChange={(e) => handleTourTypeChange(index, e.target.value)}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            TourType {index + 1}{" "}
+            <span className="text-danger">*</span>
+        </label>
+        <button
+            type="button"
+            onClick={() => handleRemoveTourType(index)}
+        >
+            Remove
+        </button>
+    </div>
+))}
+
+                                      <button
+                                        type="button"
+                                        onClick={handleAddTourType}
+                                      >
+                                        Add TourType
+                                      </button>
+                                    </div>
+                                    <div className="col-6">
+                                    {formData && formData.included && Array.isArray(formData.included) && formData.included.map((item, index) => (
+    <div className="form-input" key={index}>
+        <input
+            type="text"
+            required
+            name={`included-${index}`}
+            value={item}
+            onChange={(e) => handleIncludedChange(index, e.target.value)}
+        />
+        <label className="lh-1 text-16 text-light-1">
+            Included <span className="text-danger">*</span>
+        </label>
+        <button
+            type="button"
+            onClick={() => handleRemoveIncluded(index)}
+        >
+            Remove
+        </button>
+    </div>
+))}
+
+                                      <button
+                                        type="button"
+                                        onClick={handleAddIncluded}
+                                      >
+                                        Add Included
+                                      </button>
+                                    </div>
+                                    
+                                    <div className="col-6 ">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.languages}
+                                          name="languages"
+                                          onChange={inputHandler}
+
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Languages
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6">
+                                      <div className="form-input">
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.childPrice}
+                                          name="childPrice"
+                                          onChange={inputHandler}
+
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                        ChildPrice
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-6">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.tourMap}
+                                          name="tourMap"
+                                          onChange={inputHandler}
+
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          TourMap
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    
+
+                                    <div className="col-6 ">
                                       <div className="form-input ">
                                         <input
                                           type="Date"
                                           required
+                                          value={formData.time}
                                           name="time"
                                           onChange={inputHandler}
+
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           Date
@@ -935,37 +984,82 @@ const getAllProduct=()=>{
                                         </label>
                                       </div>
                                     </div>
+                                    <div className="col-6 col-sm-12 col-lg-12">
+                                      <div className="form-input ">
+                                        <input
+                                          type="text"
+                                          required
+                                          value={formData.tourOverview}
+                                          name="tourOverview"
+                                          onChange={inputHandler}
 
-                                    <div className="col-12">
-                                      <h4 className="text-18 fw-500 mb-20">
-                                        Gallery
-                                      </h4>
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          TourOverview
+                                          <span className="text-danger">*</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-12  ">
+                                    {formData && formData.faq && Array.isArray(formData.faq) && formData.faq.map((faq, index) => (
+    <div key={index}>
+        <div className="form-input">
+            <input
+                type="text"
+                required
+                name={`faq-question-${index}`}
+                value={faq.question}
+                onChange={(e) => handleFaqChange(index, "question", e.target.value)}
+            />
+            <label className="lh-1 text-16 text-light-1">
+                Question <span className="text-danger">*</span>
+            </label>
+        </div>
+        <div className="form-input mt-4">
+            <input
+                type="text"
+                required
+                name={`faq-answer-${index}`}
+                value={faq.answer}
+                onChange={(e) => handleFaqChange(index, "answer", e.target.value)}
+            />
+            <label className="lh-1 text-16 text-light-1 mt-2">
+                Answer <span className="text-danger">*</span>
+            </label>
+        </div>
+        <button
+            type="button"
+            onClick={() => handlerRemoveFaq(index)}
+        >
+            Remove FAQ
+        </button>
+    </div>
+))}
 
-                                      <div className="row x-gap-20 y-gap-20">
-                                        <div className="col-auto  ">
-                                          <label
-                                            htmlFor="imageInp1"
-                                            className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                          >
-                                            <img
-                                              alt="image"
-                                              src={"/img/dashboard/upload.svg"}
-                                            />
-
-                                            <div className="text-16 fw-500 text-accent-1 mt-10">
-                                              Upload Images
-                                            </div>
-                                          </label>
-                                          <input
-                                            multiple
-                                            // onChange={FileHandler}
-                                            name="imageSrc"
-                                            accept="image/*"
-                                            id="imageInp1"
-                                            type="file"
-                                            style={{ display: "none" }}
-                                          />
-                                        </div>
+                                      <button type="button" onClick={handleAddFaq}>
+                                        Add FAQ
+                                      </button>
+                                    </div>
+                                    <div className="col-md-12 col-sm-12 col-12">
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formFile"
+                                          style={{ fontWeight: "700" }}
+                                          className="form-label mx-3"
+                                        >
+                                          Select File Here
+                                        </label>
+                                        <input
+                                          className="form-control fs-6"
+                                          style={{ border: "1px solid black" }}
+                                          type="file"
+                                          id="formFile"
+                                          multiple
+                                          // value={formData.imageSrc}
+                                          name="imageSrc"
+                                          onChange={handleFileChange}
+                                          accept="image/*"
+                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -995,7 +1089,6 @@ const getAllProduct=()=>{
                     >
                       Close
                     </button>
-                    {/* <button class="btn" style={{ backgroundColor: "#78006E", color: "white" }} type="submit" >Save changes</button> */}
                   </div>
                 </div>
               </div>
@@ -1205,7 +1298,7 @@ const getAllProduct=()=>{
                           data-bs-toggle="modal"
                           data-bs-target="#editModal"
                           onClick={() => {
-                            edit_article(elm._id);
+                            edit_product(elm._id);
                           }}
                         >
                           <i class="fa-solid fa-pen-to-square fs-6  "></i>
