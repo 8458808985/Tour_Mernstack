@@ -1,55 +1,83 @@
 import { Link } from "react-router-dom";
 import React from "react";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 export default function Banner() {
   return (
-    <section className="cta -type-2">
-      <div className="cta__bg">
-        <img src="https://swarnatara.tours/images/upload/package/1659607346andaman-travel-agency-in-chennai.png" alt="image" />
-
-        <div className="cta__image">
-          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
-          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
-          <img src="https://dallakeholidays.com/wp-content/uploads/2017/09/tajwithbus.png" alt="image" />
-        </div>
+  <>
+  <div className="container-fluid ">
+    <div
+  id="carouselExampleCaptions"
+  className="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div className="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to={0}
+      className="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    />
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to={1}
+      aria-label="Slide 2"
+    />
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to={2}
+      aria-label="Slide 3"
+    />
+  </div>
+  <div className="carousel-inner">
+    <div className="carousel-item active" style={{height:"100%"}}>
+      <img src="https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg" style={{height:"400px"}} className="d-block w-100" alt="..." />
+      <div className="carousel-caption d-md-block">
+        {/* <h5>Explore Amazing Destinations</h5>
+        <p className="fw-bold fs-5">Discover the world's most exciting places with us. Plan your next adventure today!</p> */}
       </div>
-
-      <div className="container">
-        <div className="row">
-          <div className="col-xxl-12 col-xl-12 col-lg-12 col-md-8 col-sm-12">
-            <div className="cta__content ">
-              <h2
-                data-aos="fade-up"
-                data-aos-delay=""
-                className="" 
-            style={{color:"white", fontSize:"30px" , fontWeight:"700"}}  >
-                Grab up to <span className="text-accent-1">35% off</span>
-                <br className="lg:d-none" />
-                on your favorite
-                <br className="lg:d-none" />
-                Destination
-              </h2>
-
-              <p data-aos="fade-up" data-aos-delay="" style={{fontSize:"30px", color:"white"}} className="mt-10">
-                Limited time offer, don't miss the opportunity
-              </p>
-
-              <div className="mt-30 md:mt-20">
-                <button
-                  data-aos="fade-right"
-                  data-aos-delay=""
-                  className="button -md -dark-1 bg-accent-1 text-white"
-                >
-                  <Link to="/tour-list-1">
-                <span className="flot-end"> Book Now</span>   
-                    <i className="icon-arrow-top-right ml-10 text-16"></i>
-                  </Link>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div className="carousel-item" style={{height:"100%"}}>
+      <img src="https://img.freepik.com/free-photo/travel-concept-with-landmarks_23-2149153256.jpg"  style={{height:"400px"}} className="d-block w-100" alt="..." />
+      <div className="carousel-caption d-md-block">
+        {/* <h5>Explore Amazing Destinations</h5>
+        <p className="fw-bold fs-5">vDiscover the world's most exciting places with us. Plan your next adventure today!</p> */}
       </div>
-    </section>
+    </div>
+    <div className="carousel-item" style={{height:"100%"}}>
+      <img src="https://st2.depositphotos.com/3725083/5485/i/450/depositphotos_54856347-stock-photo-travel-the-world-monument-concept.jpg"  style={{height:"400px"}} className="d-block w-100" alt="..." />
+      <div className="carousel-caption  d-md-block">
+        {/* <h5>Explore Amazing Destinations</h5>
+        <p className="fw-bold fs-5">Discover the world's most exciting places with us. Plan your next adventure today!</p> */}
+      </div>
+    </div>
+  </div>
+  <button
+    className="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="prev"
+  >
+    <span className="carousel-control-prev-icon" aria-hidden="true" />
+    <span className="visually-hidden">Previous</span>
+  </button>
+  <button
+    className="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="next"
+  >
+    <span className="carousel-control-next-icon" aria-hidden="true" />
+    <span className="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+    </div>
+  </>
   );
 }

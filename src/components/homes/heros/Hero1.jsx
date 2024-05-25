@@ -103,7 +103,7 @@ export default function Hero1({onDataChange }) {
                 {heroBanner.map((elm, i) => (
                 <div className="carousel-item active">
                 
-                  <img src={elm.banner} className="d-block w-100" style={{ marginTop: "70px" }} key={i} alt="..." />
+                  <img src={elm.banner} className="d-block w-100" style={{borderRadius:"20px", marginTop:"90px" }} key={i} alt="..." />
                             
 </div>
                             ))}

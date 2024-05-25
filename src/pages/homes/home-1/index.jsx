@@ -34,12 +34,11 @@ console.log("data", data)
       <FeaturesOne />
       <DestinationsOne />
       <TestimonialOne />
-      {/* <Tour1 /> */}
       <Product data={data}/>
       <Banner />
-      {/* <TourTypeOne /> */}
-      {/* <TourSlderOne /> */}
-      {/* <BannerOne /> */}
+       <Tour1 />
+       <TourTypeOne />
+     <TourSlderOne /> 
       <ArticlesThree />
       <FooterOne />
     </main>

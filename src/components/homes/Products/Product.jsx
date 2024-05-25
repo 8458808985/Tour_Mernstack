@@ -7,12 +7,12 @@ import BASE_URL from "@/Urls/baseUrl";
 
 export default function Product({ elm, data }) {
   const [showFullTitle, setShowFullTitle] = useState(false);
-// console.log("Home", data)
+  // console.log("Home", data)
   const toggleTitle = () => {
     setShowFullTitle(!showFullTitle);
   };
   const [productData, setProductData] = useState([])
-  
+
 
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
@@ -56,8 +56,8 @@ export default function Product({ elm, data }) {
           data-aos-delay=""
           className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
         >
-          {data.length === 0 ?(
-          productData.slice(0 , 12).map((elm, i) => (
+          {data.length === 0 ? (
+            productData.slice(0, 12).map((elm, i) => (
               <div key={i} className="col-lg-3 col-md-6">
                 <Link
                   to={`/tour-single-1/${elm._id}`}
@@ -72,66 +72,68 @@ export default function Product({ elm, data }) {
                       />
                     </div>
                   </div>
-  
+
                   <div className="tourCard__content px-10 pt-10">
                     <div className="tourCard__location d-flex items-center text-13 text-light-2">
                       <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                 <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
+                      <span style={{ fontSize: "15px", fontWeight: "700" }}>  {elm.country} ({elm.city}) </span>
                     </div>
-  
+
                     <h3 className="tourCard__title text-16 fw-500 mt-5">
-          <span style={{ fontSize: "18px", fontWeight: "700" }}>
-            {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
-          </span>
-          {elm.product.length > 20 && (
-            <button onClick={toggleTitle} className="btn-link">
-              {showFullTitle ? 'See Less' : 'See More'}
-            </button>
-          )}
-        </h3>
+                      <span style={{ fontSize: "14px", fontWeight: "600" }}>
+                        {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+                      </span>
+                      {elm.product.length > 20 && (
+                        <button onClick={toggleTitle} className="btn-link">
+
+                        </button>
+                      )}
+                    </h3>
                     <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                      <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
-                        <Stars star={elm.rating}  />
+                      <div className="d-flex x-gap-5" style={{ fontSize: "18px", fontWeight: "900" }}>
+                        <Stars star={elm.rating} />
                       </div>
-  
-                      {elm.adultOldPrice && (
-      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-        Old Price: <del>${elm.adultOldPrice}</del>
-      </span>
-    )}
+
+                      {/* {elm.adultOldPrice && (
+                        <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+                          Old Price: <del>${elm.adultOldPrice}</del>
+                        </span>
+                      )} */}
                     </div>
-                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    {elm.discount && (
-      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-        Discount: {elm.discount}%
-      </span>
-    )}
-                    </div>
-  
+                    {/* <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                      {elm.discount && (
+                        <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+                          Discount: {elm.discount}%
+                        </span>
+                      )}
+                    </div> */}
+
                     <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                      <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
-                        <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
-                   <span style={{fontSize:"12px"}}> {elm.duration}</span> 
+                      <div className="d-flex items-center" style={{ fontSize: "10px", fontWeight: "700" }}>
+                        {/* <i className="icon-clock text-16 mr-5" style={{ fontSize: "10px", fontWeight: "700" }}></i>
+                        <span style={{ fontSize: "12px" }}> {elm.duration}</span> */}
+                         
+                         <p className="px-1 rounded-2" style={{backgroundColor:"#78006E",color:"white",fontSize:"9px", fontWeight:"700"}}>Save up to 19%</p>
                       </div>
-  
+
                       <div>
-                      {elm.adultOldPrice && elm.discount && (
-        <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
-        <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
-        </span>
-      )}
-     {elm.adultOldPrice && !elm.discount && (
-      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-        New Price: $   {elm.adultOldPrice}
-      </span>
-    )}
+                        {elm.adultOldPrice && elm.discount && (
+                          <span className="text-16 fw-500" style={{ fontSize: "12px", fontWeight: "700" }}>
+                            <span style={{ fontSize: "12px" }}> New Price: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
+                          </span>
+                        )}
+                        {elm.adultOldPrice && !elm.discount && (
+                          <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+                            New Price: $   {elm.adultOldPrice}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
                 </Link>
               </div>
             ))
-          ):(
+          ) : (
             data.map((elm, i) => (
               <div key={i} className="col-lg-3 col-md-6">
                 <Link
@@ -146,64 +148,64 @@ export default function Product({ elm, data }) {
                         className="img-ratio rounded-12"
                       />
                     </div>
-  
+
                     <button className="tourCard__favorite">
-                      <i className="icon-heart" style={{fontWeight:"700",fontSize:"20px", color:"#78006E"}}></i>
+                      <i className="icon-heart" style={{ fontWeight: "700", fontSize: "20px", color: "#78006E" }}></i>
                     </button>
                   </div>
-  
+
                   <div className="tourCard__content px-10 pt-10">
                     <div className="tourCard__location d-flex items-center text-13 text-light-2">
                       <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                 <span style={{fontSize:"15px",fontWeight:"700"}}>  {elm.country} ({elm.city}) </span>   
+                      <span style={{ fontSize: "15px", fontWeight: "700" }}>  {elm.country} ({elm.city}) </span>
                     </div>
-  
+
                     <h3 className="tourCard__title text-16 fw-500 mt-5">
-          <span style={{ fontSize: "18px", fontWeight: "700" }}>
-            {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
-          </span>
-          {elm.product.length > 20 && (
-            <button onClick={toggleTitle} className="btn-link">
-              {showFullTitle ? 'See Less' : 'See More'}
-            </button>
-          )}
-        </h3>
+                      <span style={{ fontSize: "18px", fontWeight: "700" }}>
+                        {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+                      </span>
+                      {elm.product.length > 20 && (
+                        <button onClick={toggleTitle} className="btn-link">
+                          {showFullTitle ? 'See Less' : 'See More'}
+                        </button>
+                      )}
+                    </h3>
                     <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                      <div className="d-flex x-gap-5" style={{fontSize:"18px",fontWeight:"900"}}>
-                        <Stars star={elm.rating}  />
+                      <div className="d-flex x-gap-5" style={{ fontSize: "18px", fontWeight: "900" }}>
+                        <Stars star={elm.rating} />
                       </div>
-  
+
                       {elm.adultOldPrice && (
-      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-        Old Price: <del>${elm.adultOldPrice}</del>
-      </span>
-    )}
+                        <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+                          Old Price: <del>${elm.adultOldPrice}</del>
+                        </span>
+                      )}
                     </div>
                     <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    {elm.discount && (
-      <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
-        Discount: {elm.discount}%
-      </span>
-    )}
+                      {elm.discount && (
+                        <span className="text-dark-1 me-4" style={{ fontSize: "14px", fontWeight: "700" }}>
+                          Discount: {elm.discount}%
+                        </span>
+                      )}
                     </div>
-  
+
                     <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                      <div className="d-flex items-center" style={{fontSize:"10px",fontWeight:"700"}}>
-                        <i className="icon-clock text-16 mr-5" style={{fontSize:"10px",fontWeight:"700"}}></i>
-                   <span style={{fontSize:"12px"}}> {elm.duration}</span> 
+                      <div className="d-flex items-center" style={{ fontSize: "10px", fontWeight: "700" }}>
+                        <i className="icon-clock text-16 mr-5" style={{ fontSize: "10px", fontWeight: "700" }}></i>
+                        <span style={{ fontSize: "12px" }}> {elm.duration}</span>
                       </div>
-  
+
                       <div>
-                      {elm.adultOldPrice && elm.discount && (
-        <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
-        <span style={{fontSize:"12px"}}> New Price: $</span> <span  style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span> 
-        </span>
-      )}
-     {elm.adultOldPrice && !elm.discount && (
-      <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-        New Price: $   {elm.adultOldPrice}
-      </span>
-    )}
+                        {elm.adultOldPrice && elm.discount && (
+                          <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
+                            <span style={{ fontSize: "12px" }}> New Price: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
+                          </span>
+                        )}
+                        {elm.adultOldPrice && !elm.discount && (
+                          <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
+                            New Price: $   {elm.adultOldPrice}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -211,7 +213,7 @@ export default function Product({ elm, data }) {
               </div>
             ))
           )}
-          
+
         </div>
       </div>
     </section>

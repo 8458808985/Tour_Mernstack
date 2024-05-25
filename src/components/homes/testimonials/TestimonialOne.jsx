@@ -9,7 +9,7 @@ export default function TestimonialOne() {
 
 
 
-     <div className="container-fluid ">
+     {/* <div className="container-fluid ">
     <div
   id="carouselExampleCaptions"
   className="carousel slide"
@@ -81,7 +81,7 @@ export default function TestimonialOne() {
 </div>
 
 
-    </div> 
+    </div>  */}
 </>
 
   );

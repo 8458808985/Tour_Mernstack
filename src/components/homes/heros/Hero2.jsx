@@ -224,6 +224,7 @@ export default function Hero2() {
                           Grab up to
                           <span className="hero__title_shape text-accent-1">
                             35% off
+                    
                             <span>
                               <img
                                 src="/img/hero/2/brush.svg"
