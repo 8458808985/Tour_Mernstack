@@ -36,6 +36,7 @@ console.log("data", data)
       <TestimonialOne />
       <Product data={data}/>
       <Banner />
+      {/* <Product data={data}/> */}
        <Tour1 />
        <TourTypeOne />
      <TourSlderOne /> 
