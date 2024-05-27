@@ -22,13 +22,13 @@ export default function MainInformation({ tour }) {
           <div className="row x-gap-10 y-gap-10 items-center">
             <div className="col-auto">
               <button className="button -accent-1 text-14 py-5 px-15 bg-accent-1-05 text-accent-1 rounded-200">
-                Bestseller
-              </button>
+                Whatsaap <i class="fa-brands fa-whatsapp mx-2"></i>
+              </button> 
             </div>
             <div className="col-auto">
               <button className="button -accent-1 text-14 py-5 px-15 bg-light-1 rounded-200">
-                Free cancellation
-              </button>
+                Phone No <i class="fa-duotone fa-phone mx-2"></i>
+              </button> 
             </div>
           </div>
 

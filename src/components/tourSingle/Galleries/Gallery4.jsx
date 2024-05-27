@@ -112,7 +112,7 @@ export default function Gallery4({ tour }) {
             <div className="row x-gap-10 y-gap-10 items-center">
               <div className="col-auto">
                 <button className="button -accent-1 text-14 py-5 px-15 bg-white text-accent-1 rounded-200">
-                  Bestseller
+                  Bestseller 
                 </button>
               </div>
               <div className="col-auto">

@@ -23,7 +23,7 @@ export default function PageHeader() {
 
           <div className="col-auto">
             <div className="pageHeader__subtitle">
-              THE 10 BEST Phuket Tours & Excursions
+              THE 10 BEST Phuket Tours & Excursions bbb
             </div>
           </div>
         </div>

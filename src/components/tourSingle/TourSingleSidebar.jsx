@@ -80,7 +80,7 @@ console.log(productData)
                 <i className="text-20 icon-calendar"></i>
               </div>
               <div className="searchFormItem__content">
-                <h5>Select</h5>
+                <h5>Select Date</h5>
                 <div>
                   <span className="js-first-date">
                     <Calender />
