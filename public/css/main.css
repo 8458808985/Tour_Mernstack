@@ -10187,7 +10187,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 768px) {
   .layout-pt-xl {
     padding-top: 50px;
   }

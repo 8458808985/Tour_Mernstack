@@ -10,7 +10,7 @@ export default function Destinations8() {
         <div className="row y-gap-10 justify-between items-end">
           <div className="col-auto">
             <h2 data-aos="fade-up" data-aos-delay="" className="text-30">
-              Trending destinations
+              Trending destinations dsfsf
             </h2>
           </div>
 
@@ -30,10 +30,10 @@ export default function Destinations8() {
         <div
           data-aos="fade-up"
           data-aos-delay=""
-          className="row y-gap-30 md:y-gap-20 pt-40 sm:pt-20"
+          className="row "
         >
           {destinations11.map((elm, i) => (
-            <div key={i} className="col-xl-3 col-lg-4 col-md-6">
+            <div key={i} className="col-xl-3 col-lg-4 col-md-6 col-6">
               <Link to="/tour-list-1" className="featureCard -type-9">
                 <div className="featureCard__image">
                   <img src={elm.imageSrc} alt="image" />
