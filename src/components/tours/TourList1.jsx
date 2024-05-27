@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-// import Sidebar from "./Sidebar";
 import { speedFeatures } from "@/data/tourFilteringOptions";
-import { tourDataTwo } from "@/data/tours";
+import { useSelector } from "react-redux";
 import Stars from "../common/Stars";
-import Pagination from "../common/Pagination";
-
-import { Link, useParams } from "react-router-dom";
+import Sidebar from "../tours/Sidebar";
 import BASE_URL from "@/Urls/baseUrl";
-import  Sidebar  from "../tours/Sidebar";
+import { Link } from "react-router-dom";
 
 export default function TourList1() {
   const [sortOption, setSortOption] = useState("");
@@ -17,41 +14,40 @@ export default function TourList1() {
   const [productData, setProductData] = useState([]);
   const [finalData, setFinalData] = useState([]);
   const [rangeData, setRangeData] = useState([]);
-  // const { id } = useParams(); // Destructure id from useParams
-  
+
+  const { Searchdata } = useSelector((state) => state.app);
+
   const receiveDataFromChild = (data) => {
-    // Data received from child component
     setFinalData(data);
   };
+
   const receiveRange = (data) => {
-    // Data received from child component
     setRangeData(data);
   };
 
-  // console.log("range data",rangeData)
-  // console.log("new data",finalData)
   useEffect(() => {
     fetch(`${BASE_URL}/product`)
-      .then(res => res.json())
-      .then(data => setProductData(data))
-      .catch(err => console.error('Error fetching product:', err));
-  }, []); // Add id to dependency array
+      .then((res) => res.json())
+      .then((data) => setProductData(data))
+      .catch((err) => console.error("Error fetching product:", err));
+  }, []);
 
-  const filteredProducts = productData.filter(product => {
-    const adultOldPrice = product.adultOldPrice; // Assuming this is the property to filter
-    return adultOldPrice >= rangeData[0] && adultOldPrice <= rangeData[1];
+  const filteredProducts = productData.filter((product) => {
+    const adultOldPrice = product.adultOldPrice;
+    const matchesSearch = Searchdata && typeof Searchdata === 'string'
+      ? product.product.toLowerCase().includes(Searchdata.toLowerCase()) ||
+        product.city.toLowerCase().includes(Searchdata.toLowerCase())
+      : true;
+    const inRange = rangeData && Array.isArray(rangeData) && rangeData.length === 2
+      ? adultOldPrice >= rangeData[0] && adultOldPrice <= rangeData[1]
+      : true;
+    return matchesSearch && inRange;
+});
 
-  });
-  
-
-  // console.log(filteredProducts)ss
 
   useEffect(() => {
     const handleClick = (event) => {
-      if (
-        dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target)
-      ) {
+      if (dropDownContainer.current && !dropDownContainer.current.contains(event.target)) {
         setDdActives(false);
       }
     };
@@ -62,35 +58,26 @@ export default function TourList1() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
   return (
     <section className="layout-pb-xl">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar  sendData={receiveDataFromChild} sendRange={receiveRange}  />
+              <Sidebar sendData={receiveDataFromChild} sendRange={receiveRange} />
             </div>
 
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
-              <div
-                className={`accordion__item col-12 ${
-                  sidebarActive ? "is-active" : ""
-                } `}
-              >
-                <button
-                  className="accordion__button button -dark-1 bg-light-1 px-25 py-10 border-1 rounded-12"
-                  onClick={() => setSidebarActive((pre) => !pre)}
-                >
+              <div className={`accordion__item col-12 ${sidebarActive ? "is-active" : ""}`}>
+                <button className="accordion__button button -dark-1 bg-light-1 px-25 py-10 border-1 rounded-12" onClick={() => setSidebarActive((pre) => !pre)}>
                   <i className="icon-sort-down mr-10 text-16"></i>
                   Filter
                 </button>
 
-                <div
-                  className="accordion__content"
-                  style={sidebarActive ? { maxHeight: "2000px" } : {}}
-                >
+                <div className="accordion__content" style={sidebarActive ? { maxHeight: "2000px" } : {}}>
                   <div className="pt-20">
-                    <Sidebar sendData={receiveDataFromChild} sendRange={receiveRange}/>
+                    <Sidebar sendData={receiveDataFromChild} sendRange={receiveRange} />
                   </div>
                 </div>
               </div>
@@ -100,38 +87,20 @@ export default function TourList1() {
           <div className="col-xl-8 col-lg-8">
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
-                <div>1362 results</div>
+                <div>{filteredProducts.length} results</div>
               </div>
 
               <div ref={dropDownContainer} className="col-auto">
-                <div
-                  className={`dropdown -type-2 js-dropdown js-form-dd ${
-                    ddActives ? "is-active" : ""
-                  } `}
-                  data-main-value=""
-                >
-                  <div
-                    className="dropdown__button js-button"
-                    onClick={() => setDdActives((pre) => !pre)}
-                  >
+                <div className={`dropdown -type-2 js-dropdown js-form-dd ${ddActives ? "is-active" : ""}`} data-main-value="">
+                  <div className="dropdown__button js-button" onClick={() => setDdActives((pre) => !pre)}>
                     <span>Sort by: </span>
-                    <span className="js-title">
-                      {sortOption ? sortOption : "Featured"}
-                    </span>
+                    <span className="js-title">{sortOption ? sortOption : "Featured"}</span>
                     <i className="icon-chevron-down"></i>
                   </div>
 
                   <div className="dropdown__menu js-menu-items">
                     {speedFeatures.map((elm, i) => (
-                      <div
-                        onClick={() => {
-                          setSortOption((pre) => (pre == elm ? "" : elm));
-                          setDdActives(false);
-                        }}
-                        key={i}
-                        className="dropdown__item"
-                        data-value="fast"
-                      >
+                      <div onClick={() => setSortOption((pre) => (pre === elm ? "" : elm))} key={i} className="dropdown__item" data-value="fast">
                         {elm}
                       </div>
                     ))}
@@ -139,46 +108,36 @@ export default function TourList1() {
                 </div>
               </div>
             </div>
-            
 
-  {finalData.length === 0 
-    ? (
-    productData.map((elm, i) => (
-      <div className="col-12" key={i}>
-        <div className="tourCard -type-2">
+            {finalData.length === 0
+              ? filteredProducts.map((elm, i) => (
+                  <div className="col-12" key={i}>
+                    <div className="tourCard -type-2">
                       <div className="tourCard__image">
                         <img src={elm.imageSrc[0]} alt="image" />
-
                         <div className="tourCard__favorite">
                           <button className="button -accent-1 size-35 bg-white rounded-full flex-center">
                             <i className="icon-heart text-15"></i>
                           </button>
                         </div>
                       </div>
-
                       <div className="tourCard__content">
                         <div className="tourCard__location">
                           <i className="icon-pin"></i>
                           <span className="ms-1">{elm.city}</span>
-                        <span className="ms-1"> ({elm.country}) </span>
+                          <span className="ms-1"> ({elm.country}) </span>
                         </div>
-
                         <h3 className="tourCard__title mt-5">
                           <span>{elm.product}</span>
                         </h3>
-
                         <div className="d-flex items-center mt-5">
                           <div className="d-flex items-center x-gap-5">
                             <Stars star={elm} font={12} />
                           </div>
-
                           <div className="text-14 ml-10">
                             <span className="fw-500">{elm.tourOverview}</span>
                           </div>
                         </div>
-
-                        
-
                         <div className="row x-gap-20 y-gap-5 pt-30">
                           {elm.features?.map((elm2, i2) => (
                             <div key={i2} className="col-auto">
@@ -190,26 +149,20 @@ export default function TourList1() {
                           ))}
                         </div>
                       </div>
-
                       <div className="tourCard__info">
                         <div>
                           <div className="d-flex items-center text-14">
                             <i className="icon-clock mr-10"></i>
                             {elm.duration}
                           </div>
-
                           <div className="tourCard__price">
                             <div>${elm.adultOldPrice}</div>
-
                             <div className="d-flex items-center">
-                              From{" "}
-                              <span className="text-20 fw-500 ml-5">
-                                ${elm.adultOldPrice}
-                              </span>
+                              From <span className="text-20 fw-500 ml-5">${elm.adultOldPrice}</span>
                             </div>
                           </div>
                         </div>
-
+                        
                         <button className="button -outline-accent-1 text-accent-1">
                           <Link to={`/tour-single-1/${elm._id}`}>
                             View Details
@@ -218,46 +171,36 @@ export default function TourList1() {
                         </button>
                       </div>
                     </div>
-      </div>
-    ))
-  ) : (
-    
-    finalData.map((elm, i) => (
-      <div className="col-12" key={i}>
-        <div className="tourCard -type-2">
+                  </div>
+                ))
+              : finalData.map((elm, i) => (
+                  <div className="col-12" key={i}>
+                    <div className="tourCard -type-2">
                       <div className="tourCard__image">
                         <img src={elm.imageSrc[0]} alt="image" />
-
                         <div className="tourCard__favorite">
                           <button className="button -accent-1 size-35 bg-white rounded-full flex-center">
                             <i className="icon-heart text-15"></i>
                           </button>
                         </div>
                       </div>
-
                       <div className="tourCard__content">
                         <div className="tourCard__location">
                           <i className="icon-pin"></i>
                           <span className="ms-1">{elm.city}</span>
-                        <span className="ms-1"> ({elm.country}) </span>
+                          <span className="ms-1"> ({elm.country}) </span>
                         </div>
-
                         <h3 className="tourCard__title mt-5">
                           <span>{elm.product}</span>
                         </h3>
-
                         <div className="d-flex items-center mt-5">
                           <div className="d-flex items-center x-gap-5">
                             <Stars star={elm} font={12} />
                           </div>
-
                           <div className="text-14 ml-10">
                             <span className="fw-500">{elm.tourOverview}</span>
                           </div>
                         </div>
-
-                        
-
                         <div className="row x-gap-20 y-gap-5 pt-30">
                           {elm.features?.map((elm2, i2) => (
                             <div key={i2} className="col-auto">
@@ -269,44 +212,30 @@ export default function TourList1() {
                           ))}
                         </div>
                       </div>
-
                       <div className="tourCard__info">
                         <div>
                           <div className="d-flex items-center text-14">
                             <i className="icon-clock mr-10"></i>
                             {elm.duration}
                           </div>
-
                           <div className="tourCard__price">
                             <div>${elm.adultOldPrice}</div>
-
                             <div className="d-flex items-center">
-                              From{" "}
-                              <span className="text-20 fw-500 ml-5">
-                                ${elm.adultOldPrice}
-                              </span>
+                              From <span className="text-20 fw-500 ml-5">${elm.adultOldPrice}</span>
                             </div>
                           </div>
                         </div>
-
+                       
                         <button className="button -outline-accent-1 text-accent-1">
-                          <Link to={`/tour-single-1/${elm._id}`}>
+                        <Link to={`/tour-single-1/${elm._id}`}>
                             View Details
                             <i className="icon-arrow-top-right ml-10"></i>
                           </Link>
                         </button>
                       </div>
                     </div>
-      </div>
-    ))
-  )}
-
-  
-
-
-
-            
-
+                  </div>
+                ))}
           </div>
         </div>
       </div>

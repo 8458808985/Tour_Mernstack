@@ -13873,6 +13873,7 @@ button.gm-ui-hover-effect::after {
   left: 8px;
 }
 
+
 .searchMenu-date .calendar-icon.-right {
   right: 8px;
 }
@@ -13886,6 +13887,16 @@ button.gm-ui-hover-effect::after {
   width: 3px;
   background-color: rgba(0, 0, 0, 0.3);
 }
+::placeholder{
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #5B7052;
+}
+
+.form-control:focus {
+  border-color: #fff;
+  box-shadow: none;
+} 
 
 .h-500 {
   height: 500px;

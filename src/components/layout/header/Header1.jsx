@@ -4,7 +4,6 @@ import Destinations from "../components/Destinations";
 import Activities from "../components/Activities";
 import Currency from "../components/Currency";
 import MobileMenu from "../components/MobileMenu";
-// import { searchUser } from "@/redux/Feature/Searchslice";
 
 
 
@@ -12,7 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { searchUser } from "../Redux/feature/Searchslice";
 
-export default function Header1() {
+export default function 
+Header1() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,15 +59,42 @@ export default function Header1() {
     };
   }, []);
 
-//  search 
+// Search functionality
+const [searchdata, setSearchData] = useState("");
+const [recentSearches, setRecentSearches] = useState([]);
+const [showRecentSearches, setShowRecentSearches] = useState(false);
 
-  const [searchdata, setSearchData] = useState("");
-  
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    dispatch(searchUser(searchdata));
-    navigate("/tour-list-1");
-  };
+useEffect(() => {
+  const savedSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+  setRecentSearches(savedSearches);
+}, []);
+
+const handleSearchSubmit = (e) => {
+  e.preventDefault();
+  const updatedRecentSearches = [searchdata, ...recentSearches.filter(search => search !== searchdata)];
+  setRecentSearches(updatedRecentSearches);
+  localStorage.setItem("recentSearches", JSON.stringify(updatedRecentSearches));
+  dispatch(searchUser(searchdata));
+  navigate("/tour-list-1");
+};
+
+const handleSearchChange = (e) => {
+  setSearchData(e.target.value);
+};
+
+const handleRecentSearchClick = (search) => {
+  setSearchData(search);
+  dispatch(searchUser(search));
+  navigate("/tour-list-1");
+};
+
+const handleSearchFocus = () => {
+  setShowRecentSearches(true);
+};
+
+const handleSearchBlur = () => {
+  setTimeout(() => setShowRecentSearches(false), 200); // Timeout to allow click event to register
+};
 
   return (
     <>
@@ -88,20 +115,45 @@ export default function Header1() {
             <Link to="/" className="header__logo">
               <img src="/img/Logo/renomadic-color-logo.png" style={{width:"120px"}} alt="logo icon" />
             </Link>
-
-            <form className="d-flex" onSubmit={handleSearchSubmit}>
+            <div className="xl:d-none ml-30 position-relative">
+          
+            <form className="d-flex" style={{marginLeft:"4rem"}} onSubmit={handleSearchSubmit}>
+            <div style={{position:"relative"}}>
+              <div class="input-group">
+                <span class="input-group-text bg-transparent border-0 me-1" id="basic-addon1">
+                <i class="icon-search text-18 " style={{position:"absolute", left:"10px", top:"50%", transform:" translateY(-50%)"}}></i>
+                </span>
                 <input
-                  className="form-control me-2 border-1"
-                  onChange={(e) => setSearchData(e.target.value)}
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  Search
-                </button>
+                  style={{ width:"300px", }}
+                    class="form-control me-2 b"
+                    onChange={handleSearchChange}
+                    onFocus={handleSearchFocus}
+                    onBlur={handleSearchBlur}
+                    value={searchdata}
+                    type="search"
+                    placeholder="Search destinations or activities"
+                    aria-label="Search"
+                  />
+              </div>
+              </div>
+
               </form>
+              {showRecentSearches && (
+                <ul className="recent-searches-list position-absolute list-group mt-2 w-100 " style={{marginLeft:"90px"}}>
+                  {recentSearches
+                    .filter(search => search.toLowerCase().includes(searchdata.toLowerCase()))
+                    .map((search, index) => (
+                      <li
+                        key={index}
+                        className="list-group-item list-group-item-action"
+                        onMouseDown={() => handleRecentSearchClick(search)}
+                      >
+                        {search}
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </div>
           </div>
 
           <div className="headerMobile__right">
