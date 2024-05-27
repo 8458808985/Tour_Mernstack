@@ -50,6 +50,9 @@ export default function DestinationsOne() {
               }}
               modules={[Navigation, Pagination]}
               breakpoints={{
+                360: {
+                  slidesPerView: 2,
+                },
                 500: {
                   slidesPerView: 2,
                 },
@@ -64,7 +67,7 @@ export default function DestinationsOne() {
                 },
               }}
             >
-              {destinations.slice(0, 12).map((elm, i) => (
+              {destinations.slice(0, 6).map((elm, i) => (
                 <SwiperSlide key={i}>
                   <Link to={`/destinations/${elm._id}`}>
                     <div className="featureImage__image mx-50 rounded-full -hover-image-scale__image" >
