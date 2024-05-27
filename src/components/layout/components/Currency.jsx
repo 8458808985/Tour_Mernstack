@@ -3,12 +3,8 @@ import { useState, useEffect, useRef } from "react";
 const currencies = [
   "USD",
   "Euro",
-  "British Pound",
-  "Turkish Lira",
-  "Canadian Dollar",
-  "Australian Dollar",
-  "Swiss Franc",
-  "Singapore Dollar",
+  "INR",
+
 ];
 
 export default function Currency({ parentClass }) {

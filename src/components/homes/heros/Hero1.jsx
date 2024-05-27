@@ -2,15 +2,19 @@ import BASE_URL from "@/Urls/baseUrl";
 import Calender from "@/components/common/dropdownSearch/Calender";
 import Location from "@/components/common/dropdownSearch/Location";
 import TourType from "@/components/common/dropdownSearch/TourType";
+import { searchUser } from "@/components/layout/Redux/feature/Searchslice";
 import axios from "axios";
 
 import React, { useEffect, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Hero1({onDataChange }) {
   const [heroBanner, setHeroBanner]=useState([])
   const [searchData, setSearchData]=useState("")
   const [filter, setFilter]=useState([])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
     fetch(`${BASE_URL}/banner`)
@@ -24,36 +28,29 @@ export default function Hero1({onDataChange }) {
 
   // const searchDataAsString = JSON.stringify(searchData);
  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/city/${searchData}`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/city/${searchData}`);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch product data');
-        }
-        const data = await response.json();
-        // console.log("object", data)
-        setFilter(data);
-        onDataChange(data);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-        // Optionally, handle the error state here
-      }
-    };
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch product data');
+  //       }
+  //       const data = await response.json();
+  //       // console.log("object", data)
+  //       setFilter(data);
+  //       onDataChange(data);
+  //     } catch (error) {
+  //       console.error("Error fetching product:", error);
+  //       // Optionally, handle the error state here
+  //     }
+  //   };
 
-    if (searchData) {
-      fetchData();
-    }
-  }, [searchData]);
+  //   if (searchData) {
+  //     fetchData();
+  //   }
+  // }, [searchData]);
 
-// console.log("filter", filter)
-// console.log("SearchData", searchData)
-  // search handler
-  
-
-  // console.log(heroBanner)
-  const navigate = useNavigate();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
@@ -80,6 +77,15 @@ export default function Hero1({onDataChange }) {
     };
   }, []);
 
+  // Search functionality
+  
+  
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchUser(searchData));
+    navigate("/tour-list-1");
+  };
+
   return (
     <section className="hero -type-1 p-0 m-0">
       <div className="hero__bg">
@@ -100,13 +106,12 @@ export default function Hero1({onDataChange }) {
               data-bs-ride="carousel"
             >
               <div className="carousel-inner" style={{height:"800px"}}>
-                {heroBanner.map((elm, i) => (
-                <div className="carousel-item active">
-                
-                  <img src={elm.banner} className="d-block w-100" style={{borderRadius:"20px", marginTop:"90px" }} key={i} alt="..." />
-                            
-</div>
-                            ))}
+              {heroBanner.map((elm, i) => (
+  <div className="carousel-item active" key={i}>
+    <img src={elm.banner} className="d-block w-100" style={{ borderRadius: "20px", marginTop: "90px" }} alt="..." />
+  </div>
+))}
+
 
                 {/* <div className="carousel-item">
                   <img src="https://res.klook.com/image/upload/fl_lossy.progressive,q_90/c_fill,,w_2560,/v1670577678/banner/tvhfgpkiapfldzoaj8ll.webp" className="d-block w-100" style={{ marginTop: "70px" }} alt="..." />
@@ -117,12 +122,11 @@ export default function Hero1({onDataChange }) {
                 <div className="position-absolute mb-1 mt-1 top-50 start-50 translate-middle text-wrap w-75 py-4">
                   <h2 className="heading1  text-light">Your world of joy</h2>
                   <p className="heading2  fadeInUp  text-light" style={{ fontSize: "20px" }}>From local escapes to far-flung adventures, find what makes you happy anytime, anywhere</p>
-                  <div className="input-group mb-3 mt-3 ">
-                    <span className="input-group-text " id="basic-addon1">
-                    <i class="fa-solid fa-magnifying-glass py-2"></i>
-                    </span>
+                  <div className="input-group mb-3 mt-3 " style={{height:"70px"}}>
+                    
+                   {/* <form action="" onSubmit={handleSearchSubmit}> 
                     <input
-                      type="text"
+                      type="search"
                       // name="search"
                       // onChange={searchHandler}
                       onChange={(e) => setSearchData(e.target.value)}
@@ -130,8 +134,40 @@ export default function Hero1({onDataChange }) {
                       placeholder="search destination activity"
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-lg"
+                      
                     />
-                     <span class="input-group-text text-light  " style={{backgroundColor:"black"}} >Search</span>
+                    </form>
+                  <span class="input-group-text text-light  " style={{backgroundColor:"black"}} >Search</span> */}
+        <form className="d-flex w-100 h-100" onSubmit={handleSearchSubmit}>
+  <div className="input-group position-relative">
+    {/* Icon */}
+    <span className="input-group-text bg-white border-end-0" id="basic-addon1">
+      <i className="fa-solid fa-magnifying-glass"></i>
+    </span>
+    {/* Input field */}
+    <input
+      className="form-control bg-white py-3 border-start-0"
+      onChange={(e) => setSearchData(e.target.value)}
+      type="search"
+      style={{height:"100%"}}
+      placeholder="Search destination activity"
+      aria-label="Sizing example input"
+      aria-describedby="inputGroup-sizing-lg"
+    />
+    {/* Button */}
+    <button
+      onClick={() => navigate("/tour-list-1")}
+      className="button -dark-1 bg-accent-1 text-white position-absolute top-0  end-0  me-2"  style={{height:"80%", width:"15%", borderRadius:"10px",marginTop:"6px", zIndex:"50"}}
+      type="submit"
+      
+    >
+      <i className="icon-search text-16 mr-10 "></i>
+      Search
+    </button>
+  </div>
+</form>
+
+
                   </div>
                 
                 </div>

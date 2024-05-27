@@ -22,18 +22,17 @@ export default function DestinationsOne() {
         <div className="row y-gap-10 justify-between items-end">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 mt-30 md:text-24">
-              Trending destinations 
+              Trending destinations
             </h2>
           </div>
 
           <div data-aos="fade-up" className="col-auto">
-            <Link
+            {/* <Link
               to={"/tour-list-1"}
               className="buttonArrow d-flex items-center "
             >
-              <span style={{fontWeight:"700" , fontSize:"20px"}}>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
-            </Link>
+            <span className="px-3 rounded-3 text-light" style={{ fontWeight: "700", fontSize: "15px", backgroundColor:"#78006E" }}>See all   <i className="icon-arrow-top-right mx-1" style={{ color: "white", fontSize: "12px", fontWeight: "700" }}></i></span>
+            </Link> */}
           </div>
         </div>
 

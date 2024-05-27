@@ -36,11 +36,12 @@ console.log("data", data)
       <Hero1 onDataChange={handleDataChange} />
       <FeaturesOne />
       <DestinationsOne />
-      <TestimonialOne />
       <Product data={data}/>
       <Banner />
+      {/* <Product data={data}/> */}
        <Tour1 />
        <TourTypeOne />
+      <TestimonialOne />
      <TourSlderOne /> 
       <ArticlesThree />
       <FooterOne />

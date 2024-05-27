@@ -8,11 +8,11 @@ export default function PageHeader() {
           <div className="col-auto">
             <div className="breadcrumbs">
               <span className="breadcrumbs__item">
-                <a href="#">Home</a>
+                <a href="/">Home</a>
               </span>
               <span>{">"}</span>
               <span className="breadcrumbs__item">
-                <a href="#">Tours</a>
+                <a href="/">Tours</a>
               </span>
               <span>{">"}</span>
               <span className="breadcrumbs__item">
@@ -20,12 +20,12 @@ export default function PageHeader() {
               </span>
             </div>
           </div>
-
+{/* 
           <div className="col-auto">
             <div className="pageHeader__subtitle">
               THE 10 BEST Phuket Tours & Excursions
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="row pt-30">

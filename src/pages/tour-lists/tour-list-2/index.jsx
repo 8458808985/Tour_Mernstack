@@ -6,6 +6,7 @@ import TourTypes from "@/components/tours/TourTypes";
 import React from "react";
 
 import MetaComponent from "@/components/common/MetaComponent";
+import { useParams } from "react-router-dom";
 
 const metadata = {
   title: "Tour-list-2 || ViaTour - Travel & Tour Reactjs Template",
@@ -13,6 +14,10 @@ const metadata = {
 };
 
 export default function TourListPage2() {
+  let params = useParams();
+  const id = params.id;
+  console.log(id)
+  // const tour = allTour.find((item) => item.id == id) || allTour[0];
   return (
     <>
       <MetaComponent meta={metadata} />

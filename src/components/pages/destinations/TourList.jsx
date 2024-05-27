@@ -72,10 +72,11 @@ useEffect(() => {
 
 
   const receiveDataFromChild = (data) => {
-    // Data received from child component
-    setFinalData(data);
+      setFinalData(data);
   };
+  
 
+  // console.log('sss',finalData)
   // console.log("productData",productData)
   return (
     <section className="layout-pb-xl">
@@ -96,7 +97,7 @@ useEffect(() => {
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar2 price={price}  sendData={receiveDataFromChild} filteredProductData={filteredProductData}/>
+              <Sidebar2 price={price}  sendData={receiveDataFromChild} filteredProductData={filteredProductData} productData={productData}/>
             </div>
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
               <div className={`accordion__item col-12 ${sidebarActive ? "is-active" : ""} `}>
@@ -109,7 +110,7 @@ useEffect(() => {
                 </button>
                 <div className="accordion__content" style={sidebarActive ? { maxHeight: "2000px" } : {}}>
                   <div className="pt-20">
-                    <Sidebar2 filteredProductData={filteredProductData} sendData={receiveDataFromChild} />
+                    <Sidebar2  sendData={receiveDataFromChild} filteredProductData={filteredProductData} productData={productData}  />
                   </div>
                 </div>
               </div>

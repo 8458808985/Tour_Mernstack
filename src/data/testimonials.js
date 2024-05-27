@@ -1,7 +1,7 @@
 export const testimonialsOne = [
   {
     id: 1,
-    imageSrc: "/img/testimonials/1/2.png",
+    imageSrc: "https://images.pexels.com/photos/247322/pexels-photo-247322.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Excellent Service!",
     content:
       "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
@@ -10,7 +10,7 @@ export const testimonialsOne = [
   },
   {
     id: 2,
-    imageSrc: "/img/testimonials/1/2.png",
+    imageSrc: "https://images.pexels.com/photos/247322/pexels-photo-247322.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Great Adventures!",
     content:
       "The tours in this website are great. I had been really enjoying with my family! The team is very professional and takes care of the customers. Will surely recommend it to my friends.",
@@ -19,7 +19,7 @@ export const testimonialsOne = [
   },
   {
     id: 3,
-    imageSrc: "/img/testimonials/1/2.png",
+    imageSrc: "https://images.pexels.com/photos/948873/pexels-photo-948873.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Awesome Experience!",
     content:
       "The best travel company I've ever used. Their tours are fantastic, and the guides are very knowledgeable. I can't wait to go on another adventure with them.",
@@ -28,7 +28,7 @@ export const testimonialsOne = [
   },
   {
     id: 4,
-    imageSrc: "/img/testimonials/1/2.png",
+    imageSrc: "https://images.pexels.com/photos/948873/pexels-photo-948873.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Awesome Experience!",
     content:
       "The best travel company I've ever used. Their tours are fantastic, and the guides are very knowledgeable. I can't wait to go on another adventure with them.",
@@ -37,7 +37,7 @@ export const testimonialsOne = [
   },
   {
     id: 5,
-    imageSrc: "/img/testimonials/1/2.png",
+    imageSrc: "https://images.pexels.com/photos/948873/pexels-photo-948873.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Awesome Experience!",
     content:
       "The best travel company I've ever used. Their tours are fantastic, and the guides are very knowledgeable. I can't wait to go on another adventure with them.",

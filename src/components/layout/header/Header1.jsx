@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import HeaderSerch from "../components/HeaderSerch";
+// import HeaderSerch from "../components/HeaderSerch";
 import Destinations from "../components/Destinations";
 import Activities from "../components/Activities";
 import Currency from "../components/Currency";
 import MobileMenu from "../components/MobileMenu";
+// import { searchUser } from "@/redux/Feature/Searchslice";
+
+
 
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { searchUser } from "../Redux/feature/Searchslice";
 
 export default function Header1() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [data , setData]=useState('')
 
   useEffect(()=>{
@@ -23,9 +31,6 @@ export default function Header1() {
     navigate('/');
   }
 
-// console.log("sata", data)
-
-  const navigate = useNavigate();
 
   const pageNavigate = (pageName) => {
     navigate(pageName);
@@ -54,6 +59,16 @@ export default function Header1() {
     };
   }, []);
 
+//  search 
+
+  const [searchdata, setSearchData] = useState("");
+  
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchUser(searchdata));
+    navigate("/tour-list-1");
+  };
+
   return (
     <>
       <header
@@ -74,9 +89,19 @@ export default function Header1() {
               <img src="/img/Logo/renomadic-color-logo.png" style={{width:"120px"}} alt="logo icon" />
             </Link>
 
-            {/* <div className="xl:d-none ml-30">
-              <HeaderSerch />
-            </div> */}
+            <form className="d-flex" onSubmit={handleSearchSubmit}>
+                <input
+                  className="form-control me-2 border-1"
+                  onChange={(e) => setSearchData(e.target.value)}
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                
+                />
+                <button className="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
           </div>
 
           <div className="headerMobile__right">

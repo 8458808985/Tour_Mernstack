@@ -14,7 +14,7 @@ import Stars from "../common/Stars";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
 
-  export default function Sidebar({sendData, sendRange, filteredProductData }) {
+  export default function Sidebar({ filteredProductData }) {
     const [ddActives, setDdActives] = useState(["tourtype"]);
     const [solve , setSolve]=useState([])
     const [selectedTourTypes, setSelectedTourTypes] = useState([]);
@@ -24,77 +24,41 @@ import axios from "axios";
     const [okData, setOkData] = useState("");
     // const { id } = useParams(); // Destructure id from useParams
     
-    const receiveDataFromChild = (data) => {
-      // Data received from child component
-      setFinalData(data);
-      sendRange(data);
-    };
+    // const receiveDataFromChild = (data) => {
+    //   // Data received from child component
+    //   setFinalData(data);
+    //   sendRange(data);
+    // };
     useEffect(() => {
       if (Array.isArray(filteredProductData) && filteredProductData.length > 0 && filteredProductData[0].city) {
         const city = filteredProductData[0].city;
         setOkData(city);
       }
     }, [filteredProductData]);
-
-    console.log("object1111", okData)
-    // console.log(filteredProductData)
-    
-    // console.log(data)
-    
-    // console.log("range", finalData)
-    // console.log("ak",filteredProductData)
-    // useEffect(() => {
-    //   fetch(`${BASE_URL}/product`)
-    //     .then((res) => {
-    //       if (!res.ok) {
-    //         throw new Error(`Failed to fetch product: ${res.status} ${res.statusText}`);
-    //       }
-    //       return res.json();
-    //     })
-    //     .then((data) => {
-    //       setProductData(data);
-    //       const tourTypes = data.map(product => product.tourType);
-    //       // Assuming `setSolve` is meant to set some state related to tour types
-    //       setSolve(tourTypes);
-    //     })
-    //     .catch((err) => console.error("Error fetching product:", err));
-    // }, []);
-    // console.log("object",filteredProductData)
-    
-
+   
 const tourTypeString = selectedTourTypes.join(',');
 
-    
-
-useEffect(() => {
-  const fetchTourTypes = async () => {
-    try {
-      const response = await fetch(`https://test1.buyjugaad.com/api/v1/product/city/${okData}/tourtype/${tourTypeString}`);
-      console.log("filter1", response)
-      if (!response.ok) {
-        throw new Error('Failed to fetch tour types');
-      }
+// useEffect(() => {
+//   const fetchTourTypes = async () => {
+//     try {
+//       const response = await fetch(`${BASE_URL}/product/city?city=${okData}&&tourType=${selectedTourTypes}`);
+//       if (!response.ok) {
+//         throw new Error('Failed to fetch tour types');
+//       }
       
-      const data = await response.json();
-      setFilter(data);
-      sendData(data);
-    } catch (error) {
-      console.error("Error fetching tour types:", error);
-      // Optionally, handle the error state here
-    }
-  };
-  console.log("object",filter)
-  
-  
+//       const data = await response.json();
+//       // sendData(data); // sendData before setting state
+//       setFilter(data); // Corrected function name from setFinalData to setFilter
+//     } catch (error) {
+//       console.error("Error fetching tour types:", error);
+//       // Optionally, handle the error state here
+//     }
+//   };
 
-  // Only fetch tour types when selectedTourTypes change
-  if (selectedTourTypes.length > 0) {
-    fetchTourTypes();
-  } else {
-    // Handle case when no tour types are selected
-    setFilter([]);
-  }
-}, [sendData, selectedTourTypes, tourTypeString]); // Added tourTypeString to dependency array
+//   fetchTourTypes(); // Call fetchTourTypes immediately
+// }, [okData, tourTypeString]);
+
+console.log("objectfile", filter)
 
 const toggleTourType = (tourType) => {
   setSelectedTourTypes((prevSelected) =>
@@ -245,7 +209,7 @@ const uniqueTourTypes = solve.filter((tourType, index) => solve.findIndex(t => t
                 }
               >
                 <div className="pt-15">
-                  <RangeSlider sendData={receiveDataFromChild}/>
+                  <RangeSlider/>
                 </div>
               </div>
             </div>

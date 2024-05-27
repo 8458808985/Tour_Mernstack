@@ -7,7 +7,7 @@ export default function Hero1({ blog }) {
         <img src="/img/hero/1.png" alt="image" />
         <img
           style={{ height: "auto" }}
-          src="/img/hero/1/shape.svg"
+          src="https://images.pexels.com/photos/3279885/pexels-photo-3279885.jpeg?auto=compress&cs=tinysrgb&w=600"
           alt="image"
         />
       </div>

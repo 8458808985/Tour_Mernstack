@@ -31,7 +31,7 @@ export default function Product({ elm, data }) {
             <h2
               data-aos="fade-right"
               data-aos-delay=""
-              className="text-30 md:text-24"
+              className="" style={{fontSize:"22px"}}
             >
               Find Popular Tours
             </h2>
@@ -44,8 +44,8 @@ export default function Product({ elm, data }) {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span style={{ fontWeight: "700", fontSize: "20px" }}>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10" style={{ color: "#78006E", fontSize: "20px", fontWeight: "700" }}></i>
+              <span className="px-3 rounded-3 text-light" style={{ fontWeight: "700", fontSize: "15px", backgroundColor:"#78006E" }}>See all   <i className="icon-arrow-top-right mx-1" style={{ color: "white", fontSize: "12px", fontWeight: "700" }}></i></span>
+            
 
             </Link>
           </div>
@@ -78,10 +78,10 @@ export default function Product({ elm, data }) {
                       <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
                       <span style={{ fontSize: "15px", fontWeight: "700" }}>  {elm.country} ({elm.city}) </span>
                     </div>
-
+<div style={{height:"35px"}}>
                     <h3 className="tourCard__title text-16 fw-500 mt-5">
                       <span style={{ fontSize: "14px", fontWeight: "600" }}>
-                        {showFullTitle ? elm.product : `${elm.product.substring(0, 20)}...`}
+                        {showFullTitle<3 ? elm.product : `${elm.product.substring(0, 10)}...`}
                       </span>
                       {elm.product.length > 20 && (
                         <button onClick={toggleTitle} className="btn-link">
@@ -89,6 +89,7 @@ export default function Product({ elm, data }) {
                         </button>
                       )}
                     </h3>
+                    </div>
                     <div className="tourCard__rating d-flex items-center text-13 mt-5">
                       <div className="d-flex x-gap-5" style={{ fontSize: "18px", fontWeight: "900" }}>
                         <Stars star={elm.rating} />
@@ -113,7 +114,7 @@ export default function Product({ elm, data }) {
                         {/* <i className="icon-clock text-16 mr-5" style={{ fontSize: "10px", fontWeight: "700" }}></i>
                         <span style={{ fontSize: "12px" }}> {elm.duration}</span> */}
                          
-                         <p className="px-1 rounded-2" style={{backgroundColor:"#78006E",color:"white",fontSize:"9px", fontWeight:"700"}}>Save up to 19%</p>
+                         <p className="px-1 rounded-3" style={{backgroundColor:"#78006E",color:"white",fontSize:"9px", fontWeight:"700"}}>Save Up to {elm.discount}% </p>
                       </div>
 
                       <div>

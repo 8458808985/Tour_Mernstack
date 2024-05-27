@@ -23,7 +23,7 @@ export default function TourTypeOne() {
               data-aos-delay=""
               className="text-30 md:text-24" style={{fontSize:"20px", fontWeight:"700"}}
             >
-              Popular things to do 
+              Popular things to do  
             </h2>
           </div>
 
@@ -34,8 +34,7 @@ export default function TourTypeOne() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span style={{fontSize:"18px",fontWeight:"700"}}>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10" style={{fontSize:"18px",fontWeight:"700"}}></i>
+             <span className="px-3 rounded-3 text-light" style={{ fontWeight: "700", fontSize: "15px", backgroundColor:"#78006E" }}>See all   <i className="icon-arrow-top-right mx-1" style={{ color: "white", fontSize: "12px", fontWeight: "700" }}></i></span>
             </Link>
           </div>
         </div>
