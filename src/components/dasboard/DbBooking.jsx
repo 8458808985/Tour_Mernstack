@@ -79,7 +79,8 @@ export default function DbBooking() {
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Full Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Action</th>
@@ -91,6 +92,7 @@ export default function DbBooking() {
 <tr key={index}>
       <th scope="row"><span>{index+1}</span></th>
       <td >{items.name}</td>
+      <td >{items.lastname}</td>
       <td >{items.email}</td>
       <td>{items.phone}</td>
       <td style={{display:"flex"}}>  <Button

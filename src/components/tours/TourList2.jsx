@@ -5,12 +5,15 @@ import { tourDataThree, tourDataTwo } from "@/data/tours";
 import Stars from "../common/Stars";
 import Pagination from "../common/Pagination";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import BASE_URL from "@/Urls/baseUrl";
+// import products from "razorpay/dist/types/products";
 
-export default function TourList2() {
+export default function TourList2({id}) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
+  // const [category, setCategory]=useState([])
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -21,20 +24,47 @@ export default function TourList2() {
         setDdActives(false);
       }
     };
-
+// console.log("object", id)
     document.addEventListener("click", handleClick);
 
     return () => {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+  useEffect(()=>{
+    setCategory(id)
+  },[])
+ 
+
+  const [productData, setProductData] = useState([])
+  const [category, setCategory] = useState([]);
+
+// console.log(category)
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/product`)
+      .then(res => res.json())
+      .then(data => {
+        // Assuming each product has a "tourType" property
+        // const filteredProducts = data.filter(product => product.tourType === category);
+        const filteredProducts = data.filter(product => product.tourType.includes(category));
+
+        setProductData(filteredProducts);
+      })
+      .catch(err => console.error('Error fetching products:', err));
+  }, [category]); // Run this effect whenever category changes
+  
+  // Assuming category is state managed by useState hook
+  
+
+console.log("aaa",productData)
   return (
     <section className="layout-pb-xl">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar />
+              {/* <Sidebar /> */}
             </div>
 
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
@@ -107,7 +137,7 @@ export default function TourList2() {
             </div>
 
             <div className="row y-gap-30 pt-30">
-              {tourDataThree.map((elm, i) => (
+              {productData.map((elm, i) => (
                 <div key={i} className="col-lg-4 col-sm-6">
                   <Link
                     to={`/tour-single-1/${elm.id}`}
@@ -116,7 +146,7 @@ export default function TourList2() {
                     <div className="tourCard__header">
                       <div className="tourCard__image ratio ratio-28:20">
                         <img
-                          src={elm.imageSrc}
+                          src={elm.imageSrc[0]}
                           alt="image"
                           className="img-ratio rounded-12"
                         />
@@ -130,22 +160,22 @@ export default function TourList2() {
                     <div className="tourCard__content px-10 pt-10">
                       <div className="tourCard__location d-flex items-center text-13 text-light-2">
                         <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                        {elm.location}
-                      </div>
+                       {elm.country}  ({elm.city}
+)                      </div>
 
                       <h3 className="tourCard__title text-16 fw-500 mt-5">
-                        <span>{elm.title}</span>
+                        <span>{elm.product}</span>
                       </h3>
 
-                      <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                        <div className="d-flex x-gap-5">
-                          <Stars star={elm.rating} />
-                        </div>
+                      {/* {/* <div className="tourCard__rating d-flex items-center text-13 mt-5"> */}
+                        {/* <div className="d-flex x-gap-5"> */}
+                          {/* <Stars star={elm.rating} /> */}
+                        {/* </div> */} 
 
-                        <span className="text-dark-1 ml-10">
+                        {/* <span className="text-dark-1 ml-10">
                           {elm.rating} ({elm.ratingCount})
-                        </span>
-                      </div>
+                        </span> */}
+                      {/* </div> */}
 
                       <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                         <div className="d-flex items-center">
@@ -155,7 +185,7 @@ export default function TourList2() {
 
                         <div>
                           From{" "}
-                          <span className="text-16 fw-500">${elm.price}</span>
+                          <span className="text-16 fw-500">${elm.adultOldPrice}</span>
                         </div>
                       </div>
                     </div>

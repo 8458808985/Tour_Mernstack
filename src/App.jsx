@@ -97,7 +97,7 @@ function App() {
             <Route path="/tour-list-9" element={<TourListPage9 />} />
             <Route path="/tour-list-10" element={<TourListPage10 />} /> */}
 
-            <Route path="/tour-single-1/:id" element={< Protected Component={TourSinglePage1}/>} />
+            <Route path="/tour-single-1/:id" element={<TourSinglePage1/>} />
             <Route path="/tour-single-2/:id" element={<TourSinglePage2 />} />
             <Route path="/tour-single-3/:id" element={<TourSinglePage3 />} />
             <Route path="/tour-single-4/:id" element={<TourSinglePage4 />} />
@@ -118,7 +118,7 @@ function App() {
             <Route path="/blog-list-3" element={<BlogListPage3 />} />
             <Route path="/blog-single/:id" element={<BlogSinglePage />} />
 
-            <Route path="/destinations/:id" element={< Protected Component={DestinationsPage}/>} />
+            <Route path="/destinations/:id" element={< DestinationsPage/>} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/help-center" element={<HelpCenterPage />} />
             <Route path="/terms" element={<TermsPage />} />

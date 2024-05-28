@@ -120,12 +120,12 @@ export default function Product({ elm, data }) {
                       <div>
                         {elm.adultOldPrice && elm.discount && (
                           <span className="text-16 fw-500" style={{ fontSize: "12px", fontWeight: "700" }}>
-                            <span style={{ fontSize: "12px" }}> New Price: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
+                            <span style={{ fontSize: "12px" }}> From: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
                           </span>
                         )}
                         {elm.adultOldPrice && !elm.discount && (
                           <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-                            New Price: $   {elm.adultOldPrice}
+                            From: ${elm.adultOldPrice}
                           </span>
                         )}
                       </div>
@@ -199,12 +199,12 @@ export default function Product({ elm, data }) {
                       <div>
                         {elm.adultOldPrice && elm.discount && (
                           <span className="text-16 fw-500" style={{ fontSize: "14px", fontWeight: "700" }}>
-                            <span style={{ fontSize: "12px" }}> New Price: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
+                            <span style={{ fontSize: "12px" }}> From: $</span> <span style={{ fontSize: "14px", fontWeight: "700" }}>{(elm.adultOldPrice - (elm.adultOldPrice * elm.discount) / 100).toFixed(2)}</span>
                           </span>
                         )}
                         {elm.adultOldPrice && !elm.discount && (
                           <span className="text-16 fw-500" style={{ fontSize: "17px", fontWeight: "700" }}>
-                            New Price: $   {elm.adultOldPrice}
+                            From: $   {elm.adultOldPrice}
                           </span>
                         )}
                       </div>

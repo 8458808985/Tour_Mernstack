@@ -16,8 +16,8 @@ const metadata = {
 export default function TourListPage2() {
   let params = useParams();
   const id = params.id;
-  console.log(id)
-  // const tour = allTour.find((item) => item.id == id) || allTour[0];
+  // setCategory(id)
+  // const tour = allTour.find((item) => item.TourTypes == id) || allTour[0];
   return (
     <>
       <MetaComponent meta={metadata} />
@@ -25,7 +25,7 @@ export default function TourListPage2() {
         <Header1 />
         <PageHeader />
 
-        <TourList2 />
+        <TourList2  id={id} />
         <FooterOne />
       </main>
     </>

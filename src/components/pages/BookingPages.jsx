@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Razorpay from "razorpay";
@@ -85,15 +85,17 @@ export default function BookingPages() {
       <ToastContainer />
       <div className="container">
         <div className="row">
-          <div className="col-lg-8">
-            <div className="bg-white rounded-12 shadow-2 py-1 px-30 md:py-20 md:px-20 mt-30">
+          <div className="col-lg-8 col-12 col-sm-8">
+            <div className="border-1 rounded-12 shadow-2 py-1 px-30 md:py-20 md:px-20 mt-30">
               <div>
-                <h2 className="text-30 md:text-24 fw-700">
-                  Let us know who you are
+                <h2 className="text-20 md:text-20 fw-700 text-black mt-4" >
+                  Contact Details
                 </h2>
+                <p className="text-6 md:text-20 fw-500 text-black"> We'll use this information to send  you confirmation and updates about your booking</p>
+             <p><span className="text-black" style={{fontWeight:"700", cursor: 'alias',}} > <i class="fa-solid fa-right-to-bracket mx-1"></i> Log in or Sign-up</span> for a faster checkout and to redeem available viator Rewards</p>
                 <form onSubmit={handleSubmit} name="formrv">
                   <div className="row y-gap-30 contactForm pt-30">
-                    <div className="col-12">
+                    <div className="col-md-6 col-lg-6 col-6">
                       <div className="form-input">
                         <input
                           type="text"
@@ -102,12 +104,24 @@ export default function BookingPages() {
                           onChange={inputHandler}
                         />
                         <label className="lh-1 text-16 text-light-1">
-                          Full Name
+                          First Name
                         </label>
                       </div>
                     </div>
-
-                    <div className="col-md-6">
+                    <div className="col-md-6 col-lg-6 col-6">
+                      <div className="form-input">
+                        <input
+                          type="text"
+                          required
+                          name="lastname"
+                          onChange={inputHandler}
+                        />
+                        <label className="lh-1 text-16 text-light-1">
+                          Last Name
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-md-12 col-12 col-sm-12 col-lg-12">
                       <div className="form-input">
                         <input
                           type="text"
@@ -121,46 +135,100 @@ export default function BookingPages() {
                       </div>
                     </div>
 
-                    <div className="col-md-6">
-                      <div className="form-input">
+                    <div className="col-md-12 col-12 col-sm-12 col-lg-12">
+                      {/* <div className="">
                         <input
                           type="text"
                           required
                           name="phone"
+                          placeholder="Enter Your Phone Number"
                           onChange={inputHandler}
                         />
                         <label className="lh-1 text-16 text-light-1">
                           Phone Number
-                        </label>
+                        </label> 
+                      
                       </div>
+                    */}
+                    <div className="input-group mb-3">
+  <button
+    className="btn btn-outline-secondary dropdown-toggle"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+   +91
+  </button>
+  <ul className="dropdown-menu">
+    <li>
+      <a className="dropdown-item" href="#">
+        Action
+      </a>
+    </li>
+    <li>
+      <a className="dropdown-item" href="#">
+        Another action
+      </a>
+    </li>
+    <li>
+      <a className="dropdown-item" href="#">
+        Something else here
+      </a>
+    </li>
+    <li>
+      <hr className="dropdown-divider" />
+    </li>
+    <li>
+      <a className="dropdown-item" href="#">
+        Separated link
+      </a>
+    </li>
+  </ul>
+  <input
+    type="text"
+    name="phone"
+    className="form-control"
+    aria-label="Text input with dropdown button"
+    onChange={inputHandler}
+    placeholder="Enter Your Phone Number"
+  />
+</div>
+
                     </div>
                   </div>
-                  <button className="btn btn-success btn-lg mt-4" type="submit">
+                  {/* <button className="btn btn-success btn-lg mt-4 mb-5" type="submit">
                     Book Now
-                  </button>
+                  </button> */}
+
+                  <div className="mt-12">
+                    <button className="button -md -dark-1 bg-accent-1 text-white col-12 mt-4 mb-4 mx-auto" onClick={handlePayment}>
+                      Complete My Order
+                      <i className="icon-arrow-top-right text-16 ml-10"></i>
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
           </div>
 
-          <div className="col-lg-4">
-            <div className="pl-50 md:pl-0">
+          <div className="col-lg-4 col-sm-4 col-12 mt-4">
+            <div className="border-1 pl-50 md:pl-0 shadow rounded-3">
               <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20">
                 <h2 className="text-20 fw-500">Your booking details</h2>
 
                 <div className=" mt-30">
-                <span style={{ width: "50px", height: "50px" }}>
-    {booking && booking.imageSrc && booking.imageSrc.length > 0 ? (
-        // If booking.imageSrc exists and has elements, render the image
-        <img src={booking.imageSrc[0]} alt="image" />
-    ) : (
-        // Otherwise, render a placeholder or an error message
-        <p>No image available</p>
-    )}
-</span>
+                  <span style={{ width: "50px", height: "50px" }}>
+                    {booking && booking.imageSrc && booking.imageSrc.length > 0 ? (
+                      // If booking.imageSrc exists and has elements, render the image
+                      <img src={booking.imageSrc[0]} alt="image" className="rounded-3 w-100" />
+                    ) : (
+                      // Otherwise, render a placeholder or an error message
+                      <p>No image available</p>
+                    )}
+                  </span>
 
                   <div className="ml-2 mt-5">
-                    <span className="fs-4"> {booking.product}</span>
+                    <span className="fs-5"> {booking.product}</span>
                   </div>
                 </div>
 
@@ -182,15 +250,15 @@ export default function BookingPages() {
 
                 <div className="">
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Subtotal</div>
-                    <div className="">${price}</div>
+                    <div className="fw-700">Subtotal</div>
+                    <div className="mb-">${price}</div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
+              {/* <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
                 <h2 className="text-20 fw-500">Do you have a promo code?</h2>
-{/* 
+
                 <div className="contactForm mt-25">
                   <div className="form-input ">
                     <input type="text" required />
@@ -198,20 +266,15 @@ export default function BookingPages() {
                       Promo code
                     </label>
                   </div>
-                </div> */}
+                </div>
 
                 <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                   Apply
                   <i className="icon-arrow-top-right text-16 ml-10"></i>
                 </button>
-              </div>
+              </div> */}
 
-              <div className="mt-30">
-                <button className="button -md -dark-1 bg-accent-1 text-white col-12" onClick={handlePayment}>
-                  Complete My Order
-                  <i className="icon-arrow-top-right text-16 ml-10"></i>
-                </button>
-              </div>
+
             </div>
           </div>
         </div>

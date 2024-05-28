@@ -46,7 +46,7 @@ export default function TourTypeOne() {
         >
           {toursTypes.map((elm, i) => (
             <Link
-              to={`/tour-list-2/${elm._id}`}
+              to={`/tour-list-2/${elm}`}
               key={i}
               className="featureCard -type-1 -hover-1 overflow-hidden rounded-12 px-30 py-30"
             >

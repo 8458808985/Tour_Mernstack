@@ -14,7 +14,7 @@ import Stars from "../common/Stars";
 import BASE_URL from "@/Urls/baseUrl";
 import axios from "axios";
 
-  export default function Sidebar({ filteredProductData }) {
+  export default function Sidebar({ filteredProductData, sendFilter }) {
     const [ddActives, setDdActives] = useState(["tourtype"]);
     const [solve , setSolve]=useState([])
     const [selectedTourTypes, setSelectedTourTypes] = useState([]);
@@ -22,6 +22,7 @@ import axios from "axios";
     const [productData, setProductData] = useState([]);
     const [finalData, setFinalData] = useState([]);
     const [okData, setOkData] = useState("");
+    // const[filteredProductData,setFilteredProductData]=useState([])
     // const { id } = useParams(); // Destructure id from useParams
     
     // const receiveDataFromChild = (data) => {
@@ -29,14 +30,45 @@ import axios from "axios";
     //   setFinalData(data);
     //   sendRange(data);
     // };
-    useEffect(() => {
-      if (Array.isArray(filteredProductData) && filteredProductData.length > 0 && filteredProductData[0].city) {
-        const city = filteredProductData[0].city;
-        setOkData(city);
-      }
-    }, [filteredProductData]);
+    // useEffect(() => {
+    //   if (Array.isArray(filteredProductData) && filteredProductData.length > 0 && filteredProductData[0].city) {
+    //     const city = filteredProductData[0].city;
+    //     setOkData(city);
+    //   }
+    // }, [filteredProductData]);
    
 const tourTypeString = selectedTourTypes.join(',');
+console.log("sele", tourTypeString)
+
+useEffect(() => {
+  // Filter products based on selected tour types
+  const filteredByTourType = filteredProductData.filter(product => {
+      // Assuming tour type information is stored in product.tourType
+      return selectedTourTypes.every(type => product.tourType.includes(type));
+  });
+
+  // Update state with filtered data
+  sendFilter(filteredByTourType);
+
+  // Set city if filtered data exists and has city information
+  if (Array.isArray(filteredByTourType) && filteredByTourType.length > 0 && filteredByTourType[0].city) {
+      const city = filteredByTourType[0].city;
+      setOkData(city);
+  }
+}, [selectedTourTypes, productData]);
+
+
+// useEffect(()=>{
+//   const fetchTourTypes=async()=>{
+
+//     try {
+      
+//     } catch (error) {
+      
+//     }
+//   }
+//   fetchTourTypes()
+// })
 
 // useEffect(() => {
 //   const fetchTourTypes = async () => {
@@ -58,7 +90,7 @@ const tourTypeString = selectedTourTypes.join(',');
 //   fetchTourTypes(); // Call fetchTourTypes immediately
 // }, [okData, tourTypeString]);
 
-console.log("objectfile", filter)
+// console.log("objectfile", filter)
 
 const toggleTourType = (tourType) => {
   setSelectedTourTypes((prevSelected) =>
